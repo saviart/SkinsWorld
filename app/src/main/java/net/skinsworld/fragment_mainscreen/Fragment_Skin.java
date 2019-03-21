@@ -109,7 +109,7 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
 
     public void createPopup(Model_ListItems data) {
-        myDialog.setContentView(R.layout.popup_skins);
+        myDialog.setContentView(R.layout.popup_buy_item);
         workingDialog(myDialog,data);
         myDialog.show();
 
