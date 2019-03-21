@@ -37,6 +37,7 @@ public class Adapter_RcvSkin extends RecyclerView.Adapter<Adapter_RcvSkin.ItemVi
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
+
         Model_ListItems item = data.get(position);
 
         holder.nameitem.setText(item.getNameitem());
@@ -44,6 +45,7 @@ public class Adapter_RcvSkin extends RecyclerView.Adapter<Adapter_RcvSkin.ItemVi
         holder.numbcoin.setText(item.getNumbcoin());
         holder.txtgame.setText(item.getTxtgame());
         holder.imgitem.setImageResource(item.getImgitem());
+
     }
 
     @Override

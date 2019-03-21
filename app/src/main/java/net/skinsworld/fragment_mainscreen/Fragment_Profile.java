@@ -1,5 +1,6 @@
 package net.skinsworld.fragment_mainscreen;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.NonNull;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +28,7 @@ import net.skinsworld.R;
 import net.skinsworld.adapter.AdapterRcvProfile;
 
 import net.skinsworld.library.GlobalVariables;
+import net.skinsworld.model.Model_ListItems;
 import net.skinsworld.model.Model_Profile;
 
 import java.util.ArrayList;
@@ -44,7 +48,8 @@ public class Fragment_Profile extends Fragment {
     TextView tvCoins;
     TextView tvJoinDate;
     EditText etTradeURL;
-
+    TextView invitecode;
+    private Dialog inviteDialog;
     public Fragment_Profile() {
     }
 
@@ -156,12 +161,16 @@ public class Fragment_Profile extends Fragment {
         tvCoins = view.findViewById(R.id.tvCoins);
         tvJoinDate = view.findViewById(R.id.tvJoinDate);
         etTradeURL = view.findViewById(R.id.etTradeURL);
+        invitecode = view.findViewById(R.id.popup_invitecode);
+
         //Thêm item từ database code ở đây
 
 
     }
 
+    }
 
-}
+
+
 
 

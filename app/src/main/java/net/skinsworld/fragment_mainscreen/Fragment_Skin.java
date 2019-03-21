@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,6 +36,7 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
     ImageView ic_refresh;
 
 
+
     public Fragment_Skin() {
     }
 
@@ -42,8 +44,6 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStage) {
         view = inflater.inflate(R.layout.fragment_skin, container, false);
-
-
 
 
         anhxa();
@@ -68,6 +68,9 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 //                ic_refresh.startAnimation(ic_refresh_rotate);
 //            }
 //        });
+
+
+
 
 
         return view;

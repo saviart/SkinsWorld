@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    android:weightSum="10"
+    android:background="@drawable/bg_popup_invite">
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/popup_invitecode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Get 50 points if you enter the invite code "
+                    android:textColor="#ffff"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/popup_invitecode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Invitation code"
+                    android:textColor="#ffff"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:textSize="12sp"/>
+                <EditText
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:id="@+id/popup_invitecode"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:text="input here"
+                    android:textColor="#ffff"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="15sp"/>
+                    <Button
+
+                        android:id="@+id/popup_numbpoint"
+                        android:layout_width="150dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/bg_content_copy"
+                        android:fontFamily="@font/poppinsmedium"
+                        android:padding="5dp"
+                        android:text="SUBMIT"
+                        android:textColor="#000000"/>
+
+
+
+
+
+</LinearLayout>
