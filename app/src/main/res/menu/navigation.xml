@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_skins"
+        android:icon="@drawable/nav_skins"
+        android:title="@string/title_skins" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/nav_profile"
+        android:title="@string/title_profile" />
+
+    <item
+        android:id="@+id/navigation_earn"
+        android:icon="@drawable/nav_earn"
+        android:title="@string/title_earn" />
+
+    <item
+        android:id="@+id/navigation_setting"
+        android:icon="@drawable/nav_setting"
+        android:title="@string/title_setting" />
+
+</menu>

@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#121420">
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="15"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_header_profileuser">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="3">
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            xmlns:app="http://schemas.android.com/apk/res-auto"
+                            android:id="@+id/ivAvatar"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/img_avt"
+                            app:civ_border_width="2dp"
+                            app:civ_border_color="#FF898888"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                       <TextView
+                        android:id="@+id/tvUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Username"
+                        android:fontFamily="@font/poppinsbold"
+                        android:textColor="#FFFF"/>
+                        <TextView
+                            android:id="@+id/tvJoinDate"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="member since:"
+                            android:fontFamily="@font/poppinsmedium"
+                            android:textColor="#FFFF"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:gravity="center"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:background="@drawable/bg_dailygift"
+                            android:orientation="vertical">
+                            <ImageView
+                                android:id="@+id/btn_dailypoint"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_dailygift"/>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="#FFFF"
+                                android:text="DAILY POINT"
+                                android:fontFamily="@font/poppinsmedium"
+                                android:textSize="8sp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="3dp"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#0B0D19">
+             <LinearLayout
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="2dp"
+                 android:weightSum="3"
+                 android:orientation="horizontal">
+                  <LinearLayout
+                      android:layout_weight="1"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+                       <LinearLayout
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content"
+                           android:orientation="vertical">
+                                <LinearLayout
+                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+                                    <ImageView
+
+                                        android:layout_width="30dp"
+                                        android:layout_height="30dp"
+                                        android:src="@drawable/ic_invite"/>
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="50"
+                                        android:textSize="15sp"
+                                        android:textColor="#FFFF"/>
+                                </LinearLayout>
+                           <LinearLayout
+                               android:gravity="center"
+                               android:layout_width="match_parent"
+                               android:layout_height="wrap_content">
+                               <Button
+                                   android:id="@+id/btn_invite"
+                                   android:layout_width="70dp"
+                                   android:layout_height="15dp"
+                                   android:background="@drawable/bg_buttonprofile"
+                                   android:textSize="10sp"
+                                   android:text="+invite"
+                                   android:textColor="#FFFF"/>
+
+                           </LinearLayout>
+
+                       </LinearLayout>
+
+
+                  </LinearLayout>
+                 <LinearLayout
+                     android:layout_weight="1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent">
+                     <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:orientation="vertical">
+                         <LinearLayout
+                             android:gravity="center"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content">
+                             <ImageView
+                                 android:layout_width="30dp"
+                                 android:layout_height="30dp"
+                                 android:src="@drawable/ic_point"/>
+                             <TextView
+                                 android:id="@+id/tvCoins"
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:text="50"
+                                 android:textSize="15sp"
+                                 android:textColor="#FFFF"/>
+                         </LinearLayout>
+                         <LinearLayout
+                             android:gravity="center"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content">
+                             <Button
+                                 android:id="@+id/btn_getmore"
+                                 android:layout_width="70dp"
+                                 android:layout_height="15dp"
+                                 android:background="@drawable/bg_buttonprofile"
+                                 android:textSize="10sp"
+                                 android:text="get more"
+                                 android:textColor="#FFFF"/>
+
+                         </LinearLayout>
+
+                     </LinearLayout>
+                 </LinearLayout>
+                 <LinearLayout
+                     android:layout_weight="1"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent">
+                     <LinearLayout
+                         android:layout_width="match_parent"
+                         android:layout_height="wrap_content"
+                         android:orientation="vertical">
+                         <LinearLayout
+                             android:gravity="center"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content">
+                             <ImageView
+                                 android:layout_width="30dp"
+                                 android:layout_height="30dp"
+                                 android:src="@drawable/ic_earned"/>
+                             <TextView
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:text="50"
+                                 android:textSize="15sp"
+                                 android:textColor="#FFFF"/>
+                         </LinearLayout>
+                         <LinearLayout
+                             android:gravity="center"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content">
+                             <Button
+                                 android:id="@+id/btn_share"
+                                 android:gravity="center"
+                                 android:layout_width="70dp"
+                                 android:layout_height="15dp"
+                                 android:background="@drawable/bg_buttonprofile"
+                                 android:text="Eared"
+                                 android:textColor="#ffff"
+                                 android:textSize="10sp"/>
+
+                         </LinearLayout>
+
+                     </LinearLayout>
+
+                 </LinearLayout>
+
+             </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="#0B0D19">
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_margin="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Refer your friend using above code - you will both receive additional point !. Each invite friend user must earn at least 50 point"
+                android:textColor="#FF898888"
+                android:textSize="10sp"
+                />
+        </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="3sp"
+        android:layout_weight="0.8"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#0B0D19">
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Trade URL"
+                android:textColor="#ffff"
+                android:fontFamily="@font/aqua"
+                android:textSize="12sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_marginTop="3sp"
+            android:layout_weight="2.5"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_tradeurl">
+                 <LinearLayout
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:weightSum="3"
+                     android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_marginLeft="10sp"
+                            android:layout_marginRight="10sp"
+                            android:layout_weight="1.2"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp">
+                            <EditText
+                                android:id="@+id/etTradeURL"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="No trade url has been set"
+                                android:textSize="10sp"
+                                android:textColor="#ffff"
+                                android:textColorHint="#ffff"
+                                android:fontFamily="@font/poppinsmedium"
+                                />
+                        </LinearLayout>
+                     <LinearLayout
+                         android:layout_weight="1.8"
+                         android:layout_width="match_parent"
+                         android:layout_height="0dp">
+                                <LinearLayout
+                                    android:layout_marginLeft="10sp"
+                                    android:layout_marginRight="10sp"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:weightSum="4">
+                                    <LinearLayout
+                                        android:gravity="center_vertical"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="3">
+                                        <TextView
+                                            android:layout_width="219dp"
+                                            android:layout_height="39dp"
+                                            android:fontFamily="@font/poppinsmedium"
+                                            android:text="Adding SkinSpace to your steam profile name to get daily point"
+                                            android:textColor="#ffff"
+                                            android:textSize="10sp" />
+
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:gravity="center_vertical"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="3">
+                                        <Button
+                                            android:layout_width="70dp"
+                                            android:layout_height="20dp"
+                                            android:text="Set URL"
+                                            android:textColor="#ffff"
+                                            android:textSize="10sp"
+                                            android:background="@drawable/btn_dailypoint"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+                     </LinearLayout>
+
+                 </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    <LinearLayout
+
+        android:layout_weight="1.2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#0B0D19">
+
+            <TextView
+                android:gravity="center_vertical"
+                android:layout_margin="3dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="In order to use our trade offer system, we need your Steam trade URL. This URL will not be publically visable. Please input the URL below and press submit:"
+                android:textColor="#FF898888"
+                android:textSize="10sp"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_weight="5.4"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="10"
+                    android:orientation="vertical">
+                    <LinearLayout
+                        android:layout_weight="2"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:background="@drawable/bg_header_listskins">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:weightSum="4">
+                            <LinearLayout
+                                android:layout_weight="3.5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent">
+                                <TextView
+                                    android:layout_marginLeft="5dp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:fontFamily="@font/aqua"
+                                    android:text="Last Order"
+                                    android:textColor="#ffff"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_weight="0.5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:gravity="center">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/ic_refresh"/>
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_weight="8"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:background="#0B0D19">
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rvtransitems"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="2dp"
+                            android:layout_marginLeft="2dp"
+                            android:layout_marginRight="2dp"
+                            android:dividerHeight="2dp"
+                            android:orientation="vertical"/>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
+
+

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="10"
+    android:orientation="horizontal"
+    android:background="@drawable/bg_items"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="1dp"
+    android:layout_marginBottom="1dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+           <ImageView
+               android:id="@+id/imgitem"
+               android:layout_gravity="center"
+               android:layout_width="60dp"
+               android:layout_height="60dp"
+               android:src="@drawable/sample_csgo"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_weight="4"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/nameitem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="NameofItems"
+                android:textColor="#d6d4d4"
+                android:textSize="12sp" />
+            <TextView
+                android:layout_gravity="center"
+                android:id="@+id/desitem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DesofItems"
+                android:textSize="10sp"
+                android:fontFamily="@font/poppinsmedium"
+                android:textColor="#898888"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_gravity="center"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:clickable="false"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_buttonpoint"
+            android:drawableLeft="@drawable/img_point"
+            android:padding="5dp"
+            android:text=""
+            android:textSize="12sp"
+            android:textColor="#FFFF"
+            android:fontFamily="@font/poppinsmedium"
+            android:id="@+id/numbcoin"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="2"
+        android:layout_width="0dp"
+        android:layout_height="match_parent" >
+
+        <Button
+            android:clickable="false"
+            android:padding="5dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:background="@drawable/bg_game"
+            android:fontFamily="@font/poppinsmedium"
+            android:text=""
+            android:textColor="#FFFF"
+            android:textSize="12sp"
+            android:id="@+id/txtgame"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>

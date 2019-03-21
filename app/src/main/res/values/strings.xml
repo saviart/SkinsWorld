@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Skins World</string>
+
+    <string name="title_skins">""</string>
+    <string name="title_profile">""</string>
+    <string name="title_earn">""</string>
+    <string name="title_setting">""</string>
+
+    <string name="dong_y_su_dung">You must accept our Privacy Policy and Terms</string>
+
+</resources>
