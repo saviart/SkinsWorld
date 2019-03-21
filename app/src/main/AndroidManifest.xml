@@ -3,6 +3,7 @@
     package="net.skinsworld">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,10 +14,10 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <activity android:name=".Activity_Signup">
-        </activity>
-        <activity android:name=".WebView_Login"></activity>
-        <activity android:name=".Activity_MainScreen"></activity>
+
+        <activity android:name=".Activity_Signup"></activity>
+        <activity android:name=".WebView_Login" />
+        <activity android:name=".Activity_MainScreen" />
         <activity android:name=".Activity_Loading">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity_MissingCoin"></activity>
     </application>
 
 </manifest>
