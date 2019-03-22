@@ -15,7 +15,7 @@
                     android:layout_gravity="center"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/ic_check_circle"/>
+                    android:src="@drawable/ic_dailyreward_getreward"/>
                 <TextView
 
                     android:layout_margin="10dp"

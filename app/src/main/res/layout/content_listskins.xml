@@ -77,7 +77,7 @@
             android:layout_height="25dp"
             android:layout_gravity="center"
             android:background="@drawable/bg_buttonpoint"
-            android:drawableLeft="@drawable/img_point"
+            android:drawableLeft="@drawable/img_coin"
             android:padding="5dp"
             android:text=""
             android:textSize="12sp"

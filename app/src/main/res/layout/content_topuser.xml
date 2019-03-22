@@ -82,7 +82,7 @@
             android:layout_gravity="center"
             android:layout_margin="3dp"
             android:background="@drawable/bg_buttonpoint"
-            android:drawableLeft="@drawable/img_point"
+            android:drawableLeft="@drawable/img_coin"
             android:fontFamily="@font/poppinsmedium"
             android:paddingLeft="5dp"
             android:paddingRight="15dp"

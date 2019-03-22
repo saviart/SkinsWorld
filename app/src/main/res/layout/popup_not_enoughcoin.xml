@@ -98,7 +98,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
-                    android:background="@drawable/bg_popup_action"
+                    android:background="@drawable/bg_popup_btn_action"
                     android:fontFamily="@font/poppinsmedium"
                     android:text="GET MORE COIN"
                     android:textColor="#ffff"

@@ -57,7 +57,7 @@
                 android:layout_margin="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Completion required to receive points. e.g. intall and open, complete the tutorial, reach the level etc.."
+                android:text="Latest transaction of all users"
                 android:textColor="#FF898888"
                 android:textSize="10sp"
                 />
