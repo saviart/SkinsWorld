@@ -31,7 +31,7 @@ public class Activity_MainScreen extends AppCompatActivity {
     public static Activity_MainScreen main;
     private ActionBar toolbar;
     private BottomNavigationView navigation;
-    private SwipeRefreshLayout swipeContainer;
+
 
 
     public void selectIndex(int newIndex) {
@@ -42,9 +42,11 @@ public class Activity_MainScreen extends AppCompatActivity {
     public void onBackPressed() {
         int currentPosition = mViewPager.getCurrentItem();
         if (currentPosition != 0) {
-            mViewPager.setCurrentItem(0);
+            mViewPager.setCurrentItem(currentPosition-1);
         } else {
-            super.onBackPressed();
+
+            Toast.makeText(this.getApplicationContext(),"Bấm back 1 lần nữa để thoát ứng dụng",Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -55,6 +57,8 @@ public class Activity_MainScreen extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        getWindow().setSoftInputMode(WindowManager.
+                LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_mainscreen);
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
         Toast.makeText(Activity_MainScreen.this, db.getUser().getPersonaName(), Toast.LENGTH_LONG).show();
@@ -68,14 +72,14 @@ public class Activity_MainScreen extends AppCompatActivity {
         eventViewpager();
 
 
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                swipeContainer.setRefreshing(true);
-            }
-        });
+//
     }
+
+
+
+
+
+
 
     private void eventViewpager() {
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -187,6 +191,8 @@ public class Activity_MainScreen extends AppCompatActivity {
         adapter.AddFragment(new Fragment_Community(), "Setting");
         mViewPager = (ViewPager) findViewById(R.id.viewpager_main);
         mViewPager.setAdapter(adapter);
+        mViewPager.setCurrentItem(1);//selected position
+
     }
 
     public ViewPager getViewPager() {

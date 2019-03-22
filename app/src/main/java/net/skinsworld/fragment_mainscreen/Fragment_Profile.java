@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -50,6 +51,10 @@ public class Fragment_Profile extends Fragment {
     EditText etTradeURL;
     TextView invitecode;
     private Dialog inviteDialog;
+    private SwipeRefreshLayout swipe_Fragment_Profile;
+
+
+
     public Fragment_Profile() {
     }
 
@@ -77,6 +82,22 @@ public class Fragment_Profile extends Fragment {
 
         //set toan bo thong tin user vao giao dien
         setUserProfile();
+
+
+
+
+
+        //// Swipe to reload data here
+        swipe_Fragment_Profile = (SwipeRefreshLayout) view.findViewById(R.id.swipe_Fragment_Profile);
+        swipe_Fragment_Profile.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe_Fragment_Profile.setRefreshing(true);
+            }
+        });
+
+
+
 
         return view;
     }

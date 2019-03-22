@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_Fragment_Skins"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 <RelativeLayout android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -103,10 +109,12 @@
                  android:layout_marginRight="2dp"
                  android:dividerHeight="2dp"
                  android:orientation="vertical"
+                 android:layoutAnimation="@anim/layout_ryc_animation"
                />
          </LinearLayout>
 
      </LinearLayout>
 </RelativeLayout>
 
+</android.support.v4.widget.SwipeRefreshLayout>
 

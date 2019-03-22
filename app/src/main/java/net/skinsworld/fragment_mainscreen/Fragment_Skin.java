@@ -1,10 +1,12 @@
 package net.skinsworld.fragment_mainscreen;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,6 +29,7 @@ import net.skinsworld.event.OnClickIteml;
 import java.util.ArrayList;
 
 public class Fragment_Skin extends Fragment implements OnClickIteml {
+    int resId = R.anim.layout_ryc_animation;
 
     View view;
     RecyclerView ListItems;
@@ -34,7 +37,7 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
     Adapter_RcvSkin adapter;
     private Dialog myDialog;
     ImageView ic_refresh;
-
+    private SwipeRefreshLayout swipe_Fragment_Skins;
 
 
     public Fragment_Skin() {
@@ -44,13 +47,11 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStage) {
         view = inflater.inflate(R.layout.fragment_skin, container, false);
-
-
         anhxa();
-
+        LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
+        ListItems.setLayoutAnimation(animation);
 
         adapter = new Adapter_RcvSkin(getActivity(), R.layout.content_listskins, arrayListItems,this);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -70,7 +71,16 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 //        });
 
 
+//        -----------Swipe to reload data here-----------------------------------
 
+        swipe_Fragment_Skins = (SwipeRefreshLayout) view.findViewById(R.id.swipe_Fragment_Skins);
+        swipe_Fragment_Skins.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe_Fragment_Skins.setRefreshing(true);
+            }
+        });
+//        -----------------------------------------------------------------------
 
 
         return view;
