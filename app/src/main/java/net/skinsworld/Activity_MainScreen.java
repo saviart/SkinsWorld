@@ -5,6 +5,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class Activity_MainScreen extends AppCompatActivity {
     public static Activity_MainScreen main;
     private ActionBar toolbar;
     private BottomNavigationView navigation;
+    private SwipeRefreshLayout swipeContainer;
 
 
     public void selectIndex(int newIndex) {
@@ -56,33 +58,35 @@ public class Activity_MainScreen extends AppCompatActivity {
         setContentView(R.layout.activity_mainscreen);
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
         Toast.makeText(Activity_MainScreen.this, db.getUser().getPersonaName(), Toast.LENGTH_LONG).show();
-
         toolbar = getSupportActionBar();
         initUI();
         setUI();
         main = this;
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         navigation.setItemIconTintList(null);
-
-
-
         eventViewpager();
+
+
+        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(true);
+            }
+        });
     }
 
     private void eventViewpager() {
         mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
-
-
             }
 
             @Override
             public void onPageSelected(int position) {
 
-                switch (position){
+                switch (position) {
                     case 0:
                         navigation.setSelectedItemId(R.id.navigation_skins);
                         break;
@@ -97,6 +101,7 @@ public class Activity_MainScreen extends AppCompatActivity {
                         break;
                 }
             }
+
             @Override
             public void onPageScrollStateChanged(int i) {
 
@@ -142,8 +147,6 @@ public class Activity_MainScreen extends AppCompatActivity {
             return false;
         }
     };
-
-
 
 
     private void initUI() {
