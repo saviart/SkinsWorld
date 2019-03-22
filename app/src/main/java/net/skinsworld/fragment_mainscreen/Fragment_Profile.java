@@ -1,9 +1,13 @@
 package net.skinsworld.fragment_mainscreen;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.NonNull;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -113,6 +118,7 @@ public class Fragment_Profile extends Fragment {
         tvCoins.setText(GlobalVariables.user.getCoins());
         tvJoinDate.setText(GlobalVariables.user.getCreated_date());
         etTradeURL.setText(GlobalVariables.user.getTradeURL());
+        etTradeURL.setFocusable(false);
     }
 
 
@@ -120,7 +126,17 @@ public class Fragment_Profile extends Fragment {
         btn_dailypoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"đã bấm daily gift",Toast.LENGTH_SHORT).show();
+                // custom dialog
+
+                final BottomSheetDialog  dailypoint = new BottomSheetDialog(getContext());
+
+                dailypoint.setContentView(R.layout.popup_daily_reward_steamprofile);
+               dailypoint.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
+
+                // set the custom dialog components - text, image and button
+
+
+                dailypoint.show();
             }
         });
     }
@@ -138,8 +154,33 @@ public class Fragment_Profile extends Fragment {
         btn_invite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"đã bấm invite",Toast.LENGTH_SHORT).show();
-            }
+
+                    // custom dialog
+
+                final Dialog dialog = new Dialog(getContext());
+                     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                    dialog.setContentView(R.layout.popup_invite);
+
+
+                    // set the custom dialog components - text, image and button
+                    TextView popup_invite_code = (TextView) dialog.findViewById(R.id.popup_invite_code);
+                    popup_invite_code.setText("SW888888");
+
+
+                    Button popup_invite_copyintivecode = (Button) dialog.findViewById(R.id.popup_invite_copyintivecode);
+                Button popup_invite_shareonfacebook = (Button) dialog.findViewById(R.id.popup_invite_shareonfacebook);
+                    // if button is clicked, close the custom dialog
+                popup_invite_copyintivecode.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(getActivity().getApplicationContext(),"đã copy code",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+                    dialog.show();
+                }
+
+
         });
     }
 

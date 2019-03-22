@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/Android/AndroidStudio/plugins/android/lib/android.jar!/images/material_design_icons/content/ic_content_copy_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/Android/AndroidStudio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_remove_shopping_cart_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="ic_content_copy" />
+                            <entry key="color" value="da1f4f" />
+                            <entry key="outputName" value="ic_dailyreward_rewarded" />
                             <entry key="sourceFile" value="C:\Users\Saviart" />
                           </map>
                         </option>

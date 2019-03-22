@@ -28,7 +28,7 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:id="@+id/popup_invitecode"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Invitation code"
@@ -37,13 +37,13 @@
                     android:textSize="12sp"/>
                 <TextView
                     android:layout_gravity="center"
-                    android:id="@+id/popup_invitecode"
+                    android:id="@+id/popup_invite_code"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SW123456"
+                    android:text=""
                     android:textColor="#ffff"
                     android:fontFamily="@font/poppinsbold"
-                    android:textSize="15sp"/>
+                    android:textSize="18sp"/>
 
         </LinearLayout>
         <LinearLayout
@@ -55,12 +55,12 @@
         <LinearLayout
 
             android:gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal">
                 <Button
-                    android:id="@+id/popup_numbpoint"
+                    android:id="@+id/popup_invite_copyintivecode"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -72,7 +72,7 @@
                     android:textSize="8sp" />
                 <Button
                   android:layout_marginLeft="10dp"
-                    android:id="@+id/popup_numbpoint"
+                    android:id="@+id/popup_invite_shareonfacebook"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
@@ -84,7 +84,7 @@
 
         </LinearLayout>
         <LinearLayout
-            android:layout_weight="3.5"
+            android:layout_weight="2.5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
                 <TextView
@@ -94,9 +94,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Refer your friend using above code - you will both receive addition coin."
-                    android:textColor="#ffff"
+                    android:textColor="#898888"
                     android:fontFamily="@font/poppinsmedium"
-                    android:textSize="12sp"/>
+                    android:textSize="10sp"/>
 
         </LinearLayout>
 

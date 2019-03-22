@@ -1,7 +1,6 @@
 package net.skinsworld.fragment_mainscreen;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -123,6 +122,7 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
     public void createPopup(Model_ListItems data) {
         myDialog.setContentView(R.layout.popup_buy_item);
+        myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         workingDialog(myDialog,data);
         myDialog.show();
 
@@ -155,7 +155,7 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
         TextView popup_desitem = (TextView) myDialog.findViewById(R.id.popup_desitem);
         popup_desitem.setText(data.getDesitem());
 
-        Animation animstar3 = (Animation) AnimationUtils.loadAnimation(getActivity(),R.anim.animstar3);
+        Animation animstar3 = (Animation) AnimationUtils.loadAnimation(getActivity(),R.anim.anim_zoomin_out);
         popup_imgitem.startAnimation(animstar3);
 
        //Code tính năng của popup ở đây.
