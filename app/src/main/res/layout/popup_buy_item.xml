@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="@drawable/bg_header_listskins"
+        android:background="@drawable/bg_header_popup_buyitem"
         android:gravity="right">
 
         <LinearLayout
@@ -57,7 +57,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="#0a0e28"
+        android:background="#011b43"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3"
@@ -73,7 +73,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="#0a0e28"
+        android:background="#011b43"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="6">
@@ -91,7 +91,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="5.5"
-                android:background="#14182e"
+
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -135,7 +135,7 @@
                     android:layout_height="27dp"
                     android:layout_gravity="center"
                     android:layout_margin="2dp"
-                    android:background="@drawable/bg_game"
+                    android:background="@drawable/bg_buttongame"
                     android:fontFamily="@font/poppinsmedium"
                     android:padding="5dp"
                     android:text=""

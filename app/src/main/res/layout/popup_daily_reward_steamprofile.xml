@@ -7,7 +7,7 @@
     android:layout_gravity="bottom">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="130dp"
         android:background="@drawable/bg_popup_reward"
         android:orientation="vertical"
         android:weightSum="10">
@@ -28,23 +28,8 @@
                     android:fontFamily="@font/poppinsbold"
                     android:textSize="12sp"/>
 
-                 <Button
-
-                        android:layout_marginTop="15dp"
-                        android:id="@+id/popup_numbpoint"
-                        android:layout_width="150dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bg_content_copy"
-                        android:fontFamily="@font/poppinsmedium"
-                        android:padding="5dp"
-                        android:text="Complete Offfer"
-                        android:textColor="#000000"/>
 
 
-
-
-
-</LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

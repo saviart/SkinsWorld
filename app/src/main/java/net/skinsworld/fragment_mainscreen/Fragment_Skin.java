@@ -37,7 +37,14 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
     private Dialog myDialog;
     ImageView ic_refresh;
     private SwipeRefreshLayout swipe_Fragment_Skins;
-
+    ImageView Autochess_Filter;
+    boolean isAutochess_Filter_Pressed=false;
+    ImageView Dota2_Filter;
+    boolean isDota2_Filter_Pressed=false;
+    ImageView Csgo_Filter;
+    boolean isCsgo_Filter_Pressed=false;
+    ImageView Other_Filter;
+    boolean isOther_Filter_Pressed=false;
 
     public Fragment_Skin() {
     }
@@ -59,8 +66,114 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
 
         // adapter.notifyDataSetChanged();
-
         myDialog =new Dialog(getContext());
+
+
+
+
+        //-----Nút lọc item autochess----------------------------------------------------------
+        //  đổi image khi click
+        //trả về false nếu ko lọc, trả vè true nếu lọc
+        Autochess_Filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mặc định false là không lọc
+                if(isAutochess_Filter_Pressed){
+                    Autochess_Filter.setImageResource(R.drawable.ic_normal_autochess);
+                    isAutochess_Filter_Pressed=!isAutochess_Filter_Pressed;
+                    Toast.makeText(getActivity().getApplicationContext(),""+ isAutochess_Filter_Pressed,Toast.LENGTH_SHORT).show();
+                }else{
+                    //click vào trả về true và lọc item
+                    Autochess_Filter.setImageResource(R.drawable.ic_autochess_off);
+                    isAutochess_Filter_Pressed=!isAutochess_Filter_Pressed;
+                    Toast.makeText(getActivity().getApplicationContext(),""+ isAutochess_Filter_Pressed,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+  //      -----------------------------------------------------------------------------------------------------
+
+
+
+
+        //-----Nút lọc item dota2----------------------------------------------------------
+        //  đổi image khi click
+        //trả về false nếu ko lọc, trả vè true nếu lọc
+        Dota2_Filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mặc định false là không lọc
+                if(isDota2_Filter_Pressed){
+                    Dota2_Filter.setImageResource(R.drawable.ic_normal_dota2);
+                    isDota2_Filter_Pressed=!isDota2_Filter_Pressed;
+                    Toast.makeText(getActivity().getApplicationContext(),""+ isDota2_Filter_Pressed,Toast.LENGTH_SHORT).show();
+                }else{
+                    //click vào trả về true và lọc item
+                    Dota2_Filter.setImageResource(R.drawable.ic_dota2_off);
+                    isDota2_Filter_Pressed=!isDota2_Filter_Pressed;
+                    Toast.makeText(getActivity().getApplicationContext(),""+ isDota2_Filter_Pressed,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //      -----------------------------------------------------------------------------------------------------
+
+
+
+
+
+        //-----Nút lọc item csgo----------------------------------------------------------
+        //  đổi image khi click
+        //trả về false nếu ko lọc, trả vè true nếu lọc
+        Csgo_Filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mặc định false là không lọc
+                if(isCsgo_Filter_Pressed){
+                    Csgo_Filter.setImageResource(R.drawable.ic_normal_csgo);
+                    isCsgo_Filter_Pressed=!isCsgo_Filter_Pressed;
+                    Toast.makeText(getActivity().getApplicationContext(),""+ isCsgo_Filter_Pressed,Toast.LENGTH_SHORT).show();
+                }else{
+                    //click vào trả về true và lọc item
+                    Csgo_Filter.setImageResource(R.drawable.ic_csgo_off);
+                    isCsgo_Filter_Pressed=!isCsgo_Filter_Pressed;
+                    Toast.makeText(getActivity().getApplicationContext(),""+ isCsgo_Filter_Pressed,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //      -----------------------------------------------------------------------------------------------------
+
+
+
+
+
+        //-----Nút lọc item csgo----------------------------------------------------------
+        //  đổi image khi click
+        //trả về false nếu ko lọc, trả vè true nếu lọc
+        Other_Filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //mặc định false là không lọc
+                if(isOther_Filter_Pressed){
+                    Other_Filter.setImageResource(R.drawable.ic_normal_other);
+                    isOther_Filter_Pressed=!isOther_Filter_Pressed;
+                    Toast.makeText(getActivity().getApplicationContext(),""+ isCsgo_Filter_Pressed,Toast.LENGTH_SHORT).show();
+                }else{
+                    //click vào trả về true và lọc item
+                    Other_Filter.setImageResource(R.drawable.ic_other_off);
+                    isOther_Filter_Pressed=!isOther_Filter_Pressed;
+                    Toast.makeText(getActivity().getApplicationContext(),""+ isCsgo_Filter_Pressed,Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //      -----------------------------------------------------------------------------------------------------
+
+
+
+
+        //--------Nút reload Listskins-------------------------------------------------------
 //        ic_refresh.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -68,6 +181,11 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 //                ic_refresh.startAnimation(ic_refresh_rotate);
 //            }
 //        });
+//       ------------------------------------------------------------------------------------
+
+
+
+
 
 
 //        -----------Swipe to reload data here-----------------------------------
@@ -90,10 +208,11 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
 
 
-
-
     private void anhxa() {
-        ic_refresh = (ImageView) view.findViewById(R.id.ic_refresh);
+        Autochess_Filter = (ImageView) view.findViewById(R.id.Autochess_Filter) ;
+        Dota2_Filter =(ImageView) view.findViewById(R.id.Dota2_Filter) ;
+        Csgo_Filter = (ImageView) view.findViewById(R.id.Csgo_Filter) ;
+        Other_Filter = (ImageView) view.findViewById(R.id.Other_Filter);
         ListItems = (RecyclerView) view.findViewById(R.id.listviewitems);
         arrayListItems = new ArrayList<>();
 

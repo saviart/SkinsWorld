@@ -35,7 +35,7 @@
                              android:layout_height="match_parent"
                              android:layout_weight="4">
                              <TextView
-                                 android:paddingLeft="3dp"
+                                 android:paddingLeft="5dp"
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
                                  android:text="Avalable"
@@ -54,9 +54,10 @@
                              android:layout_height="match_parent"
                              android:layout_weight="1">
                              <ImageView
+                                 android:id="@+id/Autochess_Filter"
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
-                                 android:src="@drawable/ic_autochess"/>
+                                android:src="@drawable/ic_normal_autochess"/>
                          </LinearLayout>
                          <LinearLayout
                              android:gravity="center"
@@ -64,9 +65,10 @@
                              android:layout_height="match_parent"
                              android:layout_weight="1">
                              <ImageView
+                                 android:id="@+id/Dota2_Filter"
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
-                                 android:src="@drawable/ic_dota2"/>
+                                 android:src="@drawable/ic_normal_dota2"/>
                          </LinearLayout>
                          <LinearLayout
                              android:gravity="center"
@@ -74,9 +76,10 @@
                              android:layout_height="match_parent"
                              android:layout_weight="1">
                              <ImageView
+                                 android:id="@+id/Csgo_Filter"
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
-                                 android:src="@drawable/ic_csgo"/>
+                                 android:src="@drawable/ic_normal_csgo"/>
 
                          </LinearLayout>
                          <LinearLayout
@@ -85,10 +88,10 @@
                              android:layout_height="match_parent"
                              android:layout_weight="1">
                              <ImageView
-                                 android:id="@+id/ic_refresh"
+                                 android:id="@+id/Other_Filter"
                                  android:layout_width="wrap_content"
                                  android:layout_height="wrap_content"
-                                 android:src="@drawable/ic_more"/>
+                                 android:src="@drawable/ic_normal_other"/>
                          </LinearLayout>
 
 

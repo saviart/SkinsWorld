@@ -101,7 +101,7 @@
             android:layout_marginRight="2dp"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:background="@drawable/bg_game"
+            android:background="@drawable/bg_buttongame"
             android:fontFamily="@font/poppinsmedium"
             android:text=""
             android:textColor="#FFFF"
