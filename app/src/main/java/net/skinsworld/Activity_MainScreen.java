@@ -68,7 +68,7 @@ public class Activity_MainScreen extends AppCompatActivity {
         main = this;
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        navigation.setItemIconTintList(null);
+        //navigation.setItemIconTintList(null);
         eventViewpager();
 
 

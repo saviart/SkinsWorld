@@ -33,16 +33,18 @@
         android:layout_height="wrap_content">
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/navigation"
+            android:theme="@style/Widget.BottomNavigationView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:foreground="?attr/selectableItemBackground"
             app:itemIconTint="@android:color/white"
             app:itemTextColor="@android:color/white"
             app:menu="@menu/navigation"
+
+
             />
 
     </LinearLayout>
