@@ -46,7 +46,7 @@ public class Fragment_Profile extends Fragment {
     AdapterRcvProfile adapter;
     Button btn_getmore;
     Button btn_invite;
-    ImageView btn_dailypoint;
+    ImageView btn_dailyreward;
     Button btn_share;
 
     ImageView ivAvatar;
@@ -82,7 +82,7 @@ public class Fragment_Profile extends Fragment {
         clickbtn_getmore();
         clickbtn_invite();
         clickbtn_share();
-        clickbtn_dailypoint();
+        clickbtn_dailyreward();
 
 
         //set toan bo thong tin user vao giao dien
@@ -122,8 +122,8 @@ public class Fragment_Profile extends Fragment {
     }
 
 
-    private void clickbtn_dailypoint() {
-        btn_dailypoint.setOnClickListener(new View.OnClickListener() {
+    private void clickbtn_dailyreward() {
+        btn_dailyreward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // custom dialog
@@ -206,7 +206,7 @@ public class Fragment_Profile extends Fragment {
 
     private void anhxa() {
         btn_share = (Button) view.findViewById(R.id.btn_share);
-        btn_dailypoint = (ImageView) view.findViewById(R.id.btn_dailypoint);
+        btn_dailyreward = (ImageView) view.findViewById(R.id.btn_dailyreward);
         btn_invite = (Button) view.findViewById(R.id.btn_invite);
         btn_getmore = (Button) view.findViewById(R.id.btn_getmore);
         ListItems = (RecyclerView) view.findViewById(R.id.rvtransitems);

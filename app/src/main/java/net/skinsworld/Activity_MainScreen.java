@@ -2,6 +2,7 @@ package net.skinsworld;
 
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -70,7 +71,8 @@ public class Activity_MainScreen extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //navigation.setItemIconTintList(null);
         eventViewpager();
-
+        //mặc định set vị trí là profile
+        navigation.setSelectedItemId(R.id.navigation_profile);
 
 //
     }
@@ -101,7 +103,7 @@ public class Activity_MainScreen extends AppCompatActivity {
                         navigation.setSelectedItemId(R.id.navigation_earn);
                         break;
                     case 3:
-                        navigation.setSelectedItemId(R.id.navigation_setting);
+                        navigation.setSelectedItemId(R.id.navigation_community);
                         break;
                 }
             }
@@ -122,9 +124,7 @@ public class Activity_MainScreen extends AppCompatActivity {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_skins:
-//                    fragment = new Fragment_Skin();
-//                    loadFragment(fragment);
-
+//
                     selectIndex(0);
 
 
@@ -141,7 +141,7 @@ public class Activity_MainScreen extends AppCompatActivity {
 
 
                     return true;
-                case R.id.navigation_setting:
+                case R.id.navigation_community:
 
                     selectIndex(3);
 
@@ -192,6 +192,7 @@ public class Activity_MainScreen extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.viewpager_main);
         mViewPager.setAdapter(adapter);
         mViewPager.setCurrentItem(1);//selected position
+
 
     }
 

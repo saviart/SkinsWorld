@@ -262,7 +262,7 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
         });
 
-        Button popup_numbcoin = (Button) myDialog.findViewById(R.id.popup_numbpoint);
+        Button popup_numbcoin = (Button) myDialog.findViewById(R.id.popup_numbcoins);
         popup_numbcoin.setText(data.getNumbcoin());
 
         Button popup_txtgame = (Button) myDialog.findViewById(R.id.popup_txtgame);

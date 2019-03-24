@@ -39,7 +39,7 @@ public class Adapter_RcvTopuser extends RecyclerView.Adapter<Adapter_RcvTopuser.
         holder.img_avtuser.setImageResource(item.getImgavt());
         holder.user_name.setText(item.getUsername());
         holder.member_since.setText(item.getMembersince());
-        holder.current_point.setText(item.getCurrentpoint());
+        holder.current_coins.setText(item.getCurrentcoins());
 
 
     }
@@ -54,7 +54,7 @@ public class Adapter_RcvTopuser extends RecyclerView.Adapter<Adapter_RcvTopuser.
         ImageView img_avtuser;
         TextView user_name;
         TextView member_since;
-       Button current_point;
+       Button current_coins;
 
 
         public ItemViewHolder(View itemView) {
@@ -63,7 +63,7 @@ public class Adapter_RcvTopuser extends RecyclerView.Adapter<Adapter_RcvTopuser.
             img_avtuser = (ImageView) itemView.findViewById(R.id.img_avtuser) ;
             user_name = (TextView) itemView.findViewById(R.id.user_name);
             member_since = (TextView) itemView.findViewById(R.id.member_since);
-            current_point = (Button) itemView.findViewById(R.id.current_point);
+            current_coins = (Button) itemView.findViewById(R.id.current_coins);
 
 
         }

@@ -36,7 +36,7 @@ public class Adapter_RcvEarn extends RecyclerView.Adapter<Adapter_RcvEarn.ItemVi
         Model_LastEarning item = data.get(position);
         holder.name_offer.setText(item.getName_offer());
         holder.time_complete.setText(item.getTime_complete());
-        holder.numb_earn_point.setText(item.getNumb_earn_point());
+        holder.numb_earn_coins.setText(item.getNumb_earn_coins());
 
 
     }
@@ -51,7 +51,7 @@ public class Adapter_RcvEarn extends RecyclerView.Adapter<Adapter_RcvEarn.ItemVi
 
         TextView name_offer;
         TextView time_complete;
-        TextView numb_earn_point;
+        TextView numb_earn_coins;
 
 
         public ItemViewHolder(View itemView) {
@@ -60,7 +60,7 @@ public class Adapter_RcvEarn extends RecyclerView.Adapter<Adapter_RcvEarn.ItemVi
 
             name_offer = (TextView) itemView.findViewById(R.id.name_offer);
             time_complete = (TextView) itemView.findViewById(R.id.time_complete);
-            numb_earn_point = (TextView) itemView.findViewById(R.id.numb_earn_point);
+            numb_earn_coins = (TextView) itemView.findViewById(R.id.numb_earn_coins);
 
 
         }

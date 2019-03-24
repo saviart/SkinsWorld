@@ -17,7 +17,7 @@
         android:title="@string/title_earn" />
 
     <item
-        android:id="@+id/navigation_setting"
+        android:id="@+id/navigation_community"
         android:icon="@drawable/nav_community"
         android:title="@string/title_setting" />
 

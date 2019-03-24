@@ -3,13 +3,13 @@ package net.skinsworld.model;
 public class Model_TopUser {
 
     private int imgavt;
-    private String username,membersince,currentpoint;
+    private String username,membersince,currentcoins;
 
-    public Model_TopUser(int imgavt, String username, String membersince, String currentpoint) {
+    public Model_TopUser(int imgavt, String username, String membersince, String currentcoins) {
         this.imgavt = imgavt;
         this.username = username;
         this.membersince = membersince;
-        this.currentpoint = currentpoint;
+        this.currentcoins = currentcoins;
     }
 
     public int getImgavt() {
@@ -36,11 +36,11 @@ public class Model_TopUser {
         this.membersince = membersince;
     }
 
-    public String getCurrentpoint() {
-        return currentpoint;
+    public String getCurrentcoins() {
+        return currentcoins;
     }
 
-    public void setCurrentpoint(String currentpoint) {
-        this.currentpoint = currentpoint;
+    public void setCurrentcoins(String currentcoins) {
+        this.currentcoins = currentcoins;
     }
 }

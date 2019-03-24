@@ -116,7 +116,7 @@
                     android:textSize="10sp" />
 
                 <Button
-                    android:id="@+id/popup_numbpoint"
+                    android:id="@+id/popup_numbcoins"
                     android:layout_width="wrap_content"
                     android:layout_height="27dp"
                     android:layout_gravity="center"

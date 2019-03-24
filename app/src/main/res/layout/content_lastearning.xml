@@ -73,7 +73,7 @@
         android:layout_height="match_parent" >
 
         <Button
-            android:id="@+id/numb_earn_point"
+            android:id="@+id/numb_earn_coins"
             android:layout_width="70dp"
             android:layout_height="24dp"
             android:layout_gravity="center"

@@ -43,6 +43,7 @@
             app:itemIconTint="@android:color/white"
             app:itemTextColor="@android:color/white"
             app:menu="@menu/navigation"
+            android:background="@drawable/bg_navigation"
 
 
             />

@@ -23,7 +23,6 @@
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:id="@+id/popup_invitedcode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Invitation code"
@@ -33,7 +32,7 @@
                 <EditText
                     android:gravity="center"
                     android:layout_gravity="center"
-                    android:id="@+id/popup_invitecode"
+                    android:id="@+id/popup_invited_code"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:text="input here"
@@ -41,8 +40,7 @@
                     android:fontFamily="@font/poppinsbold"
                     android:textSize="15sp"/>
                     <Button
-
-                        android:id="@+id/popup_numbpoint"
+                        android:id="@+id/popup_invited_submit"
                         android:layout_width="150dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"

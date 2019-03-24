@@ -2,12 +2,12 @@ package net.skinsworld.model;
 
 public class Model_LastEarning {
 
-    private String name_offer,time_complete,numb_earn_point;
+    private String name_offer,time_complete,numb_earn_coins;
 
-    public Model_LastEarning(String name_offer, String time_complete, String numb_earn_point) {
+    public Model_LastEarning(String name_offer, String time_complete, String numb_earn_coins) {
         this.name_offer = name_offer;
         this.time_complete = time_complete;
-        this.numb_earn_point = numb_earn_point;
+        this.numb_earn_coins = numb_earn_coins;
     }
 
 
@@ -27,12 +27,12 @@ public class Model_LastEarning {
         this.time_complete = time_complete;
     }
 
-    public String getNumb_earn_point() {
-        return numb_earn_point;
+    public String getNumb_earn_coins() {
+        return numb_earn_coins;
     }
 
-    public void setNumb_earn_point(String numb_earn_point) {
-        this.numb_earn_point = numb_earn_point;
+    public void setNumb_earn_coins(String numb_earn_coins) {
+        this.numb_earn_coins = numb_earn_coins;
     }
 }
 
