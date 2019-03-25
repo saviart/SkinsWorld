@@ -59,7 +59,6 @@ public class Fragment_Profile extends Fragment {
     private SwipeRefreshLayout swipe_Fragment_Profile;
 
 
-
     public Fragment_Profile() {
     }
 
@@ -89,25 +88,22 @@ public class Fragment_Profile extends Fragment {
         setUserProfile();
 
 
-
-
-
         //// Swipe to reload data here
         swipe_Fragment_Profile = (SwipeRefreshLayout) view.findViewById(R.id.swipe_Fragment_Profile);
         swipe_Fragment_Profile.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 swipe_Fragment_Profile.setRefreshing(true);
+                // goi async load data ve sau do set refreshing false;
+                swipe_Fragment_Profile.setRefreshing(false);
             }
         });
-
-
 
 
         return view;
     }
 
-    private void setUserProfile(){
+    private void setUserProfile() {
         //avatar
         Picasso.with(getActivity().getApplicationContext()).load(GlobalVariables.user.getAvatar()).into(ivAvatar);
         //name
@@ -118,7 +114,6 @@ public class Fragment_Profile extends Fragment {
         tvCoins.setText(GlobalVariables.user.getCoins());
         tvJoinDate.setText(GlobalVariables.user.getCreatedDate());
         etTradeURL.setText(GlobalVariables.user.getTradeURL());
-        etTradeURL.setFocusable(false);
     }
 
 
@@ -128,10 +123,10 @@ public class Fragment_Profile extends Fragment {
             public void onClick(View v) {
                 // custom dialog
 
-                final BottomSheetDialog  dailypoint = new BottomSheetDialog(getContext());
+                final BottomSheetDialog dailypoint = new BottomSheetDialog(getContext());
 
                 dailypoint.setContentView(R.layout.popup_daily_reward_steamprofile);
-               dailypoint.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
+                dailypoint.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
 
                 // set the custom dialog components - text, image and button
 
@@ -145,7 +140,7 @@ public class Fragment_Profile extends Fragment {
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"đã bấm share",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity().getApplicationContext(), "đã bấm share", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -155,36 +150,36 @@ public class Fragment_Profile extends Fragment {
             @Override
             public void onClick(View v) {
 
-                    // custom dialog
+                // custom dialog
 
                 final Dialog dialog = new Dialog(getContext());
-                     dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                    dialog.setContentView(R.layout.popup_invite);
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+                dialog.setContentView(R.layout.popup_invite);
 
 
-                    // set the custom dialog components - text, image and button
-                    TextView popup_invite_code = (TextView) dialog.findViewById(R.id.popup_invite_code);
-                    popup_invite_code.setText("SW888888");
+                // set the custom dialog components - text, image and button
+                TextView popup_invite_code = (TextView) dialog.findViewById(R.id.popup_invite_code);
+                popup_invite_code.setText("SW888888");
 
 
-                    Button popup_invite_copyintivecode = (Button) dialog.findViewById(R.id.popup_invite_copyintivecode);
+                Button popup_invite_copyintivecode = (Button) dialog.findViewById(R.id.popup_invite_copyintivecode);
                 Button popup_invite_shareonfacebook = (Button) dialog.findViewById(R.id.popup_invite_shareonfacebook);
-                    // if button is clicked, close the custom dialog
+                // if button is clicked, close the custom dialog
                 popup_invite_copyintivecode.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Toast.makeText(getActivity().getApplicationContext(),"đã copy code",Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(getActivity().getApplicationContext(), "đã copy code", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-                    dialog.show();
-                }
+                dialog.show();
+            }
 
 
         });
     }
 
-    private void  clickbtn_getmore() {
+    private void clickbtn_getmore() {
         btn_getmore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -198,7 +193,7 @@ public class Fragment_Profile extends Fragment {
 //        FragmentTransaction transaction = manager.beginTransaction();
 //        transaction.replace(R.id.fragment_one, AFragment.newInstance());
 //        transaction.commit();
-      Activity_MainScreen.main.selectIndex(2);
+        Activity_MainScreen.main.selectIndex(2);
 
 
     }
@@ -230,7 +225,7 @@ public class Fragment_Profile extends Fragment {
 
     }
 
-    }
+}
 
 
 

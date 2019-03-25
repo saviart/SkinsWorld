@@ -106,6 +106,7 @@ public class WebView_Login extends AppCompatActivity {
                 JSONObject json_registered = uf.signUp(playersObj.getString("steamid"),playersObj.getString("avatarmedium"),playersObj.getString("personaname"),GlobalVariables.gaid);
                 Gson gson = new Gson();
                 GlobalVariables.user = gson.fromJson(json_registered.toString(),User.class);
+                db.addUser(GlobalVariables.user);
                 //getURL = json_registered.getString("SteamID64");
 
 

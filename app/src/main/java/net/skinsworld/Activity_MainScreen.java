@@ -62,7 +62,7 @@ public class Activity_MainScreen extends AppCompatActivity {
                 LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_mainscreen);
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        Toast.makeText(Activity_MainScreen.this, db.getUser().getPersonaName(), Toast.LENGTH_LONG).show();
+        Toast.makeText(Activity_MainScreen.this, "---"+ db.getUser().getPersonaName(), Toast.LENGTH_LONG).show();
         toolbar = getSupportActionBar();
         initUI();
         setUI();

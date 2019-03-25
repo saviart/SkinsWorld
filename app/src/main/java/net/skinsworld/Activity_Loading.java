@@ -107,6 +107,10 @@ public class Activity_Loading extends AppCompatActivity {
                     db.resetTables();
                     JSONObject json_registered = uf.signUp(playersObj.getString("steamid"), playersObj.getString("avatarmedium"), playersObj.getString("personaname"), GlobalVariables.gaid);
                     GlobalVariables.user = gson.fromJson(json_registered.toString(), User.class);
+                    db.addUser(GlobalVariables.user);
+
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
