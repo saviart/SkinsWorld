@@ -9,17 +9,17 @@
     android:background="@drawable/bg_popup_invite">
 
                 <TextView
-                    android:layout_marginTop="10dp"
+                    android:layout_margin="15dp"
                     android:gravity="center"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Get 50 points if you enter the invite code "
+                    android:text="Get 50 coins if you enter the invite code, if you don't have, please enter SkinsWorld to get free coins"
                     android:textColor="#ffff"
                     android:fontFamily="@font/poppinsbold"
                     android:textSize="12sp"/>
                 <TextView
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="2dp"
                     android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:layout_gravity="center"
@@ -35,10 +35,11 @@
                     android:id="@+id/popup_invited_code"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:text="input here"
+                    android:hint=""
+                    android:textColorHint="#ffff"
                     android:textColor="#ffff"
                     android:fontFamily="@font/poppinsbold"
-                    android:textSize="15sp"/>
+                    android:textSize="12sp"/>
                     <Button
                         android:id="@+id/popup_invited_submit"
                         android:layout_width="150dp"

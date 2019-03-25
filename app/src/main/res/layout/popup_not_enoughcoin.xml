@@ -46,13 +46,6 @@
                 android:layout_weight="1"
                 android:gravity="right">
 
-                <ImageView
-                    android:id="@+id/btn_close_popuperror"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="10dp"
-                    android:paddingTop="3dp"
-                    android:src="@drawable/ic_closepopup" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

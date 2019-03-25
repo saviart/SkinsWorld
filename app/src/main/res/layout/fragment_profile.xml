@@ -82,7 +82,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#FFFF"
-                                android:text="DAILY POINT"
+                                android:text="DAILY REWARD"
                                 android:fontFamily="@font/poppinsmedium"
                                 android:textSize="8sp"/>
                         </LinearLayout>
@@ -256,7 +256,7 @@
                 android:layout_margin="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Refer your friend using above code - you will both receive additional point !. Each invite friend user must earn at least 50 point"
+                android:text="Refer your friend using above code - you will both receive additional coins !. Each invite friend user must earn at least 50 coins"
                 android:textColor="#FF898888"
                 android:textSize="10sp"
                 />
@@ -338,7 +338,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/poppinsmedium"
-                                            android:text="Adding SkinWorld to your steam profile name to get daily point"
+                                            android:text="Adding SkinWorld to your steam profile name to get daily coins"
                                             android:textColor="#ffff"
                                             android:textSize="10sp" />
 
@@ -410,7 +410,7 @@
                 android:layout_margin="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="In order to use our trade offer system, we need your Steam trade URL. This URL will not be publically visable. Please input the URL below and press submit:"
+                android:text="In order to use our trade offer system, we need your Steam trade URL. This URL will not be publically visable. Please input the URL  and press Set Ủ:"
                 android:textColor="#FF898888"
                 android:textSize="10sp"/>
 
@@ -461,6 +461,7 @@
                                 android:layout_height="match_parent"
                                 android:gravity="center">
                                 <ImageView
+                                    android:id="@+id/btn_refresh_lastorder"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:src="@drawable/ic_refresh"/>

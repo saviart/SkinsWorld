@@ -1,8 +1,11 @@
 package net.skinsworld.fragment_mainscreen;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,6 +25,8 @@ import android.support.annotation.NonNull;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -49,6 +54,7 @@ public class Fragment_Profile extends Fragment {
     Button btn_invite;
     ImageView btn_dailyreward;
     Button btn_share;
+    Button btn_tradeurl_help;
 
     ImageView ivAvatar;
     TextView tvUsername;
@@ -56,7 +62,8 @@ public class Fragment_Profile extends Fragment {
     TextView tvJoinDate;
     EditText etTradeURL;
     TextView invitecode;
-    private Dialog inviteDialog;
+    ImageView btn_refresh_lastorder;
+
     private SwipeRefreshLayout swipe_Fragment_Profile;
 
     ProgressDialog pd;
@@ -78,8 +85,8 @@ public class Fragment_Profile extends Fragment {
 
 
         // adapter.notifyDataSetChanged();
-
-
+        click_refresh_lastorder();
+        clickbtn_tradeurl_help();
         clickbtn_getmore();
         clickbtn_invite();
         clickbtn_share();
@@ -124,6 +131,48 @@ public class Fragment_Profile extends Fragment {
 
         return view;
     }
+
+    private void click_refresh_lastorder() {
+        btn_refresh_lastorder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "đã bấm refresh last order", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void clickbtn_tradeurl_help() {
+        btn_tradeurl_help.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+
+
+                WebView wv = new WebView(getContext());
+                wv.loadUrl(getResources().getString(R.string.help_tradeurl_url));
+                wv.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        view.loadUrl(url);
+
+                        return true;
+                    }
+                });
+
+                alert.setView(wv);
+                alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+
+
+            }
+        });
+    }
+
     class submitCode extends AsyncTask<String,String,String>{
         @Override
         protected void onPreExecute() {
@@ -245,6 +294,8 @@ public class Fragment_Profile extends Fragment {
 
 
     private void anhxa() {
+        btn_refresh_lastorder = (ImageView) view.findViewById(R.id.btn_refresh_lastorder);
+        btn_tradeurl_help = (Button) view.findViewById(R.id.btn_tradeurl_help);
         btn_share = (Button) view.findViewById(R.id.btn_share);
         btn_dailyreward = (ImageView) view.findViewById(R.id.btn_dailyreward);
         btn_invite = (Button) view.findViewById(R.id.btn_invite);

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -31,8 +32,8 @@ public class Fragment_Community extends Fragment {
     ArrayList<Model_TopUser> arrayListItems2;
     Adapter_TransactionHistory adapter1;
     Adapter_RcvTopuser adapter2;
-
     ImageView ic_refresh;
+    private SwipeRefreshLayout swipe_Fragment_Community;
 
     public Fragment_Community(){
     }
@@ -44,6 +45,23 @@ public class Fragment_Community extends Fragment {
         view = inflater.inflate(R.layout.fragment_community,container,false);
         anhxa();
 
+
+        //// Swipe to reload data here
+        swipe_Fragment_Community = (SwipeRefreshLayout) view.findViewById(R.id.swipe_Fragment_Community);
+        swipe_Fragment_Community.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipe_Fragment_Community.setRefreshing(true);
+                // goi async load data ve sau do set refreshing false;
+                swipe_Fragment_Community.setRefreshing(false);
+            }
+        });
+
+
+
+
+
+       //setup layout transactions history
         adapter1 = new Adapter_TransactionHistory(getActivity(), arrayListItems1);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext());
         layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -52,6 +70,7 @@ public class Fragment_Community extends Fragment {
 
 
 
+        //setup layout top usser
         adapter2 = new Adapter_RcvTopuser(getActivity(), arrayListItems2);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
         layoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
@@ -61,7 +80,8 @@ public class Fragment_Community extends Fragment {
         return view;
     }
     private void anhxa() {
-        ic_refresh = (ImageView) view.findViewById(R.id.ic_refresh);
+
+
         ListItems1 = (RecyclerView) view.findViewById(R.id.rvtransactionhistory);
         ListItems2 = (RecyclerView) view.findViewById(R.id.rvtopuser);
         arrayListItems1 = new ArrayList<>();

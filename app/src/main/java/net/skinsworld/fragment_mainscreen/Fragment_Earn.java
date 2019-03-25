@@ -2,9 +2,11 @@ package net.skinsworld.fragment_mainscreen;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,6 +30,7 @@ public class Fragment_Earn extends Fragment {
     ImageView fybervideo;
     ImageView tapjoyvideo;
     ImageView sonicvideo;
+    ImageView btn_refresh_lastearning;
 
 
     RecyclerView ListItems;
@@ -66,7 +69,7 @@ public class Fragment_Earn extends Fragment {
         sonicvideo = (ImageView) view.findViewById(R.id.sonicvideo);
 
 
-
+        click_btn_refresh_lastearning();
         click_sonicvideo();
         click_tapjoyvideo();
         click_fybervideo();
@@ -75,6 +78,15 @@ public class Fragment_Earn extends Fragment {
         click_fyberwall();
 
         return view;
+    }
+
+    private void click_btn_refresh_lastearning() {
+        btn_refresh_lastearning.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(),"đã bấm Refesh Last Earning",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void click_fyberwall() {
@@ -135,7 +147,7 @@ public class Fragment_Earn extends Fragment {
 
 
     private void anhxa() {
-
+        btn_refresh_lastearning = (ImageView) view.findViewById(R.id.btn_refresh_lastearning);
         ListItems = (RecyclerView) view.findViewById(R.id.rvearnitems);
         arrayListItems = new ArrayList<>();
         arrayListItems.add(new Model_LastEarning("Fyber wall","2019-03-15 19:02:32","50"));

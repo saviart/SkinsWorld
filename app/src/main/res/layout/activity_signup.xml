@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:fontFamily="@font/aqua"
-                android:text="Earn Point. Get your skins"
+                android:text="Earn coins. Get your skins"
                 android:textColor="#FFFF"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -113,6 +113,7 @@
                     <CheckBox
 
                         android:id="@+id/checkBox"
+                        android:checked="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
@@ -139,6 +140,7 @@
                     <CheckBox
 
                         android:id="@+id/checkBox2"
+                        android:checked="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
