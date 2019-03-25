@@ -327,34 +327,67 @@
                                     android:layout_marginRight="10sp"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:orientation="horizontal"
+                                    android:orientation="vertical"
                                     android:weightSum="4">
                                     <LinearLayout
                                         android:gravity="center_vertical"
                                         android:layout_width="wrap_content"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="3">
+                                        android:layout_weight="2">
                                         <TextView
-                                            android:layout_width="219dp"
-                                            android:layout_height="39dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
                                             android:fontFamily="@font/poppinsmedium"
-                                            android:text="Adding SkinSpace to your steam profile name to get daily point"
+                                            android:text="Adding SkinWorld to your steam profile name to get daily point"
                                             android:textColor="#ffff"
                                             android:textSize="10sp" />
 
                                     </LinearLayout>
                                     <LinearLayout
                                         android:gravity="center_vertical"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="match_parent"
-                                        android:layout_weight="3">
-                                        <Button
-                                            android:layout_width="70dp"
-                                            android:layout_height="20dp"
-                                            android:text="Set URL"
-                                            android:textColor="#ffff"
-                                            android:textSize="10sp"
-                                            android:background="@drawable/bg_button_pressed"/>
+                                        android:layout_weight="2">
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:weightSum="4"
+                                            android:orientation="horizontal">
+                                            <LinearLayout
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="2">
+                                                <Button
+                                                    android:id="@+id/btn_tradeurl_help"
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="20dp"
+                                                    android:text="How To Find TRADEURL"
+                                                    android:textColor="#ffff"
+                                                    android:textSize="10sp"
+                                                    android:paddingLeft="3dp"
+                                                    android:drawableLeft="@drawable/ic_dailyreward_info"
+                                                    android:background="@drawable/bg_button_pressed"/>
+
+                                            </LinearLayout>
+                                            <LinearLayout
+                                                android:gravity="right"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_weight="2">
+                                                <Button
+                                                    android:id="@+id/btn_seturl"
+                                                    android:layout_width="70dp"
+                                                    android:layout_height="20dp"
+                                                    android:text="Set URL"
+                                                    android:textColor="#ffff"
+                                                    android:textSize="10sp"
+                                                    android:background="@drawable/bg_button_pressed"/>
+
+                                            </LinearLayout>
+
+                                        </LinearLayout>
+
+
 
                                     </LinearLayout>
 
