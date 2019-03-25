@@ -81,47 +81,75 @@
                 android:textSize="15sp" />
         </LinearLayout>
         <LinearLayout
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical">
 
         </LinearLayout>
         <LinearLayout
+
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical">
-
-            <CheckBox
-                android:layout_gravity="center"
-
-                android:id="@+id/checkBox"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:buttonTint="@color/colorAccent"
-                android:text="Iaccept Privacy Policy"
-                android:textColor="#FDFDFD"
-                />
+                android:weightSum="2"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <CheckBox
+                    <CheckBox
 
-                android:layout_gravity="center"
-                android:id="@+id/checkBox2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:buttonTint="@color/colorAccent"
-                android:text="I accept Terms and Conditions "
-                android:textColor="#FDFDFD"
-                />
+                        android:id="@+id/checkBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="8dp"
+                        android:layout_marginStart="8dp"
+                        android:buttonTint="@color/colorAccent"
+                        android:textColor="#FDFDFD" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="I accept Privacy Policy"
+                        android:textColor="#ffff"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+
+                        android:layout_gravity="center"
+                        android:id="@+id/checkBox2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:buttonTint="@color/colorAccent"
+
+                        android:textColor="#FDFDFD"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="I accept Terms and Conditions"
+                        android:textColor="#ffff"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
         </LinearLayout>
         <LinearLayout
             android:layout_weight="1"
