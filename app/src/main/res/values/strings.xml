@@ -7,5 +7,6 @@
     <string name="title_setting">"Community"</string>
 
     <string name="dong_y_su_dung">You must accept our Privacy Policy and Terms</string>
+    <string name="title_activity__user_blocked">Activity_UserBlocked</string>
 
 </resources>

@@ -17,7 +17,7 @@
 
         <activity
             android:name=".Activity_Signup"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".WebView_Login"
             android:screenOrientation="portrait" />
@@ -34,7 +34,8 @@
         <activity
             android:name=".Activity_MissingCoin"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity_Error"></activity>
+        <activity android:name=".Activity_Error" />
+        <activity android:name=".Activity_UserBlocked"></activity>
     </application>
 
 </manifest>
