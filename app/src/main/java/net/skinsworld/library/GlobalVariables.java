@@ -9,11 +9,8 @@ import net.skinsworld.model.User;
 public class GlobalVariables {
 
 	public static final String apiURL = "http://skinsworld.net/api/";
-	public static final String get_user_by_device_tag = "get_user_by_device";
-	public static final String register_tag = "register";
-	public static final String get_coins_tag = "get_coins";
-	public static final String load_history_tag = "load_history";
-	public static final String load_offers_tag = "load_featured_offers";
+	public static final String get_user_by_gaid_tag = "get_user_by_gaid";
+	public static final String login_with_steam_tag = "login";
 	public static final String KEY_ID = "UserID";
 	public static final String KEY_STEAM_ID_64 = "SteamID64";
 	public static final String KEY_TRADE_URL = "TradeURL";

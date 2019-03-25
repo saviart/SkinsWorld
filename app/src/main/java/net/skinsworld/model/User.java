@@ -2,109 +2,109 @@ package net.skinsworld.model;
 
 public class User {
 
-	private String id;
-	private String steamid64;
-	private String tradeURL;
-	private String coins;
-	private String created_date;
-	private String active;
-	private String gaid;
-	private String invited_by;
-	private String avatar;
-	private String personaName;
+	private String UserID;
+	private String SteamID64;
+	private String TradeURL;
+	private String Coins;
+	private String CreatedDate;
+	private String Active;
+	private String GAID;
+	private String InvitedBy;
+	private String Avatar;
+	private String PersonaName;
 	public User() {
 		super();
 	}
 	public User(String steamid64, String created_date, String coins, String gaid) {
-		this.steamid64 = steamid64;
-		this.created_date = created_date;
-		this.coins = coins;
-		this.gaid = gaid;
+		this.SteamID64 = steamid64;
+		this.CreatedDate = created_date;
+		this.Coins = coins;
+		this.GAID = gaid;
 	}
 	public User(String steamid64, String avatar, String personaName)
 	{
-		this.steamid64 = steamid64;
-		this.avatar = avatar;
-		this.personaName = personaName;
+		this.SteamID64 = steamid64;
+		this.Avatar = avatar;
+		this.PersonaName = personaName;
 	}
 
-	public String getPersonaName() {
-		return personaName;
+	public String getUserID() {
+		return UserID;
 	}
 
-	public void setPersonaName(String personaName) {
-		this.personaName = personaName;
+	public void setUserID(String userID) {
+		UserID = userID;
 	}
 
-	public String getAvatar() {
-		return avatar;
+	public String getSteamID64() {
+		return SteamID64;
 	}
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getInvited_by() {
-		return invited_by;
-	}
-
-	public void setInvited_by(String invited_by) {
-		this.invited_by = invited_by;
-	}
-
-	public String getSteamid64() {
-		return steamid64;
-	}
-
-	public void setSteamid64(String steamid64) {
-		this.steamid64 = steamid64;
+	public void setSteamID64(String steamID64) {
+		SteamID64 = steamID64;
 	}
 
 	public String getTradeURL() {
-		return tradeURL;
+		return TradeURL;
 	}
 
 	public void setTradeURL(String tradeURL) {
-		this.tradeURL = tradeURL;
+		TradeURL = tradeURL;
 	}
 
 	public String getCoins() {
-		return coins;
+		return Coins;
 	}
 
 	public void setCoins(String coins) {
-		this.coins = coins;
+		Coins = coins;
 	}
 
-	public String getCreated_date() {
-		return created_date;
+	public String getCreatedDate() {
+		return CreatedDate;
 	}
 
-	public void setCreated_date(String created_date) {
-		this.created_date = created_date;
+	public void setCreatedDate(String createdDate) {
+		CreatedDate = createdDate;
 	}
 
 	public String getActive() {
-		return active;
+		return Active;
 	}
 
 	public void setActive(String active) {
-		this.active = active;
+		Active = active;
 	}
 
-	public String getGaid() {
-		return gaid;
+	public String getGAID() {
+		return GAID;
 	}
 
-	public void setGaid(String gaid) {
-		this.gaid = gaid;
+	public void setGAID(String GAID) {
+		this.GAID = GAID;
+	}
+
+	public String getInvitedBy() {
+		return InvitedBy;
+	}
+
+	public void setInvitedBy(String invitedBy) {
+		InvitedBy = invitedBy;
+	}
+
+	public String getAvatar() {
+		return Avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		Avatar = avatar;
+	}
+
+	public String getPersonaName() {
+		return PersonaName;
+	}
+
+	public void setPersonaName(String personaName) {
+		PersonaName = personaName;
 	}
 }

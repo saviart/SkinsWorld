@@ -116,7 +116,7 @@ public class Fragment_Profile extends Fragment {
         //trade url
         tvUsername.setText(GlobalVariables.user.getPersonaName());
         tvCoins.setText(GlobalVariables.user.getCoins());
-        tvJoinDate.setText(GlobalVariables.user.getCreated_date());
+        tvJoinDate.setText(GlobalVariables.user.getCreatedDate());
         etTradeURL.setText(GlobalVariables.user.getTradeURL());
         etTradeURL.setFocusable(false);
     }

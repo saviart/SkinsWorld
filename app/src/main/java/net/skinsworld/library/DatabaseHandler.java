@@ -16,7 +16,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	public DatabaseHandler(Context context) {
 		super(context, GlobalVariables.DATABASE_NAME, null, GlobalVariables.DATABASE_VERSION);
-	} 
+	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -49,14 +49,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		resetTables();
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(GlobalVariables.KEY_ID, user.getId());
-		values.put(GlobalVariables.KEY_STEAM_ID_64, user.getSteamid64());
+		values.put(GlobalVariables.KEY_ID, user.getUserID());
+		values.put(GlobalVariables.KEY_STEAM_ID_64, user.getSteamID64());
 		values.put(GlobalVariables.KEY_TRADE_URL, user.getTradeURL());
 		values.put(GlobalVariables.KEY_COINS, user.getCoins());
-		values.put(GlobalVariables.KEY_CREATED_DATE, user.getCreated_date());
+		values.put(GlobalVariables.KEY_CREATED_DATE, user.getCreatedDate());
 		values.put(GlobalVariables.KEY_ACTIVE, user.getActive());
-		values.put(GlobalVariables.KEY_GAID, user.getGaid());
-		values.put(GlobalVariables.KEY_INVITED_BY, user.getInvited_by());
+		values.put(GlobalVariables.KEY_GAID, user.getGAID());
+		values.put(GlobalVariables.KEY_INVITED_BY, user.getInvitedBy());
 		values.put(GlobalVariables.KEY_AVATAR, user.getAvatar());
 		values.put(GlobalVariables.KEY_PERSONA_NAME, user.getPersonaName());
 		db.insert(GlobalVariables.TABLE_LOGIN, null, values);
@@ -70,14 +70,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		Cursor cursor = db.rawQuery(selectQuery, null);
 		cursor.moveToFirst();
 		if (cursor.getCount() > 0) {
-			user.setId(cursor.getString(0));
-			user.setSteamid64(cursor.getString(1));
+			user.setUserID(cursor.getString(0));
+			user.setSteamID64(cursor.getString(1));
 			user.setTradeURL(cursor.getString(2));
 			user.setCoins(cursor.getString(3));
-			user.setCreated_date(cursor.getString(4));
+			user.setCreatedDate(cursor.getString(4));
 			user.setActive(cursor.getString(5));
-			user.setGaid(cursor.getString(6));
-			user.setInvited_by(cursor.getString(7));
+			user.setGAID(cursor.getString(6));
+			user.setInvitedBy(cursor.getString(7));
 			user.setAvatar(cursor.getString(8));
 			user.setPersonaName(cursor.getString(9));
 		}
@@ -94,7 +94,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 		cursor.close();
 		return rowCount;
-	} 
+	}
 
 	// Thực hiện xóa tất cả row trong table
 	public void resetTables() {
