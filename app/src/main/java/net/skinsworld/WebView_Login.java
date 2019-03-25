@@ -22,29 +22,27 @@ import net.skinsworld.model.User;
 import org.json.JSONObject;
 
 public class WebView_Login extends AppCompatActivity {
-    WebView webview_login;
-    Boolean flag = false;
-    String getURL;
     String steam64_from_api;
-    final String REALM_PARAM = "skinsworld.net";
+    final String REALM_PARAM = "skinsworld";
     ProgressDialog pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         final WebView webView = new WebView(this);
-        webView.getSettings().setJavaScriptEnabled(true);
 
         final Activity activity = this;
-
+        webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 //checks the url being loaded
+                Toast.makeText(WebView_Login.this, "Loaded !", Toast.LENGTH_SHORT).show();
                 setTitle(url);
                 Uri Url = Uri.parse(url);
 
                 if(Url.getAuthority().equals(REALM_PARAM.toLowerCase())) {
+                    Toast.makeText(WebView_Login.this, "Finished Loading !", Toast.LENGTH_SHORT).show();
                     // That means that authentication is finished and the url contains user's id.
                     webView.stopLoading();
                     // Extracts user id.
@@ -90,6 +88,7 @@ public class WebView_Login extends AppCompatActivity {
                 //Toast.makeText(WebView_Login.this, GlobalVariables.user.getSteamID64(), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 e.printStackTrace();
+                Toast.makeText(WebView_Login.this, e.toString(), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -108,10 +107,9 @@ public class WebView_Login extends AppCompatActivity {
                 GlobalVariables.user = gson.fromJson(json_registered.toString(),User.class);
                 db.addUser(GlobalVariables.user);
                 //getURL = json_registered.getString("SteamID64");
-
-
             } catch (Exception e) {
                 e.printStackTrace();
+
             }
             return null;
         }

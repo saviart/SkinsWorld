@@ -39,12 +39,12 @@ public class Activity_Signup extends AppCompatActivity {
         btn_signup = (Button) findViewById(R.id.btnSignup);
         cb1 = (CheckBox) findViewById(R.id.checkBox);
         cb2 = (CheckBox) findViewById(R.id.checkBox2);
-        tv_policy = (TextView) findViewById(R.id.tv_policy) ;
-        tv_conditions = (TextView) findViewById(R.id.tv_conditions) ;
-        String policy = "<font color=#ffffff>I accept</font> <font color=#FF4081>Pravicy Policy</font>";
-        tv_policy.setText(Html.fromHtml(policy));
-        String conditions= "<font color=#ffffff>I accept</font> <font color=#FF4081>Terms and Conditions</font>";
-        tv_conditions.setText(Html.fromHtml(conditions));
+        //tv_policy = (TextView) findViewById(R.id.tv_policy) ;
+        //tv_conditions = (TextView) findViewById(R.id.tv_conditions) ;
+        //String policy = "<font color=#ffffff>I accept</font> <font color=#FF4081>Pravicy Policy</font>";
+        //tv_policy.setText(Html.fromHtml(policy));
+        //String conditions= "<font color=#ffffff>I accept</font> <font color=#FF4081>Terms and Conditions</font>";
+        //tv_conditions.setText(Html.fromHtml(conditions));
 
 
         btn_signup.setOnClickListener(new View.OnClickListener() {
@@ -60,63 +60,63 @@ public class Activity_Signup extends AppCompatActivity {
         });
 
         // click vào text pravicy policy
-        tv_policy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(Activity_Signup.this);
-                alert.setTitle("Privacy Policy");
+//        tv_policy.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder alert = new AlertDialog.Builder(Activity_Signup.this);
+//                alert.setTitle("Privacy Policy");
+//
+//                WebView wv = new WebView(Activity_Signup.this);
+//                wv.loadUrl("http://skinsworld.net/policy/privacy.html");
+//                wv.setWebViewClient(new WebViewClient() {
+//                    @Override
+//                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                        view.loadUrl(url);
+//
+//                        return true;
+//                    }
+//                });
+//
+//                alert.setView(wv);
+//                alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                alert.show();
+//            }
+//        });
 
-                WebView wv = new WebView(Activity_Signup.this);
-                wv.loadUrl("http://skinsworld.net/policy/privacy.html");
-                wv.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        view.loadUrl(url);
-
-                        return true;
-                    }
-                });
-
-                alert.setView(wv);
-                alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                alert.show();
-            }
-        });
 
 
-
-        tv_conditions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(Activity_Signup.this);
-                alert.setTitle("Terms and Conditions");
-
-                WebView wv = new WebView(Activity_Signup.this);
-                wv.loadUrl("http://skinsworld.net/policy/conditions.html");
-                wv.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        view.loadUrl(url);
-
-                        return true;
-                    }
-                });
-
-                alert.setView(wv);
-                alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                alert.show();
-            }
-        });
+//        tv_conditions.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder alert = new AlertDialog.Builder(Activity_Signup.this);
+//                alert.setTitle("Terms and Conditions");
+//
+//                WebView wv = new WebView(Activity_Signup.this);
+//                wv.loadUrl("http://skinsworld.net/policy/conditions.html");
+//                wv.setWebViewClient(new WebViewClient() {
+//                    @Override
+//                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                        view.loadUrl(url);
+//
+//                        return true;
+//                    }
+//                });
+//
+//                alert.setView(wv);
+//                alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                alert.show();
+//            }
+//        });
     }
     class register extends AsyncTask<String,String,String>{
         @Override
