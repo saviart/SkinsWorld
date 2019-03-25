@@ -1,6 +1,7 @@
 package net.skinsworld.fragment_mainscreen;
 
 import android.app.Dialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +22,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.squareup.picasso.Picasso;
+
+import net.skinsworld.Activity_MainScreen;
 import net.skinsworld.R;
 import net.skinsworld.adapter.Adapter_RcvSkin;
-import net.skinsworld.model.Model_ListItems;
+import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.event.OnClickIteml;
+import net.skinsworld.library.UserFunctions;
+import net.skinsworld.model.Item;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Fragment_Skin extends Fragment implements OnClickIteml {
@@ -32,19 +46,19 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
     View view;
     RecyclerView ListItems;
-    ArrayList<Model_ListItems> arrayListItems;
     Adapter_RcvSkin adapter;
     private Dialog myDialog;
     ImageView ic_refresh;
     private SwipeRefreshLayout swipe_Fragment_Skins;
     ImageView Autochess_Filter;
-    boolean isAutochess_Filter_Pressed=false;
     ImageView Dota2_Filter;
-    boolean isDota2_Filter_Pressed=false;
     ImageView Csgo_Filter;
-    boolean isCsgo_Filter_Pressed=false;
     ImageView Other_Filter;
-    boolean isOther_Filter_Pressed=false;
+    boolean isShowDota = true;
+    boolean isShowCSGO = true;
+    boolean isShowChess = true;
+    boolean isShowOther = true;
+    private ArrayList<Item> arrayListItems;
 
     public Fragment_Skin() {
     }
@@ -57,7 +71,7 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
         ListItems.setLayoutAnimation(animation);
 
-        adapter = new Adapter_RcvSkin(getActivity(), R.layout.content_listskins, arrayListItems,this);
+        adapter = new Adapter_RcvSkin(getActivity(), R.layout.content_listskins, GlobalVariables.listItem,this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -71,30 +85,26 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
 
 
+
         //-----Nút lọc item autochess----------------------------------------------------------
         //  đổi image khi click
         //trả về false nếu ko lọc, trả vè true nếu lọc
         Autochess_Filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mặc định false là không lọc
-                if(isAutochess_Filter_Pressed){
+                isShowChess = !isShowChess;
+                if(isShowChess){
                     Autochess_Filter.setImageResource(R.drawable.ic_normal_autochess);
-                    isAutochess_Filter_Pressed=!isAutochess_Filter_Pressed;
-                    Toast.makeText(getActivity().getApplicationContext(),""+ isAutochess_Filter_Pressed,Toast.LENGTH_SHORT).show();
+
                 }else{
-                    //click vào trả về true và lọc item
                     Autochess_Filter.setImageResource(R.drawable.ic_autochess_off);
-                    isAutochess_Filter_Pressed=!isAutochess_Filter_Pressed;
-                    Toast.makeText(getActivity().getApplicationContext(),""+ isAutochess_Filter_Pressed,Toast.LENGTH_SHORT).show();
                 }
+                goFilter();
+
             }
         });
 
   //      -----------------------------------------------------------------------------------------------------
-
-
-
 
         //-----Nút lọc item dota2----------------------------------------------------------
         //  đổi image khi click
@@ -102,25 +112,18 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
         Dota2_Filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mặc định false là không lọc
-                if(isDota2_Filter_Pressed){
+                isShowDota = !isShowDota;
+                if(isShowDota){
                     Dota2_Filter.setImageResource(R.drawable.ic_normal_dota2);
-                    isDota2_Filter_Pressed=!isDota2_Filter_Pressed;
-                    Toast.makeText(getActivity().getApplicationContext(),""+ isDota2_Filter_Pressed,Toast.LENGTH_SHORT).show();
+
                 }else{
-                    //click vào trả về true và lọc item
                     Dota2_Filter.setImageResource(R.drawable.ic_dota2_off);
-                    isDota2_Filter_Pressed=!isDota2_Filter_Pressed;
-                    Toast.makeText(getActivity().getApplicationContext(),""+ isDota2_Filter_Pressed,Toast.LENGTH_SHORT).show();
                 }
+                goFilter();
             }
         });
 
         //      -----------------------------------------------------------------------------------------------------
-
-
-
-
 
         //-----Nút lọc item csgo----------------------------------------------------------
         //  đổi image khi click
@@ -128,25 +131,18 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
         Csgo_Filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mặc định false là không lọc
-                if(isCsgo_Filter_Pressed){
+                isShowCSGO = !isShowCSGO;
+                if(isShowCSGO){
                     Csgo_Filter.setImageResource(R.drawable.ic_normal_csgo);
-                    isCsgo_Filter_Pressed=!isCsgo_Filter_Pressed;
-                    Toast.makeText(getActivity().getApplicationContext(),""+ isCsgo_Filter_Pressed,Toast.LENGTH_SHORT).show();
+
                 }else{
-                    //click vào trả về true và lọc item
                     Csgo_Filter.setImageResource(R.drawable.ic_csgo_off);
-                    isCsgo_Filter_Pressed=!isCsgo_Filter_Pressed;
-                    Toast.makeText(getActivity().getApplicationContext(),""+ isCsgo_Filter_Pressed,Toast.LENGTH_SHORT).show();
                 }
+                goFilter();
             }
         });
 
         //      -----------------------------------------------------------------------------------------------------
-
-
-
-
 
         //-----Nút lọc item csgo----------------------------------------------------------
         //  đổi image khi click
@@ -154,35 +150,18 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
         Other_Filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mặc định false là không lọc
-                if(isOther_Filter_Pressed){
+                isShowOther = !isShowOther;
+                if(isShowOther){
                     Other_Filter.setImageResource(R.drawable.ic_normal_other);
-                    isOther_Filter_Pressed=!isOther_Filter_Pressed;
-                    Toast.makeText(getActivity().getApplicationContext(),""+ isCsgo_Filter_Pressed,Toast.LENGTH_SHORT).show();
+
                 }else{
-                    //click vào trả về true và lọc item
                     Other_Filter.setImageResource(R.drawable.ic_other_off);
-                    isOther_Filter_Pressed=!isOther_Filter_Pressed;
-                    Toast.makeText(getActivity().getApplicationContext(),""+ isCsgo_Filter_Pressed,Toast.LENGTH_SHORT).show();
                 }
+                goFilter();
             }
         });
 
         //      -----------------------------------------------------------------------------------------------------
-
-
-
-
-        //--------Nút reload Listskins-------------------------------------------------------
-//        ic_refresh.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Animation ic_refresh_rotate = AnimationUtils.loadAnimation(getActivity(),R.anim.ic_refresh_rotate);
-//                ic_refresh.startAnimation(ic_refresh_rotate);
-//            }
-//        });
-//       ------------------------------------------------------------------------------------
-
 
 
 
@@ -195,6 +174,10 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             @Override
             public void onRefresh() {
                 swipe_Fragment_Skins.setRefreshing(true);
+
+                //refresh roi tat no di
+                new loadItem().execute();
+
             }
         });
 //        -----------------------------------------------------------------------
@@ -202,10 +185,66 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
         return view;
     }
+    private void reset_all_filter(){
+        isShowChess = true;
+        isShowCSGO = true;
+        isShowDota = true;
+        isShowOther = true;
+        Other_Filter.setImageResource(R.drawable.ic_normal_other);
+        Autochess_Filter.setImageResource(R.drawable.ic_normal_autochess);
+        Csgo_Filter.setImageResource(R.drawable.ic_normal_csgo);
+        Dota2_Filter.setImageResource(R.drawable.ic_normal_dota2);
+    }
+    private void goFilter(){
+        ArrayList<Item> newList = new ArrayList<Item>();
+        for (Item item:GlobalVariables.listItem) {
+            if(isShowDota && item.getGame().contains("Dota")) newList.add(item);
+            if(isShowOther && item.getGame().contains("Other")) newList.add(item);
+            if(isShowCSGO && item.getGame().contains("CSGO")) newList.add(item);
+            if(isShowChess && item.getGame().contains("Auto")) newList.add(item);
+        }
+        adapter.setData(newList);
+        adapter.notifyDataSetChanged();
+    }
 
+    class loadItem extends AsyncTask<String, String, String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
 
+        @Override
+        protected void onPostExecute(String s) {
+            //fill data from listitem
+            reset_all_filter();
+            adapter.setData(GlobalVariables.listItem);
+            adapter.notifyDataSetChanged();
+            swipe_Fragment_Skins.setRefreshing(false);
+        }
 
+        @Override
+        protected String doInBackground(String... strings) {
+            UserFunctions uf = new UserFunctions();
+            JSONObject itemObj = uf.getItem();
+            JSONArray itemArray = null;
+            try {
+                itemArray = itemObj.getJSONArray("item");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            GlobalVariables.listItem = new ArrayList<Item>();
+            Gson gson = new Gson();
+            for (int i = 0;i<itemArray.length();i++){
+                try {
+                    GlobalVariables.listItem.add(gson.fromJson(itemArray.getJSONObject(i).toString(),Item.class));
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
 
 
     private void anhxa() {
@@ -214,83 +253,88 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
         Csgo_Filter = (ImageView) view.findViewById(R.id.Csgo_Filter) ;
         Other_Filter = (ImageView) view.findViewById(R.id.Other_Filter);
         ListItems = (RecyclerView) view.findViewById(R.id.listviewitems);
-        arrayListItems = new ArrayList<>();
+        arrayListItems = new ArrayList<Item>();
 
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "XM1014|Blue Spruce", "Minimal Wear", "400", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_dota2, "Staff of Gun-Yu", "Immortal weapon", "300", "DOTA2"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "Tec-9", "Feal Test", "1200", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_dota2, "AKM", "Immortal weapon", "4030", "DOTA2"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_dota2, "AKM", "Facoty New", "1200", "DOTA2"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AKM", "Minimal Wear", "98", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AK-47", "Minimal Wear", "4000", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AKM", "Minimalc", "9700", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_dota2, "P2000|Turf", "Minimal Wear", "400", "DOTA2"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_dota2, "AKM", "SMinimal", "400", "DOTA2"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_dota2, "SG 553|Phantom", "Facoty New", "400", "DOTA2"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AKM", "Facoty New", "352", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AKM", "Facoty New", "120", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AKM", "Facoty New", "34", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AKM", "Facoty New", "4767", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AKM", "Facoty New", "1235", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AKM", "Facoty New", "789", "CS:GO"));
-        arrayListItems.add(new Model_ListItems(R.drawable.sample_csgo, "AKM", "Facoty New", "909", "CS:GO"));
+        for (int i = 0;i< GlobalVariables.listItem.size();i++){
+            arrayListItems.add(GlobalVariables.listItem.get(i));
+        }
 
 
     }
 
 
-    public void createPopup(Model_ListItems data) {
-        myDialog.setContentView(R.layout.popup_buy_item);
-        myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        workingDialog(myDialog,data);
-        myDialog.show();
+    public void createPopup(Item data) {
+        if(Integer.parseInt(GlobalVariables.user.getCoins()) >= Integer.parseInt(data.getPrice())){
+            myDialog.setContentView(R.layout.popup_buy_item);
+            myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            workingDialog(myDialog,data,true);
+            myDialog.show();
+        }else{
+            myDialog.setContentView(R.layout.popup_not_enoughcoin);
+            myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            workingDialog(myDialog,data,false);
+            myDialog.show();
+        }
 
 
     }
 
-    private void workingDialog(final Dialog myDialog, Model_ListItems data) {
-        ImageView popup_imgitem = (ImageView) myDialog.findViewById(R.id.popup_imgitem);
-        popup_imgitem.setImageResource(data.getImgitem());
+    private void workingDialog(final Dialog myDialog, Item data, Boolean isEnoughCoin) {
+        if(isEnoughCoin){
+            ImageView popup_imgitem = (ImageView) myDialog.findViewById(R.id.popup_imgitem);
+            //popup_imgitem.setImageResource(data.getImgitem());
+            Picasso.with(getActivity().getApplicationContext()).load(data.getImageURL()).into(popup_imgitem);
 
 
-        ImageView btnClose = (ImageView) myDialog.findViewById(R.id.btn_close_popup);
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myDialog.dismiss();
-            }
+            ImageView btnClose = (ImageView) myDialog.findViewById(R.id.btn_close_popup);
+            btnClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    myDialog.dismiss();
+                }
 
-        });
+            });
 
-        Button popup_numbcoin = (Button) myDialog.findViewById(R.id.popup_numbcoins);
-        popup_numbcoin.setText(data.getNumbcoin());
+            Button popup_numbcoin = (Button) myDialog.findViewById(R.id.popup_numbcoins);
+            popup_numbcoin.setText(data.getPrice());
 
-        Button popup_txtgame = (Button) myDialog.findViewById(R.id.popup_txtgame);
-        popup_txtgame.setText(data.getTxtgame());
+            Button popup_txtgame = (Button) myDialog.findViewById(R.id.popup_txtgame);
+            popup_txtgame.setText(data.getGame());
 
-        TextView popup_nameitem = (TextView) myDialog.findViewById(R.id.popup_nameitem);
-        popup_nameitem.setText(data.getNameitem());
+            TextView popup_nameitem = (TextView) myDialog.findViewById(R.id.popup_nameitem);
+            popup_nameitem.setText(data.getName());
 
-        TextView popup_desitem = (TextView) myDialog.findViewById(R.id.popup_desitem);
-        popup_desitem.setText(data.getDesitem());
+            TextView popup_desitem = (TextView) myDialog.findViewById(R.id.popup_desitem);
+            popup_desitem.setText(data.getDescription());
 
-        Animation animstar3 = (Animation) AnimationUtils.loadAnimation(getActivity(),R.anim.anim_zoomin_out);
-        popup_imgitem.startAnimation(animstar3);
+            Animation animstar3 = (Animation) AnimationUtils.loadAnimation(getActivity(),R.anim.anim_zoomin_out);
+            popup_imgitem.startAnimation(animstar3);
 
-       //Code tính năng của popup ở đây.
-        Button  popup_btnconfirm = (Button) myDialog.findViewById(R.id.popup_btnconfirm);
-        popup_btnconfirm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"Confirm",Toast.LENGTH_SHORT).show();
-                myDialog.dismiss();
-            }
-        });
+            //Code tính năng của popup ở đây.
+            Button  popup_btnconfirm = (Button) myDialog.findViewById(R.id.popup_btnconfirm);
+            popup_btnconfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(getActivity().getApplicationContext(),"Confirm",Toast.LENGTH_SHORT).show();
+                    myDialog.dismiss();
+                }
+            });
+        }else{
+            Button  popup_btnconfirm = (Button) myDialog.findViewById(R.id.btn_getmore_popuperror);
+            popup_btnconfirm.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Activity_MainScreen.main.selectIndex(2);
+                    myDialog.dismiss();
+                }
+            });
+        }
+
     }
 
 
     @Override
-    public void onClickItem(Model_ListItems data) {
+    public void onClickItem(Item data) {
         createPopup(data);
     }
 

@@ -17,9 +17,12 @@ import com.google.gson.Gson;
 import net.skinsworld.library.DatabaseHandler;
 import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.library.UserFunctions;
+import net.skinsworld.model.Item;
 import net.skinsworld.model.User;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class WebView_Login extends AppCompatActivity {
     String steam64_from_api;
@@ -84,6 +87,7 @@ public class WebView_Login extends AppCompatActivity {
         protected void onPostExecute(String s) {
             pd.cancel();
             try {
+                //Toast.makeText(WebView_Login.this, GlobalVariables.listItem.get(0).getGame(), Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(WebView_Login.this, Activity_MainScreen.class));
                 //Toast.makeText(WebView_Login.this, GlobalVariables.user.getSteamID64(), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
@@ -104,8 +108,12 @@ public class WebView_Login extends AppCompatActivity {
                 db.resetTables();
                 JSONObject json_registered = uf.signUp(playersObj.getString("steamid"),playersObj.getString("avatarmedium"),playersObj.getString("personaname"),GlobalVariables.gaid);
                 Gson gson = new Gson();
-                GlobalVariables.user = gson.fromJson(json_registered.toString(),User.class);
+                GlobalVariables.user = gson.fromJson(json_registered.getJSONArray("user").getJSONObject(0).toString(),User.class);
                 db.addUser(GlobalVariables.user);
+                GlobalVariables.listItem = new ArrayList<Item>();
+                for (int i = 0;i<json_registered.getJSONArray("item").length();i++){
+                    GlobalVariables.listItem.add(gson.fromJson(json_registered.getJSONArray("item").getJSONObject(i).toString(), Item.class));
+                }
                 //getURL = json_registered.getString("SteamID64");
             } catch (Exception e) {
                 e.printStackTrace();

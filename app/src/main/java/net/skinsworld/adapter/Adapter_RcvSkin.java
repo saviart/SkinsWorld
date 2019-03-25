@@ -7,25 +7,37 @@ import android.view.ViewGroup;
 import android.view.LayoutInflater;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import net.skinsworld.R;
-import net.skinsworld.model.Model_ListItems;
 import net.skinsworld.event.OnClickIteml;
+import net.skinsworld.model.Item;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Adapter_RcvSkin extends RecyclerView.Adapter<Adapter_RcvSkin.ItemViewHolder> {
-    private List<Model_ListItems> data = new ArrayList<>();
+    private ArrayList<Item> data = new ArrayList<Item>();
     private Context context;
     private int layout;
     OnClickIteml onClickIteml;
 
 
-    public Adapter_RcvSkin(Context context, int layout, List<Model_ListItems> itemsList, OnClickIteml OnClickIteml) {
+    public Adapter_RcvSkin(Context context, int layout, ArrayList<Item> itemsList, OnClickIteml OnClickIteml) {
         this.data = itemsList;
         this.layout = layout;
-        context = context;
+        this.context = context;
         onClickIteml = OnClickIteml;
+    }
+
+    public ArrayList<Item> getData() {
+        return data;
+    }
+
+    public void setData(ArrayList<Item> data) {
+        this.data = data;
     }
 
     @Override
@@ -38,13 +50,13 @@ public class Adapter_RcvSkin extends RecyclerView.Adapter<Adapter_RcvSkin.ItemVi
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
 
-        Model_ListItems item = data.get(position);
-
-        holder.nameitem.setText(item.getNameitem());
-        holder.desitem.setText(item.getDesitem());
-        holder.numbcoin.setText(item.getNumbcoin());
-        holder.txtgame.setText(item.getTxtgame());
-        holder.imgitem.setImageResource(item.getImgitem());
+        Item item = data.get(position);
+        holder.nameitem.setText(item.getName());
+        holder.desitem.setText(item.getDescription());
+        holder.numbcoin.setText(item.getPrice());
+        holder.txtgame.setText(item.getGame());
+        //holder.imgitem.setImageResource(item.getImgitem());
+        Picasso.with(context).load(item.getImageURL()).into(holder.imgitem);
 
     }
 
@@ -75,7 +87,7 @@ public class Adapter_RcvSkin extends RecyclerView.Adapter<Adapter_RcvSkin.ItemVi
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Model_ListItems itemCurentClick = data.get(getAdapterPosition());
+                    Item itemCurentClick = data.get(getAdapterPosition());
                     onClickIteml.onClickItem(itemCurentClick);
                 }
             });

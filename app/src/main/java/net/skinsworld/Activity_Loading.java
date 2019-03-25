@@ -14,10 +14,13 @@ import net.skinsworld.library.DatabaseHandler;
 import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.library.UserFunctions;
 import net.skinsworld.library.Util;
+import net.skinsworld.model.Item;
 import net.skinsworld.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Activity_Loading extends AppCompatActivity {
 
@@ -105,12 +108,13 @@ public class Activity_Loading extends AppCompatActivity {
                     //insert thong tin user, va lay thong tin app ve
                     DatabaseHandler db = new DatabaseHandler(getApplicationContext());
                     db.resetTables();
-                    JSONObject json_registered = uf.signUp(playersObj.getString("steamid"), playersObj.getString("avatarmedium"), playersObj.getString("personaname"), GlobalVariables.gaid);
-                    GlobalVariables.user = gson.fromJson(json_registered.toString(), User.class);
+                    JSONObject json_registered = uf.signUp(playersObj.getString("steamid"),playersObj.getString("avatarmedium"),playersObj.getString("personaname"),GlobalVariables.gaid);
+                    GlobalVariables.user = gson.fromJson(json_registered.getJSONArray("user").getJSONObject(0).toString(),User.class);
                     db.addUser(GlobalVariables.user);
-
-
-
+                    GlobalVariables.listItem = new ArrayList<Item>();
+                    for (int i = 0;i<json_registered.getJSONArray("item").length();i++){
+                        GlobalVariables.listItem.add(gson.fromJson(json_registered.getJSONArray("item").getJSONObject(i).toString(), Item.class));
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

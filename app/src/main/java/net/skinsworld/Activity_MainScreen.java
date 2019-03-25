@@ -74,6 +74,9 @@ public class Activity_MainScreen extends AppCompatActivity {
         //mặc định set vị trí là profile
         navigation.setSelectedItemId(R.id.navigation_profile);
 
+        //neu chua nhap code thi show dialog nhap code len
+
+
 //
     }
 

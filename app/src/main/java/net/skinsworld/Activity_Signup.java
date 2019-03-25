@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -17,6 +18,16 @@ import android.widget.CheckBox;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import net.skinsworld.library.GlobalVariables;
+import net.skinsworld.model.Item;
+import net.skinsworld.model.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Activity_Signup extends AppCompatActivity {
     Button btn_signup;
@@ -53,6 +64,10 @@ public class Activity_Signup extends AppCompatActivity {
                 if(cb1.isChecked() && cb2.isChecked()){
                     //đồng ý, giờ đăng kí
                     startActivity(new Intent(Activity_Signup.this, WebView_Login.class));
+
+                   // String str = "[{\"UserID\":\"14\",\"SteamID64\":\"76561198346681150\",\"TradeURL\":\"\",\"Coins\":\"1\",\"CreatedDate\":\"2019-03-25 03:25:10\",\"Active\":\"1\",\"GAID\":\"96339b8d-64c4-4172-bfd1-9b4c865c10ae\",\"InvitedBy\":null,\"Avatar\":\"https:\\/\\/steamcdn-a.akamaihd.net\\/steamcommunity\\/public\\/images\\/avatars\\/bb\\/bbcb1b002603760bafa3d682596948f8877f1ee9_medium.jpg\",\"PersonaName\":\"LOOTSKINS.NET\"}]";
+                   // JSONArray jsonArray = new JSONArray("[{\"UserID\":\"14\",\"SteamID64\":\"76561198346681150\",\"TradeURL\":\"\",\"Coins\":\"1\",\"CreatedDate\":\"2019-03-25 03:25:10\",\"Active\":\"1\",\"GAID\":\"96339b8d-64c4-4172-bfd1-9b4c865c10ae\",\"InvitedBy\":null,\"Avatar\":\"https:\\/\\/steamcdn-a.akamaihd.net\\/steamcommunity\\/public\\/images\\/avatars\\/bb\\/bbcb1b002603760bafa3d682596948f8877f1ee9_medium.jpg\",\"PersonaName\":\"LOOTSKINS.NET\"}]");
+
                 }else{
                     Toast.makeText(Activity_Signup.this, getResources().getString(R.string.dong_y_su_dung), Toast.LENGTH_SHORT).show();
                 }

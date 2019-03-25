@@ -44,6 +44,16 @@ public class UserFunctions {
 		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
 		return json;
 	}
+	public JSONObject getItem(){
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", GlobalVariables.get_item_tag));
+		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
+		return json;
+	}
+	public JSONObject setInvitedBy(String userid, String invitedcode){
+		
+		return null;
+	}
 //	public JSONObject getCoinsByID(String id)
 //	{
 //		List<NameValuePair> params = new ArrayList<NameValuePair>();

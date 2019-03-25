@@ -1,10 +1,12 @@
 package net.skinsworld.fragment_mainscreen;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -34,7 +36,6 @@ import net.skinsworld.R;
 import net.skinsworld.adapter.AdapterRcvProfile;
 
 import net.skinsworld.library.GlobalVariables;
-import net.skinsworld.model.Model_ListItems;
 import net.skinsworld.model.Model_Profile;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class Fragment_Profile extends Fragment {
     private Dialog inviteDialog;
     private SwipeRefreshLayout swipe_Fragment_Profile;
 
+    ProgressDialog pd;
 
     public Fragment_Profile() {
     }
@@ -99,8 +101,51 @@ public class Fragment_Profile extends Fragment {
             }
         });
 
+        if(GlobalVariables.user.getInvitedBy() == null){
+            final Dialog dialog = new Dialog(getContext());
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialog.setContentView(R.layout.popup_input_invited);
+
+
+            // set the custom dialog components - text, image and button
+            EditText etCode = dialog.findViewById(R.id.popup_invited_code);
+
+            Button btnSubmit = dialog.findViewById(R.id.popup_invited_submit);
+
+            btnSubmit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //
+                }
+            });
+
+            dialog.show();
+        }
 
         return view;
+    }
+    class submitCode extends AsyncTask<String,String,String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(getActivity().getApplicationContext());
+            pd.setMessage("Loading...please wait !");
+            pd.setCancelable(false);
+            pd.setIndeterminate(false);
+            pd.show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            pd.cancel();
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            return null;
+        }
     }
 
     private void setUserProfile() {
