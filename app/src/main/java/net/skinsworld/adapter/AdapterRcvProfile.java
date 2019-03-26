@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import net.skinsworld.R;
 import net.skinsworld.model.Model_Profile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,7 @@ public class AdapterRcvProfile extends RecyclerView.Adapter<AdapterRcvProfile.It
 
     public AdapterRcvProfile(Context context, List<Model_Profile> itemsList) {
         this.data = itemsList;
-        context = context;
+        this.context = context;
     }
 
     @Override
@@ -34,11 +37,17 @@ public class AdapterRcvProfile extends RecyclerView.Adapter<AdapterRcvProfile.It
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         Model_Profile item = data.get(position);
-        holder.name_trans_item.setText(item.getName_strans_item());
-        holder.des_trans_item.setText(item.getDes_trans_item());
-        holder.numb_trans_point.setText(item.getNumb_trans_coin());
-        holder.trans_status.setText(item.getTxt_trans_game());
-        holder.img_trans_item.setImageResource(item.getImg_trans_item());
+//        holder.name_trans_item.setText(item.getName_strans_item());
+//        holder.des_trans_item.setText(item.getDes_trans_item());
+//        holder.numb_trans_point.setText(item.getNumb_trans_coin());
+//        holder.trans_status.setText(item.getTxt_trans_game());
+//        holder.img_trans_item.setImageResource(item.getImg_trans_item());
+        holder.name_trans_item.setText(item.getItem().getName());
+        holder.des_trans_item.setText(item.getItem().getDescription());
+        holder.numb_trans_point.setText(item.getItem().getPrice());
+        holder.trans_status.setText(item.getOrder().getStatus().equals("0")?"PENDING":"SUCCESS");
+        //holder.img_trans_item.setImageResource(item.getImg_trans_item());
+        Picasso.with(context).load(item.getItem().getImageURL()).into(holder.img_trans_item);
 
 
     }
@@ -52,10 +61,10 @@ public class AdapterRcvProfile extends RecyclerView.Adapter<AdapterRcvProfile.It
     public class ItemViewHolder extends RecyclerView.ViewHolder {
 
         TextView trans_status;
-        TextView name_trans_item ;
+        TextView name_trans_item;
         TextView des_trans_item;
         TextView numb_trans_point;
-        ImageView img_trans_item ;
+        ImageView img_trans_item;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
@@ -63,8 +72,8 @@ public class AdapterRcvProfile extends RecyclerView.Adapter<AdapterRcvProfile.It
             img_trans_item = (ImageView) itemView.findViewById(R.id.img_trans_items);
             name_trans_item = (TextView) itemView.findViewById(R.id.name_trans_item);
             des_trans_item = (TextView) itemView.findViewById(R.id.des_trans_item);
-            numb_trans_point = (TextView)itemView .findViewById(R.id.numb_trans_point);
-            trans_status = (TextView)itemView .findViewById(R.id.trans_status);
+            numb_trans_point = (TextView) itemView.findViewById(R.id.numb_trans_point);
+            trans_status = (TextView) itemView.findViewById(R.id.trans_status);
 
 
         }

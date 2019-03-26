@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,17 +36,28 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import net.skinsworld.Activity_MainScreen;
 import net.skinsworld.Activity_Signup;
 import net.skinsworld.R;
+import net.skinsworld.WebView_Login;
 import net.skinsworld.adapter.AdapterRcvProfile;
 
+import net.skinsworld.library.DatabaseHandler;
 import net.skinsworld.library.GlobalVariables;
+import net.skinsworld.library.UserFunctions;
+import net.skinsworld.model.Item;
 import net.skinsworld.model.Model_Profile;
+import net.skinsworld.model.Order;
+import net.skinsworld.model.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Fragment_Profile extends Fragment {
     View view;
@@ -63,10 +77,12 @@ public class Fragment_Profile extends Fragment {
     EditText etTradeURL;
     TextView invitecode;
     ImageView btn_refresh_lastorder;
-
+    EditText etCode;
     private SwipeRefreshLayout swipe_Fragment_Profile;
 
     ProgressDialog pd;
+    Boolean isSwipeOK = false;
+    Boolean isInputCodeOK = false;
 
     public Fragment_Profile() {
     }
@@ -103,42 +119,142 @@ public class Fragment_Profile extends Fragment {
             @Override
             public void onRefresh() {
                 swipe_Fragment_Profile.setRefreshing(true);
-                // goi async load data ve sau do set refreshing false;
-                swipe_Fragment_Profile.setRefreshing(false);
+                new doSwipe().execute();
             }
         });
 
-        if(GlobalVariables.user.getInvitedBy() == null){
+        if (GlobalVariables.user.getInvitedBy() == null) {
             final Dialog dialog = new Dialog(getContext());
             dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
             dialog.setContentView(R.layout.popup_input_invited);
 
 
             // set the custom dialog components - text, image and button
-            EditText etCode = dialog.findViewById(R.id.popup_invited_code);
+            etCode = dialog.findViewById(R.id.popup_invited_code);
 
             Button btnSubmit = dialog.findViewById(R.id.popup_invited_submit);
 
             btnSubmit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //
+
+                    new submitCode().execute();
+                    dialog.dismiss();
                 }
             });
 
             dialog.show();
         }
+        new refreshOrder().execute();
 
         return view;
+    }
+
+    class doSwipe extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            swipe_Fragment_Profile.setRefreshing(false);
+            if(isSwipeOK){
+                setUserProfile();
+                arrayListItems = new ArrayList<>();
+                for (int i = 0; i < GlobalVariables.listOrder.size(); i++) {
+                    Model_Profile m = new Model_Profile();
+                    m.setOrder(GlobalVariables.listOrder.get(i));
+                    for (Item item : GlobalVariables.listItem) {
+                        if (item.getID().equals(GlobalVariables.listOrder.get(i).getItem_ID())) {
+                            m.setItem(item);
+                        }
+                    }
+                    arrayListItems.add(m);
+                }
+                adapter = new AdapterRcvProfile(getActivity(), arrayListItems);
+                ListItems.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            UserFunctions uf = new UserFunctions();
+            Gson gson = new Gson();
+            DatabaseHandler db = new DatabaseHandler(getActivity());
+            try {
+                db.resetTables();
+                JSONObject json_registered = uf.signUp(GlobalVariables.user.getSteamID64(), GlobalVariables.user.getAvatar(), GlobalVariables.user.getPersonaName(), GlobalVariables.gaid);
+
+                GlobalVariables.user = gson.fromJson(json_registered.getJSONArray("user").getJSONObject(0).toString(), User.class);
+                db.addUser(GlobalVariables.user);
+                GlobalVariables.listOrder = new ArrayList<>();
+                for (int i = 0; i < json_registered.getJSONArray("order").length(); i++) {
+                    GlobalVariables.listOrder.add(gson.fromJson(json_registered.getJSONArray("order").getJSONObject(i).toString(), Order.class));
+                }
+                isSwipeOK = true;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                isSwipeOK = false;
+            }
+            return null;
+        }
     }
 
     private void click_refresh_lastorder() {
         btn_refresh_lastorder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "đã bấm refresh last order", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), "đã bấm refresh last order", Toast.LENGTH_SHORT).show();
+                new refreshOrder().execute();
             }
         });
+    }
+
+    class refreshOrder extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            arrayListItems = new ArrayList<>();
+            for (int i = 0; i < GlobalVariables.listOrder.size(); i++) {
+                Model_Profile m = new Model_Profile();
+                m.setOrder(GlobalVariables.listOrder.get(i));
+                for (Item item : GlobalVariables.listItem) {
+                    if (item.getID().equals(GlobalVariables.listOrder.get(i).getItem_ID())) {
+                        m.setItem(item);
+                    }
+                }
+                arrayListItems.add(m);
+            }
+            adapter = new AdapterRcvProfile(getActivity(), arrayListItems);
+            ListItems.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            UserFunctions uf = new UserFunctions();
+            JSONObject js = uf.loadOrder(GlobalVariables.user.getUserID());
+            Gson gson = new Gson();
+            DatabaseHandler db = new DatabaseHandler(getActivity());
+            try {
+                GlobalVariables.user = gson.fromJson(js.getJSONArray("user").getJSONObject(0).toString(), User.class);
+                db.addUser(GlobalVariables.user);
+                GlobalVariables.listOrder = new ArrayList<>();
+                for (int i = 0; i < js.getJSONArray("order").length(); i++) {
+                    GlobalVariables.listOrder.add(gson.fromJson(js.getJSONArray("order").getJSONObject(i).toString(), Order.class));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     private void clickbtn_tradeurl_help() {
@@ -173,11 +289,11 @@ public class Fragment_Profile extends Fragment {
         });
     }
 
-    class submitCode extends AsyncTask<String,String,String>{
+    class submitCode extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pd = new ProgressDialog(getActivity().getApplicationContext());
+            pd = new ProgressDialog(getActivity());
             pd.setMessage("Loading...please wait !");
             pd.setCancelable(false);
             pd.setIndeterminate(false);
@@ -187,11 +303,28 @@ public class Fragment_Profile extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             pd.cancel();
+            try {
+
+                new doSwipe().execute();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         }
 
         @Override
         protected String doInBackground(String... strings) {
+            UserFunctions uf = new UserFunctions();
+            DatabaseHandler db = new DatabaseHandler(getActivity());
+            JSONObject js = uf.setInvitedBy(GlobalVariables.user.getUserID(),etCode.getText().toString().trim());
+            try {
+                isInputCodeOK = js.getJSONObject("Success").getString("Message").equals("OK");
+                GlobalVariables.user.setCoins(""+(Integer.parseInt(GlobalVariables.user.getCoins())+50));
+            } catch (JSONException e) {
+                e.printStackTrace();
+                isInputCodeOK = false;
+            }
 
             return null;
         }
@@ -252,8 +385,8 @@ public class Fragment_Profile extends Fragment {
 
 
                 // set the custom dialog components - text, image and button
-                TextView popup_invite_code = (TextView) dialog.findViewById(R.id.popup_invite_code);
-                popup_invite_code.setText("SW888888");
+                final TextView popup_invite_code = (TextView) dialog.findViewById(R.id.popup_invite_code);
+                popup_invite_code.setText("SW"+ (Long.parseLong(GlobalVariables.user.getSteamID64()) - Long.parseLong("76561197960265728")) );
 
 
                 Button popup_invite_copyintivecode = (Button) dialog.findViewById(R.id.popup_invite_copyintivecode);
@@ -262,7 +395,12 @@ public class Fragment_Profile extends Fragment {
                 popup_invite_copyintivecode.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(getActivity().getApplicationContext(), "đã copy code", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity().getApplicationContext(), "đã copy code", Toast.LENGTH_SHORT).show();
+                        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText(popup_invite_code.getText().toString(), popup_invite_code.getText().toString());
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(getActivity().getApplicationContext(), "Invited code copied !", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     }
                 });
 
@@ -302,12 +440,16 @@ public class Fragment_Profile extends Fragment {
         btn_getmore = (Button) view.findViewById(R.id.btn_getmore);
         ListItems = (RecyclerView) view.findViewById(R.id.rvtransitems);
         arrayListItems = new ArrayList<>();
-        arrayListItems.add(new Model_Profile(R.drawable.sample_csgo, "AKM", "Facoty New", "1235", "PENDING"));
-        arrayListItems.add(new Model_Profile(R.drawable.sample_dota2, "AKM", "Facoty New", "789", "SUCCESS"));
-        arrayListItems.add(new Model_Profile(R.drawable.sample_dota2, "AKM", "Facoty New", "9092", "SUCCESS"));
-        arrayListItems.add(new Model_Profile(R.drawable.sample_csgo, "AKM", "Facoty New", "1235", "SUCCESS"));
-        arrayListItems.add(new Model_Profile(R.drawable.sample_csgo, "AKM", "Facoty New", "789", "SUCCESS"));
-        arrayListItems.add(new Model_Profile(R.drawable.sample_csgo, "AKM", "Facoty New", "9092", "SUCCESS"));
+        for (int i = 0; i < GlobalVariables.listOrder.size(); i++) {
+            Model_Profile m = new Model_Profile();
+            m.setOrder(GlobalVariables.listOrder.get(i));
+            for (Item item : GlobalVariables.listItem) {
+                if (item.getID().equals(GlobalVariables.listOrder.get(i).getItem_ID())) {
+                    m.setItem(item);
+                }
+            }
+            arrayListItems.add(m);
+        }
 
         ivAvatar = view.findViewById(R.id.ivAvatar);
         tvUsername = view.findViewById(R.id.tvUsername);

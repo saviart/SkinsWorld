@@ -1,10 +1,7 @@
 package net.skinsworld.library;
 
-import net.skinsworld.model.User;
-
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -50,9 +47,34 @@ public class UserFunctions {
 		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
 		return json;
 	}
+	public JSONObject buyItem(String itemID, String userID)
+	{
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", GlobalVariables.buy_item_tag));
+		params.add(new BasicNameValuePair("itemid", itemID));
+		params.add(new BasicNameValuePair("userid", userID));
+		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
+		return json;
+	}
+
+	public JSONObject loadOrder(String UserID){
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", GlobalVariables.load_order_tag));
+		params.add(new BasicNameValuePair("userid", UserID));
+		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
+		return json;
+	}
 	public JSONObject setInvitedBy(String userid, String invitedcode){
-		
-		return null;
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", GlobalVariables.set_invited_by_tag));
+		params.add(new BasicNameValuePair("userid", userid));
+
+		long steamID32 = Long.parseLong(invitedcode.substring(2));
+		long steamID64 = steamID32 + Long.parseLong("76561197960265728");
+		String invitedUser = steamID64+"";
+		params.add(new BasicNameValuePair("invitedUser", invitedUser));
+		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
+		return json;
 	}
 //	public JSONObject getCoinsByID(String id)
 //	{

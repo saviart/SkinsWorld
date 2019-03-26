@@ -1,8 +1,10 @@
 package net.skinsworld.fragment_mainscreen;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
@@ -28,11 +30,15 @@ import com.squareup.picasso.Picasso;
 
 import net.skinsworld.Activity_MainScreen;
 import net.skinsworld.R;
+import net.skinsworld.WebView_Login;
 import net.skinsworld.adapter.Adapter_RcvSkin;
+import net.skinsworld.library.DatabaseHandler;
 import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.event.OnClickIteml;
 import net.skinsworld.library.UserFunctions;
 import net.skinsworld.model.Item;
+import net.skinsworld.model.Order;
+import net.skinsworld.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,6 +65,9 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
     boolean isShowChess = true;
     boolean isShowOther = true;
     private ArrayList<Item> arrayListItems;
+    ProgressDialog pd;
+    String clickedItemID;
+    Boolean buySuccess = false;
 
     public Fragment_Skin() {
     }
@@ -71,19 +80,19 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
         LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getContext(), resId);
         ListItems.setLayoutAnimation(animation);
 
-        adapter = new Adapter_RcvSkin(getActivity(), R.layout.content_listskins, GlobalVariables.listItem,this);
+        adapter = new Adapter_RcvSkin(getActivity(), R.layout.content_listskins, GlobalVariables.listItem, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         ListItems.setLayoutManager(layoutManager);
         ListItems.setAdapter(adapter);
+        reset_all_filter();
+        goFilter();
+        adapter.notifyDataSetChanged();
 
 
         // adapter.notifyDataSetChanged();
-        myDialog =new Dialog(getContext());
-
-
-
+        myDialog = new Dialog(getContext());
 
 
         //-----Nút lọc item autochess----------------------------------------------------------
@@ -93,10 +102,10 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             @Override
             public void onClick(View v) {
                 isShowChess = !isShowChess;
-                if(isShowChess){
+                if (isShowChess) {
                     Autochess_Filter.setImageResource(R.drawable.ic_normal_autochess);
 
-                }else{
+                } else {
                     Autochess_Filter.setImageResource(R.drawable.ic_autochess_off);
                 }
                 goFilter();
@@ -104,7 +113,7 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             }
         });
 
-  //      -----------------------------------------------------------------------------------------------------
+        //      -----------------------------------------------------------------------------------------------------
 
         //-----Nút lọc item dota2----------------------------------------------------------
         //  đổi image khi click
@@ -113,10 +122,10 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             @Override
             public void onClick(View v) {
                 isShowDota = !isShowDota;
-                if(isShowDota){
+                if (isShowDota) {
                     Dota2_Filter.setImageResource(R.drawable.ic_normal_dota2);
 
-                }else{
+                } else {
                     Dota2_Filter.setImageResource(R.drawable.ic_dota2_off);
                 }
                 goFilter();
@@ -132,10 +141,10 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             @Override
             public void onClick(View v) {
                 isShowCSGO = !isShowCSGO;
-                if(isShowCSGO){
+                if (isShowCSGO) {
                     Csgo_Filter.setImageResource(R.drawable.ic_normal_csgo);
 
-                }else{
+                } else {
                     Csgo_Filter.setImageResource(R.drawable.ic_csgo_off);
                 }
                 goFilter();
@@ -151,10 +160,10 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             @Override
             public void onClick(View v) {
                 isShowOther = !isShowOther;
-                if(isShowOther){
+                if (isShowOther) {
                     Other_Filter.setImageResource(R.drawable.ic_normal_other);
 
-                }else{
+                } else {
                     Other_Filter.setImageResource(R.drawable.ic_other_off);
                 }
                 goFilter();
@@ -162,9 +171,6 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
         });
 
         //      -----------------------------------------------------------------------------------------------------
-
-
-
 
 
 //        -----------Swipe to reload data here-----------------------------------
@@ -185,7 +191,8 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
         return view;
     }
-    private void reset_all_filter(){
+
+    private void reset_all_filter() {
         isShowChess = true;
         isShowCSGO = true;
         isShowDota = true;
@@ -195,19 +202,24 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
         Csgo_Filter.setImageResource(R.drawable.ic_normal_csgo);
         Dota2_Filter.setImageResource(R.drawable.ic_normal_dota2);
     }
-    private void goFilter(){
+
+    private void goFilter() {
         ArrayList<Item> newList = new ArrayList<Item>();
-        for (Item item:GlobalVariables.listItem) {
-            if(isShowDota && item.getGame().contains("Dota")) newList.add(item);
-            if(isShowOther && item.getGame().contains("Other")) newList.add(item);
-            if(isShowCSGO && item.getGame().contains("CSGO")) newList.add(item);
-            if(isShowChess && item.getGame().contains("Auto")) newList.add(item);
+        for (Item item : GlobalVariables.listItem) {
+            if (isShowDota && item.getGame().contains("Dota") && item.getEnable().equals("1"))
+                newList.add(item);
+            if (isShowOther && item.getGame().contains("Other") && item.getEnable().equals("1"))
+                newList.add(item);
+            if (isShowCSGO && item.getGame().contains("CSGO") && item.getEnable().equals("1"))
+                newList.add(item);
+            if (isShowChess && item.getGame().contains("Auto") && item.getEnable().equals("1"))
+                newList.add(item);
         }
         adapter.setData(newList);
         adapter.notifyDataSetChanged();
     }
 
-    class loadItem extends AsyncTask<String, String, String>{
+    class loadItem extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -215,11 +227,17 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
         @Override
         protected void onPostExecute(String s) {
-            //fill data from listitem
-            reset_all_filter();
-            adapter.setData(GlobalVariables.listItem);
-            adapter.notifyDataSetChanged();
+            //fill data from
             swipe_Fragment_Skins.setRefreshing(false);
+            reset_all_filter();
+            ArrayList<Item> newList = new ArrayList<>();
+            for (int i = 0; i < GlobalVariables.listItem.size(); i++) {
+                if (GlobalVariables.listItem.get(i).getEnable().equals("1"))
+                    newList.add(GlobalVariables.listItem.get(i));
+            }
+            adapter.setData(newList);
+            adapter.notifyDataSetChanged();
+
         }
 
         @Override
@@ -234,9 +252,9 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             }
             GlobalVariables.listItem = new ArrayList<Item>();
             Gson gson = new Gson();
-            for (int i = 0;i<itemArray.length();i++){
+            for (int i = 0; i < itemArray.length(); i++) {
                 try {
-                    GlobalVariables.listItem.add(gson.fromJson(itemArray.getJSONObject(i).toString(),Item.class));
+                    GlobalVariables.listItem.add(gson.fromJson(itemArray.getJSONObject(i).toString(), Item.class));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -248,39 +266,39 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
 
 
     private void anhxa() {
-        Autochess_Filter = (ImageView) view.findViewById(R.id.Autochess_Filter) ;
-        Dota2_Filter =(ImageView) view.findViewById(R.id.Dota2_Filter) ;
-        Csgo_Filter = (ImageView) view.findViewById(R.id.Csgo_Filter) ;
+        Autochess_Filter = (ImageView) view.findViewById(R.id.Autochess_Filter);
+        Dota2_Filter = (ImageView) view.findViewById(R.id.Dota2_Filter);
+        Csgo_Filter = (ImageView) view.findViewById(R.id.Csgo_Filter);
         Other_Filter = (ImageView) view.findViewById(R.id.Other_Filter);
         ListItems = (RecyclerView) view.findViewById(R.id.listviewitems);
-        arrayListItems = new ArrayList<Item>();
+        arrayListItems = new ArrayList<>();
 
-        for (int i = 0;i< GlobalVariables.listItem.size();i++){
-            arrayListItems.add(GlobalVariables.listItem.get(i));
+        for (int i = 0; i < GlobalVariables.listItem.size(); i++) {
+            if (GlobalVariables.listItem.get(i).getEnable().equals("1")) {
+                arrayListItems.add(GlobalVariables.listItem.get(i));
+            }
         }
-
-
     }
 
 
     public void createPopup(Item data) {
-        if(Integer.parseInt(GlobalVariables.user.getCoins()) >= Integer.parseInt(data.getPrice())){
+        if (Integer.parseInt(GlobalVariables.user.getCoins()) >= Integer.parseInt(data.getPrice())) {
             myDialog.setContentView(R.layout.popup_buy_item);
             myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            workingDialog(myDialog,data,true);
+            workingDialog(myDialog, data, true);
             myDialog.show();
-        }else{
+        } else {
             myDialog.setContentView(R.layout.popup_not_enoughcoin);
             myDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-            workingDialog(myDialog,data,false);
+            workingDialog(myDialog, data, false);
             myDialog.show();
         }
 
 
     }
 
-    private void workingDialog(final Dialog myDialog, Item data, Boolean isEnoughCoin) {
-        if(isEnoughCoin){
+    private void workingDialog(final Dialog myDialog, final Item data, Boolean isEnoughCoin) {
+        if (isEnoughCoin) {
             ImageView popup_imgitem = (ImageView) myDialog.findViewById(R.id.popup_imgitem);
             //popup_imgitem.setImageResource(data.getImgitem());
             Picasso.with(getActivity().getApplicationContext()).load(data.getImageURL()).into(popup_imgitem);
@@ -307,20 +325,22 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             TextView popup_desitem = (TextView) myDialog.findViewById(R.id.popup_desitem);
             popup_desitem.setText(data.getDescription());
 
-            Animation animstar3 = (Animation) AnimationUtils.loadAnimation(getActivity(),R.anim.anim_zoomin_out);
+            Animation animstar3 = (Animation) AnimationUtils.loadAnimation(getActivity(), R.anim.anim_zoomin_out);
             popup_imgitem.startAnimation(animstar3);
 
             //Code tính năng của popup ở đây.
-            Button  popup_btnconfirm = (Button) myDialog.findViewById(R.id.popup_btnconfirm);
+            Button popup_btnconfirm = (Button) myDialog.findViewById(R.id.popup_btnconfirm);
             popup_btnconfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(getActivity().getApplicationContext(),"Confirm",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity().getApplicationContext(), data.getID(), Toast.LENGTH_SHORT).show();
+                    clickedItemID = data.getID();
+                    new buyItem().execute();
                     myDialog.dismiss();
                 }
             });
-        }else{
-            Button  popup_btnconfirm = (Button) myDialog.findViewById(R.id.btn_getmore_popuperror);
+        } else {
+            Button popup_btnconfirm = (Button) myDialog.findViewById(R.id.btn_getmore_popuperror);
             popup_btnconfirm.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -330,6 +350,48 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             });
         }
 
+    }
+
+    class buyItem extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(getActivity());
+            pd.setMessage("Loading...please wait !");
+            pd.setCancelable(false);
+            pd.setIndeterminate(false);
+            pd.show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            pd.cancel();
+            if (buySuccess) {
+                //mua thanh cong, bat len thong bao da mua thanh cong
+                Toast.makeText(getActivity(), "BUY SUCCESS !", Toast.LENGTH_SHORT).show();
+
+            } else {
+                //mua that bai, co the do loi ket noi hoac thieu coin, nem ra thong bao o day
+                Toast.makeText(getActivity(), "Error occurred ! Please try again !", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            UserFunctions uf = new UserFunctions();
+            DatabaseHandler db = new DatabaseHandler(getActivity());
+            JSONObject json_registered = uf.buyItem(clickedItemID, GlobalVariables.user.getUserID());
+            try {
+                //mua thanh cong, load lai order, load lai user
+                Gson gson = new Gson();
+                GlobalVariables.user = gson.fromJson(json_registered.getJSONArray("user").getJSONObject(0).toString(),User.class);
+                db.addUser(GlobalVariables.user);
+                buySuccess = true;
+            } catch (Exception ee) {
+                buySuccess = false;
+            }
+            return null;
+        }
     }
 
 

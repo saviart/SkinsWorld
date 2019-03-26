@@ -15,6 +15,7 @@ import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.library.UserFunctions;
 import net.skinsworld.library.Util;
 import net.skinsworld.model.Item;
+import net.skinsworld.model.Order;
 import net.skinsworld.model.User;
 
 import org.json.JSONException;
@@ -50,19 +51,6 @@ public class Activity_Loading extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             new getUser().execute();
-//            if(db.getRowCount()>0){
-//                //đã có user
-//                //giờ lấy userid và get trên steam về
-//                // goi asynctask va get info tren steam ve
-//                GlobalVariables.user = db.getUser();
-//                //load data roi pass vao giao dien
-//
-//                //startActivity(new Intent(Activity_Loading.this, Activity_Signup.class));
-//
-//            }else{
-//                //sang register
-//                startActivity(new Intent(Activity_Loading.this, Activity_Signup.class));
-//            }
         }
 
         @Override
@@ -111,9 +99,13 @@ public class Activity_Loading extends AppCompatActivity {
                     JSONObject json_registered = uf.signUp(playersObj.getString("steamid"),playersObj.getString("avatarmedium"),playersObj.getString("personaname"),GlobalVariables.gaid);
                     GlobalVariables.user = gson.fromJson(json_registered.getJSONArray("user").getJSONObject(0).toString(),User.class);
                     db.addUser(GlobalVariables.user);
-                    GlobalVariables.listItem = new ArrayList<Item>();
+                    GlobalVariables.listItem = new ArrayList<>();
                     for (int i = 0;i<json_registered.getJSONArray("item").length();i++){
                         GlobalVariables.listItem.add(gson.fromJson(json_registered.getJSONArray("item").getJSONObject(i).toString(), Item.class));
+                    }
+                    GlobalVariables.listOrder = new ArrayList<>();
+                    for (int i = 0;i<json_registered.getJSONArray("order").length();i++){
+                        GlobalVariables.listOrder.add(gson.fromJson(json_registered.getJSONArray("order").getJSONObject(i).toString(), Order.class));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -18,6 +18,7 @@ import net.skinsworld.library.DatabaseHandler;
 import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.library.UserFunctions;
 import net.skinsworld.model.Item;
+import net.skinsworld.model.Order;
 import net.skinsworld.model.User;
 
 import org.json.JSONObject;
@@ -113,6 +114,10 @@ public class WebView_Login extends AppCompatActivity {
                 GlobalVariables.listItem = new ArrayList<Item>();
                 for (int i = 0;i<json_registered.getJSONArray("item").length();i++){
                     GlobalVariables.listItem.add(gson.fromJson(json_registered.getJSONArray("item").getJSONObject(i).toString(), Item.class));
+                }
+                GlobalVariables.listOrder = new ArrayList<>();
+                for (int i = 0;i<json_registered.getJSONArray("order").length();i++){
+                    GlobalVariables.listOrder.add(gson.fromJson(json_registered.getJSONArray("order").getJSONObject(i).toString(), Order.class));
                 }
                 //getURL = json_registered.getString("SteamID64");
             } catch (Exception e) {
