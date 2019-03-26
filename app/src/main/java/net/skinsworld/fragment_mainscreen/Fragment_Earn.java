@@ -1,16 +1,16 @@
 package net.skinsworld.fragment_mainscreen;
 
 import android.app.AlertDialog;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import  android.view.View;
 import  android.view.ViewGroup;
@@ -21,9 +21,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
 import net.skinsworld.R;
 import net.skinsworld.adapter.Adapter_RcvEarn;
-import net.skinsworld.model.Model_LastEarning;
+import net.skinsworld.library.GlobalVariables;
+import net.skinsworld.library.UserFunctions;
+import net.skinsworld.model.History;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -37,36 +46,25 @@ public class Fragment_Earn extends Fragment {
     ImageView sonicvideo;
     ImageView btn_refresh_lastearning;
     TextView tv_missingcoins;
-
+    ProgressDialog pd;
 
     RecyclerView ListItems;
-    ArrayList<Model_LastEarning> arrayListItems;
     Adapter_RcvEarn adapter;
 
+    public Fragment_Earn(){}
 
-
-
-
-
-    public Fragment_Earn(Context context){
-      //  Toast.makeText(context,"sdfgsdfgdsfg",Toast.LENGTH_LONG).show();
-    }
 
     @NonNull
     @Override
     public  View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceStage) {
         view = inflater.inflate(R.layout.fragment_earn,container,false);
         anhxa();
-        adapter = new Adapter_RcvEarn(getActivity(), arrayListItems);
+        adapter = new Adapter_RcvEarn(getActivity(), GlobalVariables.listHistory);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         ListItems.setLayoutManager(layoutManager);
         ListItems.setAdapter(adapter);
-
-
-
-
-
+       // adapter.notifyDataSetChanged();
         fyberwall = (ImageView) view.findViewById(R.id.fyberwall);
         tapjoywall = (ImageView) view.findViewById(R.id.tapjoywall);
         sonicwall = (ImageView) view.findViewById(R.id.sonicwall);
@@ -122,11 +120,52 @@ public class Fragment_Earn extends Fragment {
         btn_refresh_lastearning.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(),"đã bấm Refesh Last Earning",Toast.LENGTH_SHORT).show();
+                new loadMyHistory().execute();
+
             }
         });
     }
+    class loadMyHistory extends AsyncTask<String,String,String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(getActivity());
+            pd.setMessage("Loading...please wait !");
+            pd.setCancelable(false);
+            pd.setIndeterminate(false);
+            pd.show();
+        }
 
+        @Override
+        protected void onPostExecute(String s) {
+            pd.cancel();
+            adapter.setData(GlobalVariables.listHistory);
+            adapter.notifyDataSetChanged();
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            UserFunctions uf = new UserFunctions();
+            JSONObject historyObj = uf.loadMyHistory(GlobalVariables.user.getUserID());
+            JSONArray historyArray = null;
+            try {
+                historyArray = historyObj.getJSONArray("history");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            GlobalVariables.listHistory = new ArrayList<>();
+            Gson gson = new Gson();
+            for (int i = 0; i < historyArray.length(); i++) {
+                try {
+                    GlobalVariables.listHistory.add(gson.fromJson(historyArray.getJSONObject(i).toString(), History.class));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
     private void click_fyberwall() {
         fyberwall.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,15 +227,6 @@ public class Fragment_Earn extends Fragment {
         tv_missingcoins = (TextView) view.findViewById(R.id.tv_missingcoins);
         btn_refresh_lastearning = (ImageView) view.findViewById(R.id.btn_refresh_lastearning);
         ListItems = (RecyclerView) view.findViewById(R.id.rvearnitems);
-        arrayListItems = new ArrayList<>();
-        arrayListItems.add(new Model_LastEarning("Fyber wall","2019-03-15 19:02:32","50"));
-        arrayListItems.add(new Model_LastEarning("Tapjoy wall","2019-03-14 05:02:32","120"));
-        arrayListItems.add(new Model_LastEarning("Tapjoy wall","2019-03-23 12:02:32","530"));
-        arrayListItems.add(new Model_LastEarning("Tapjoy wall","2019-03-03 10:02:32","630"));
-        arrayListItems.add(new Model_LastEarning("Tapjoy wall","2019-01-18 17:02:32","1100"));
-        arrayListItems.add(new Model_LastEarning("Fyber wall","2019-03-19 15:02:32","330"));
-
-
 
         //Thêm item từ database code ở đây, còn anh làm thế nào gọi được database thì kệ mẹ anh =))))))
 

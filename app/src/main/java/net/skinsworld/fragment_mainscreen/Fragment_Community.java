@@ -1,6 +1,7 @@
 package net.skinsworld.fragment_mainscreen;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,13 +15,22 @@ import  android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+
 import net.skinsworld.R;
 
 import net.skinsworld.adapter.Adapter_RcvTopuser;
 
 import net.skinsworld.adapter.Adapter_TransactionHistory;
-import net.skinsworld.model.Model_TopUser;
-import net.skinsworld.model.Model_TransactionHistory;
+import net.skinsworld.library.GlobalVariables;
+import net.skinsworld.library.UserFunctions;
+import net.skinsworld.model.History;
+import net.skinsworld.model.Recent;
+import net.skinsworld.model.TopUser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -28,8 +38,6 @@ public class Fragment_Community extends Fragment {
     View view;
     RecyclerView ListItems1;
     RecyclerView ListItems2;
-    ArrayList<Model_TransactionHistory> arrayListItems1;
-    ArrayList<Model_TopUser> arrayListItems2;
     Adapter_TransactionHistory adapter1;
     Adapter_RcvTopuser adapter2;
     ImageView ic_refresh;
@@ -52,8 +60,8 @@ public class Fragment_Community extends Fragment {
             @Override
             public void onRefresh() {
                 swipe_Fragment_Community.setRefreshing(true);
-                // goi async load data ve sau do set refreshing false;
-                swipe_Fragment_Community.setRefreshing(false);
+                new loadRecentOrder().execute();
+
             }
         });
 
@@ -62,7 +70,7 @@ public class Fragment_Community extends Fragment {
 
 
        //setup layout transactions history
-        adapter1 = new Adapter_TransactionHistory(getActivity(), arrayListItems1);
+        adapter1 = new Adapter_TransactionHistory(getActivity(), GlobalVariables.listRecent);
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext());
         layoutManager1.setOrientation(LinearLayoutManager.HORIZONTAL);
         ListItems1.setLayoutManager(layoutManager1);
@@ -71,7 +79,7 @@ public class Fragment_Community extends Fragment {
 
 
         //setup layout top usser
-        adapter2 = new Adapter_RcvTopuser(getActivity(), arrayListItems2);
+        adapter2 = new Adapter_RcvTopuser(getActivity(), GlobalVariables.listTop);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
         layoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
         ListItems2.setLayoutManager(layoutManager2);
@@ -79,24 +87,48 @@ public class Fragment_Community extends Fragment {
 
         return view;
     }
+    class loadRecentOrder extends AsyncTask<String,String,String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            swipe_Fragment_Community.setRefreshing(false);
+            adapter1.setData(GlobalVariables.listRecent);
+            adapter1.notifyDataSetChanged();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            UserFunctions uf = new UserFunctions();
+            JSONObject recentObj = uf.loadRecent();
+            JSONArray recentArray = null;
+            try {
+                recentArray = recentObj.getJSONArray("recent");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            GlobalVariables.listRecent = new ArrayList<>();
+            Gson gson = new Gson();
+            for (int i = 0; i < recentArray.length(); i++) {
+                try {
+                    GlobalVariables.listRecent.add(gson.fromJson(recentArray.getJSONObject(i).toString(), Recent.class));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+    }
     private void anhxa() {
 
 
         ListItems1 = (RecyclerView) view.findViewById(R.id.rvtransactionhistory);
         ListItems2 = (RecyclerView) view.findViewById(R.id.rvtopuser);
-        arrayListItems1 = new ArrayList<>();
-        arrayListItems2 = new ArrayList<>();
 
-        arrayListItems2.add(new Model_TopUser(R.drawable.img_avt, "Quang Phụ Khoa", "19/2/2019", "4032"));
-        arrayListItems2.add(new Model_TopUser(R.drawable.img_avt, "Quang Phụ Khoa", "19/2/2019", "4032"));
-        arrayListItems2.add(new Model_TopUser(R.drawable.img_avt, "Quang Phụ Khoa", "19/2/2019", "4032"));
-        arrayListItems2.add(new Model_TopUser(R.drawable.img_avt, "Quang Phụ Khoa", "19/2/2019", "4032"));
 
-        arrayListItems1.add(new Model_TransactionHistory(R.drawable.img_avt, "Quang Phụ Khoa", "Skins Name", "30min ago"));
-        arrayListItems1.add(new Model_TransactionHistory(R.drawable.img_avt, "Quang Phụ Khoa", "Skins Name", "30min ago"));
-        arrayListItems1.add(new Model_TransactionHistory(R.drawable.img_avt, "Quang Phụ Khoa", "Skins Name", "30min ago"));
-        arrayListItems1.add(new Model_TransactionHistory(R.drawable.img_avt, "Quang Phụ Khoa", "Skins Name", "30min ago"));
-        arrayListItems1.add(new Model_TransactionHistory(R.drawable.img_avt, "Quang Phụ Khoa", "Skins Name", "30min ago"));
 
     }
 

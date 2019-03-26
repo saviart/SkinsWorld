@@ -64,6 +64,19 @@ public class UserFunctions {
 		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
 		return json;
 	}
+	public JSONObject loadMyHistory(String UserID){
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", GlobalVariables.load_my_history_tag));
+		params.add(new BasicNameValuePair("userid", UserID));
+		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
+		return json;
+	}
+	public JSONObject loadRecent(){
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", GlobalVariables.load_recent_order_tag));
+		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
+		return json;
+	}
 	public JSONObject setInvitedBy(String userid, String invitedcode){
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("tag", GlobalVariables.set_invited_by_tag));
@@ -73,6 +86,22 @@ public class UserFunctions {
 		long steamID64 = steamID32 + Long.parseLong("76561197960265728");
 		String invitedUser = steamID64+"";
 		params.add(new BasicNameValuePair("invitedUser", invitedUser));
+		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
+		return json;
+	}
+	public JSONObject getDailyCoins(String userid){
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", GlobalVariables.get_daily_coins_tag));
+		params.add(new BasicNameValuePair("userid", userid));
+		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
+		return json;
+	}
+	public JSONObject setTradeURL(String userid, String tradeurl)
+	{
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("tag", GlobalVariables.set_trade_url_tag));
+		params.add(new BasicNameValuePair("userid", userid));
+		params.add(new BasicNameValuePair("tradeurl", tradeurl));
 		JSONObject json = jsonParser.getJSONFromUrl(GlobalVariables.apiURL, params);
 		return json;
 	}

@@ -1,5 +1,8 @@
 package net.skinsworld;
 
+import android.app.Activity;
+import android.app.Application;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -32,7 +35,7 @@ public class Activity_MainScreen extends AppCompatActivity {
     public static Activity_MainScreen main;
     private ActionBar toolbar;
     private BottomNavigationView navigation;
-
+    public static Activity AM;
 
 
     public void selectIndex(int newIndex) {
@@ -55,6 +58,7 @@ public class Activity_MainScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AM = this;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -62,7 +66,6 @@ public class Activity_MainScreen extends AppCompatActivity {
                 LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         setContentView(R.layout.activity_mainscreen);
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-        Toast.makeText(Activity_MainScreen.this, "---"+ db.getUser().getPersonaName(), Toast.LENGTH_LONG).show();
         toolbar = getSupportActionBar();
         initUI();
         setUI();
@@ -74,7 +77,11 @@ public class Activity_MainScreen extends AppCompatActivity {
         //mặc định set vị trí là profile
         navigation.setSelectedItemId(R.id.navigation_profile);
 
-        //neu chua nhap code thi show dialog nhap code len
+        if(GlobalVariables.user.getActive().equals("0")){
+            Intent intent = new Intent(Activity_MainScreen.this,Activity_UserBlocked.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+        }
 
 
 //
@@ -190,7 +197,7 @@ public class Activity_MainScreen extends AppCompatActivity {
         Adapter_MainScreen adapter = new Adapter_MainScreen(getSupportFragmentManager());
         adapter.AddFragment(new Fragment_Skin(), "Skins");
         adapter.AddFragment(new Fragment_Profile(), "Profile");
-        adapter.AddFragment(new Fragment_Earn(getApplicationContext()), "Earn");
+        adapter.AddFragment(new Fragment_Earn(), "Earn");
         adapter.AddFragment(new Fragment_Community(), "Setting");
         mViewPager = (ViewPager) findViewById(R.id.viewpager_main);
         mViewPager.setAdapter(adapter);

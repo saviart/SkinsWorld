@@ -11,20 +11,30 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import net.skinsworld.R;
-import net.skinsworld.model.Model_TransactionHistory;
+import net.skinsworld.model.Recent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter_TransactionHistory extends RecyclerView.Adapter<Adapter_TransactionHistory.ItemViewHolder> {
-    private List<Model_TransactionHistory> data = new ArrayList<>();
+    private List<Recent> data = new ArrayList<>();
     private Context context;
 
 
-    public Adapter_TransactionHistory(Context context, List<Model_TransactionHistory> transitemsList) {
+    public Adapter_TransactionHistory(Context context, List<Recent> transitemsList) {
         this.data = transitemsList;
-        context = context;
+        this.context = context;
+    }
+
+    public List<Recent> getData() {
+        return data;
+    }
+
+    public void setData(List<Recent> data) {
+        this.data = data;
     }
 
     @Override
@@ -36,18 +46,36 @@ public class Adapter_TransactionHistory extends RecyclerView.Adapter<Adapter_Tra
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Model_TransactionHistory item = data.get(position);
-        holder.trans_username.setText(item.getTrans_username());
-        holder.trans_skinsimage.setImageResource(item.getTrans_skinsimage());
-        holder.trans_skinsname.setText(item.getTrans_skinsname());
-        holder.trans_time.setText(item.getTrans_time());
+        Recent item = data.get(position);
+        holder.trans_username.setText(item.getPersonaName());
+
+        holder.trans_skinsname.setText(item.getItemName());
+        //holder.trans_time.setText(item.getTimeDiff() + " minutes ago");
+        String display = "";
+        int timeDiff = Integer.parseInt(item.getTimeDiff());
+        int day = timeDiff / 60 / 24;
+        if (day >= 1) {
+            display += day + " D - ";
+            timeDiff = timeDiff - day * 60 * 24;
+            //sang gio
+            display += timeDiff / 60 + " H - " + timeDiff % 60 + " M ago";
+        } else {
+            //sang gio
+            display += timeDiff / 60 + " H - " + timeDiff % 60 + " M ago";
+        }
+        holder.trans_time.setText(display);
+        Picasso.with(context).load(item.getImageURL()).into(holder.trans_skinsimage);
 
 
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        try {
+            return data.size();
+        } catch (Exception ee) {
+            return 0;
+        }
     }
 
 

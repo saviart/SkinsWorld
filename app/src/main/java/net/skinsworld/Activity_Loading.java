@@ -1,5 +1,6 @@
 package net.skinsworld;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -14,10 +15,14 @@ import net.skinsworld.library.DatabaseHandler;
 import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.library.UserFunctions;
 import net.skinsworld.library.Util;
+import net.skinsworld.model.History;
 import net.skinsworld.model.Item;
 import net.skinsworld.model.Order;
+import net.skinsworld.model.Recent;
+import net.skinsworld.model.TopUser;
 import net.skinsworld.model.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,9 +34,12 @@ public class Activity_Loading extends AppCompatActivity {
 
     Boolean isDeviceRegistered = false;
 
+    public static Activity AL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AL = this;
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
@@ -106,6 +114,31 @@ public class Activity_Loading extends AppCompatActivity {
                     GlobalVariables.listOrder = new ArrayList<>();
                     for (int i = 0;i<json_registered.getJSONArray("order").length();i++){
                         GlobalVariables.listOrder.add(gson.fromJson(json_registered.getJSONArray("order").getJSONObject(i).toString(), Order.class));
+                    }
+                    GlobalVariables.totalInvited = json_registered.getString("totalInvited");
+                    GlobalVariables.totalCoins = json_registered.getString("totalCoins");
+
+                    GlobalVariables.listHistory = new ArrayList<>();
+                    for (int i = 0;i<json_registered.getJSONArray("history").length();i++){
+                        GlobalVariables.listHistory.add(gson.fromJson(json_registered.getJSONArray("history").getJSONObject(i).toString(), History.class));
+                    }
+                    GlobalVariables.listRecent = new ArrayList<>();
+                    JSONArray recentArray = json_registered.getJSONArray("recent");
+                    for (int i = 0; i < recentArray.length(); i++) {
+                        try {
+                            GlobalVariables.listRecent.add(gson.fromJson(recentArray.getJSONObject(i).toString(), Recent.class));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    GlobalVariables.listTop = new ArrayList<>();
+                    JSONArray topArray = json_registered.getJSONArray("topuser");
+                    for (int i = 0; i < topArray.length(); i++) {
+                        try {
+                            GlobalVariables.listTop.add(gson.fromJson(topArray.getJSONObject(i).toString(), TopUser.class));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

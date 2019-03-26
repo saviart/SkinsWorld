@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -17,10 +18,15 @@ import com.google.gson.Gson;
 import net.skinsworld.library.DatabaseHandler;
 import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.library.UserFunctions;
+import net.skinsworld.model.History;
 import net.skinsworld.model.Item;
 import net.skinsworld.model.Order;
+import net.skinsworld.model.Recent;
+import net.skinsworld.model.TopUser;
 import net.skinsworld.model.User;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -118,6 +124,32 @@ public class WebView_Login extends AppCompatActivity {
                 GlobalVariables.listOrder = new ArrayList<>();
                 for (int i = 0;i<json_registered.getJSONArray("order").length();i++){
                     GlobalVariables.listOrder.add(gson.fromJson(json_registered.getJSONArray("order").getJSONObject(i).toString(), Order.class));
+                }
+                //Log.v("----------v-------",json_registered.getString("totalInvited"));
+                GlobalVariables.totalInvited = json_registered.getString("totalInvited");
+                GlobalVariables.totalCoins = json_registered.getString("totalCoins");
+
+                GlobalVariables.listHistory = new ArrayList<>();
+                for (int i = 0;i<json_registered.getJSONArray("history").length();i++){
+                    GlobalVariables.listHistory.add(gson.fromJson(json_registered.getJSONArray("history").getJSONObject(i).toString(), History.class));
+                }
+                GlobalVariables.listRecent = new ArrayList<>();
+                JSONArray recentArray = json_registered.getJSONArray("recent");
+                for (int i = 0; i < recentArray.length(); i++) {
+                    try {
+                        GlobalVariables.listRecent.add(gson.fromJson(recentArray.getJSONObject(i).toString(), Recent.class));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                GlobalVariables.listTop = new ArrayList<>();
+                JSONArray topArray = json_registered.getJSONArray("topuser");
+                for (int i = 0; i < topArray.length(); i++) {
+                    try {
+                        GlobalVariables.listTop.add(gson.fromJson(topArray.getJSONObject(i).toString(), TopUser.class));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
                 //getURL = json_registered.getString("SteamID64");
             } catch (Exception e) {

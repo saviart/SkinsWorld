@@ -9,19 +9,27 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import net.skinsworld.R;
-import net.skinsworld.model.Model_LastEarning;
+import net.skinsworld.model.History;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter_RcvEarn extends RecyclerView.Adapter<Adapter_RcvEarn.ItemViewHolder> {
-    private List<Model_LastEarning> data = new ArrayList<>();
+    private List<History> data = new ArrayList<>();
     private Context context;
 
 
-    public Adapter_RcvEarn(Context context, List<Model_LastEarning> itemsList) {
+    public Adapter_RcvEarn(Context context, List<History> itemsList) {
         this.data = itemsList;
-        context = context;
+        this.context = context;
+    }
+
+    public List<History> getData() {
+        return data;
+    }
+
+    public void setData(List<History> data) {
+        this.data = data;
     }
 
     @Override
@@ -33,17 +41,31 @@ public class Adapter_RcvEarn extends RecyclerView.Adapter<Adapter_RcvEarn.ItemVi
 
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
-        Model_LastEarning item = data.get(position);
-        holder.name_offer.setText(item.getName_offer());
-        holder.time_complete.setText(item.getTime_complete());
-        holder.numb_earn_coins.setText(item.getNumb_earn_coins());
+        History item = data.get(position);
+        if(item.getOfferName().matches("^[0-9]*$"))
+        {
+            Long abc = Long.parseLong(item.getOfferName());
+            Long def = Long.parseLong("76561197960265728");
+            holder.name_offer.setText("Input invitation code : SW"+(abc-def));
+        }
+        else
+        {
+            holder.name_offer.setText(item.getOfferName());
+        }
 
-
+        holder.time_complete.setText(item.getTime());
+        holder.numb_earn_coins.setText(item.getCoins());
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        try
+        {
+            return data.size();
+        }catch (Exception ee){
+            return 0;
+        }
+
     }
 
 

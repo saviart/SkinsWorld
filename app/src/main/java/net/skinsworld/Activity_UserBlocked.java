@@ -9,5 +9,7 @@ public class Activity_UserBlocked extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userblocked);
+        Activity_MainScreen.AM.finish();
+        Activity_Loading.AL.finish();
     }
 }

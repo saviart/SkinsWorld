@@ -3,10 +3,14 @@ package net.skinsworld.library;
 
 
 
+import net.skinsworld.model.History;
 import net.skinsworld.model.Item;
 import net.skinsworld.model.Order;
+import net.skinsworld.model.Recent;
+import net.skinsworld.model.TopUser;
 import net.skinsworld.model.User;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -19,6 +23,10 @@ public class GlobalVariables {
 	public static final String buy_item_tag = "buy_item";
 	public static final String load_order_tag = "load_order";
 	public static final String set_invited_by_tag = "set_invited_by";
+	public static final String get_daily_coins_tag = "get_daily_coins";
+	public static final String set_trade_url_tag = "set_trade_url";
+	public static final String load_my_history_tag = "load_my_history";
+	public static final String load_recent_order_tag = "load_recent_order";
 	public static final String KEY_ID = "UserID";
 	public static final String KEY_STEAM_ID_64 = "SteamID64";
 	public static final String KEY_TRADE_URL = "TradeURL";
@@ -37,6 +45,10 @@ public class GlobalVariables {
 	public static String gaid="";
 	public static ArrayList<Item> listItem;
 	public static ArrayList<Order> listOrder;
-
+	public static ArrayList<History> listHistory;
+	public static ArrayList<Recent> listRecent;
+	public static ArrayList<TopUser> listTop;
+	public static String totalInvited = "0";
+	public static String totalCoins = "0";
 	
 }

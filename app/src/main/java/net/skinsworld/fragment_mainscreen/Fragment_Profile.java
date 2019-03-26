@@ -1,6 +1,5 @@
 package net.skinsworld.fragment_mainscreen;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -8,9 +7,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,14 +16,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.NonNull;
-import android.view.Window;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -40,9 +33,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import net.skinsworld.Activity_MainScreen;
-import net.skinsworld.Activity_Signup;
 import net.skinsworld.R;
-import net.skinsworld.WebView_Login;
 import net.skinsworld.adapter.AdapterRcvProfile;
 
 import net.skinsworld.library.DatabaseHandler;
@@ -57,7 +48,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Fragment_Profile extends Fragment {
     View view;
@@ -69,20 +59,24 @@ public class Fragment_Profile extends Fragment {
     ImageView btn_dailyreward;
     Button btn_share;
     Button btn_tradeurl_help;
-
+    Button btnSetTradeURL;
     ImageView ivAvatar;
     TextView tvUsername;
     TextView tvCoins;
     TextView tvJoinDate;
     EditText etTradeURL;
-    TextView invitecode;
+    TextView tvInviteCode;
     ImageView btn_refresh_lastorder;
+    TextView tvTotalInvited;
+    TextView tvTotalCoins;
     EditText etCode;
     private SwipeRefreshLayout swipe_Fragment_Profile;
 
     ProgressDialog pd;
     Boolean isSwipeOK = false;
     Boolean isInputCodeOK = false;
+    Boolean canTakeDailyCoins = false;
+    Boolean isSetTradeURLOK = false;
 
     public Fragment_Profile() {
     }
@@ -107,6 +101,7 @@ public class Fragment_Profile extends Fragment {
         clickbtn_invite();
         clickbtn_share();
         clickbtn_dailyreward();
+        clickSetURL();
 
 
         //set toan bo thong tin user vao giao dien
@@ -138,8 +133,16 @@ public class Fragment_Profile extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    new submitCode().execute();
-                    dialog.dismiss();
+                    //validate
+                    if((etCode.getText().toString().trim().equals(""))||(!(etCode.getText().toString().trim().toUpperCase().contains("SW")))||(etCode.getText().toString().trim().length()!=11))
+                    {
+                        Toast.makeText(getActivity(), "You must input correct invitation code format !", Toast.LENGTH_SHORT).show();
+                    }else{
+                        new submitCode().execute();
+                        dialog.dismiss();
+                    }
+
+
                 }
             });
 
@@ -159,7 +162,7 @@ public class Fragment_Profile extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             swipe_Fragment_Profile.setRefreshing(false);
-            if(isSwipeOK){
+            if (isSwipeOK) {
                 setUserProfile();
                 arrayListItems = new ArrayList<>();
                 for (int i = 0; i < GlobalVariables.listOrder.size(); i++) {
@@ -175,7 +178,6 @@ public class Fragment_Profile extends Fragment {
                 adapter = new AdapterRcvProfile(getActivity(), arrayListItems);
                 ListItems.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
-
             }
         }
 
@@ -194,6 +196,8 @@ public class Fragment_Profile extends Fragment {
                 for (int i = 0; i < json_registered.getJSONArray("order").length(); i++) {
                     GlobalVariables.listOrder.add(gson.fromJson(json_registered.getJSONArray("order").getJSONObject(i).toString(), Order.class));
                 }
+                GlobalVariables.totalInvited = json_registered.getString("totalInvited");
+                GlobalVariables.totalCoins = json_registered.getString("totalCoins");
                 isSwipeOK = true;
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -257,6 +261,66 @@ public class Fragment_Profile extends Fragment {
         }
     }
 
+    private void clickSetURL() {
+        btnSetTradeURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //validate
+                if((etTradeURL.getText().toString().trim().equals(""))||(!(etTradeURL.getText().toString().contains("https://steamcommunity.com/tradeoffer")))){
+                    Toast.makeText(getActivity(),"You must input correct Trade URL format !",Toast.LENGTH_SHORT).show();
+                }else{
+                    new setURL().execute();
+                }
+
+            }
+        });
+    }
+
+    class setURL extends  AsyncTask<String,String,String>{
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pd = new ProgressDialog(getActivity());
+            pd.setMessage("Loading...please wait !");
+            pd.setCancelable(false);
+            pd.setIndeterminate(false);
+            pd.show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            pd.cancel();
+            if(isSetTradeURLOK){
+                etTradeURL.setText(GlobalVariables.user.getTradeURL());
+                Toast.makeText(getActivity(),"Done !",Toast.LENGTH_LONG).show();
+                InputMethodManager inputManager =
+                        (InputMethodManager) getActivity().
+                                getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.hideSoftInputFromWindow(
+                        getActivity().getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+            else Toast.makeText(getActivity(),"Error occurred ! Please try again later !",Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            UserFunctions uf = new UserFunctions();
+            DatabaseHandler db = new DatabaseHandler(getActivity());
+            JSONObject js = uf.setTradeURL(GlobalVariables.user.getUserID(), etTradeURL.getText().toString().trim());
+            try {
+                isSetTradeURLOK = js.getJSONObject("Success").getString("Message").equals("OK");
+                Gson gson = new Gson();
+                GlobalVariables.user = gson.fromJson(js.getJSONArray("user").getJSONObject(0).toString(),User.class);
+                db.addUser(GlobalVariables.user);
+            } catch (JSONException e) {
+                e.printStackTrace();
+                isSetTradeURLOK = false;
+            }
+            return null;
+        }
+    }
+
     private void clickbtn_tradeurl_help() {
         btn_tradeurl_help.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -304,8 +368,13 @@ public class Fragment_Profile extends Fragment {
         protected void onPostExecute(String s) {
             pd.cancel();
             try {
-
-                new doSwipe().execute();
+                if(isInputCodeOK){
+                    Toast.makeText(getActivity(), "OK !", Toast.LENGTH_SHORT).show();
+                    new doSwipe().execute();
+                }
+                else{
+                    Toast.makeText(getActivity(), "Invitation code unavailable !", Toast.LENGTH_SHORT).show();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -317,10 +386,16 @@ public class Fragment_Profile extends Fragment {
         protected String doInBackground(String... strings) {
             UserFunctions uf = new UserFunctions();
             DatabaseHandler db = new DatabaseHandler(getActivity());
-            JSONObject js = uf.setInvitedBy(GlobalVariables.user.getUserID(),etCode.getText().toString().trim());
+            JSONObject js = uf.setInvitedBy(GlobalVariables.user.getUserID(), etCode.getText().toString().trim());
             try {
-                isInputCodeOK = js.getJSONObject("Success").getString("Message").equals("OK");
-                GlobalVariables.user.setCoins(""+(Integer.parseInt(GlobalVariables.user.getCoins())+50));
+                if(js.getJSONObject("Success").getString("Message").equals("OK")){
+                    GlobalVariables.user.setCoins("" + (Integer.parseInt(GlobalVariables.user.getCoins()) + 50));
+                    isInputCodeOK = true;
+                }
+                if(js.getJSONObject("Success").getString("Message").equals("No user !")){
+                    isInputCodeOK = false;
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
                 isInputCodeOK = false;
@@ -341,6 +416,8 @@ public class Fragment_Profile extends Fragment {
         tvCoins.setText(GlobalVariables.user.getCoins());
         tvJoinDate.setText(GlobalVariables.user.getCreatedDate());
         etTradeURL.setText(GlobalVariables.user.getTradeURL());
+        tvTotalCoins.setText(GlobalVariables.totalCoins==null?"0":GlobalVariables.totalCoins);
+        tvTotalInvited.setText(GlobalVariables.totalInvited);
     }
 
 
@@ -350,17 +427,67 @@ public class Fragment_Profile extends Fragment {
             public void onClick(View v) {
                 // custom dialog
 
-                final BottomSheetDialog dailypoint = new BottomSheetDialog(getContext());
 
-                dailypoint.setContentView(R.layout.popup_daily_reward_steamprofile);
-                dailypoint.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
+
+                String prefix = "SkinsWorld.net";
+                if (GlobalVariables.user.getPersonaName().toUpperCase().contains(prefix.toUpperCase())) {
+                    //đã có prefix ở tên trong steam
+                    //if chưa nhận
+                    new getDailyCoins().execute();
+
+                } else {
+                    BottomSheetDialog dailypoint = new BottomSheetDialog(getContext());
+                    dailypoint.setContentView(R.layout.popup_daily_reward_steamprofile);
+                    dailypoint.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
+                    dailypoint.show();
+                }
+
 
                 // set the custom dialog components - text, image and button
 
 
-                dailypoint.show();
+
             }
         });
+    }
+
+    class getDailyCoins extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if (canTakeDailyCoins) {
+                //cong coins
+                BottomSheetDialog dailypoint = new BottomSheetDialog(getActivity());
+                dailypoint.setContentView(R.layout.popup_daily_reward);
+                dailypoint.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
+                dailypoint.show();
+
+            } else {
+                BottomSheetDialog dailypoint = new BottomSheetDialog(getActivity());
+                dailypoint.setContentView(R.layout.popup_daily_rewarded);
+                dailypoint.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
+                dailypoint.show();
+            }
+
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            UserFunctions uf = new UserFunctions();
+            JSONObject js = uf.getDailyCoins(GlobalVariables.user.getUserID());
+            try {
+                canTakeDailyCoins = js.getString("Error").equals("0");
+                return null;
+            } catch (JSONException e) {
+                e.printStackTrace();
+                canTakeDailyCoins = false;
+            }
+            return null;
+        }
     }
 
     private void clickbtn_share() {
@@ -386,7 +513,7 @@ public class Fragment_Profile extends Fragment {
 
                 // set the custom dialog components - text, image and button
                 final TextView popup_invite_code = (TextView) dialog.findViewById(R.id.popup_invite_code);
-                popup_invite_code.setText("SW"+ (Long.parseLong(GlobalVariables.user.getSteamID64()) - Long.parseLong("76561197960265728")) );
+                popup_invite_code.setText("SW" + (Long.parseLong(GlobalVariables.user.getSteamID64()) - Long.parseLong("76561197960265728")));
 
 
                 Button popup_invite_copyintivecode = (Button) dialog.findViewById(R.id.popup_invite_copyintivecode);
@@ -439,6 +566,8 @@ public class Fragment_Profile extends Fragment {
         btn_invite = (Button) view.findViewById(R.id.btn_invite);
         btn_getmore = (Button) view.findViewById(R.id.btn_getmore);
         ListItems = (RecyclerView) view.findViewById(R.id.rvtransitems);
+        tvTotalInvited = view.findViewById(R.id.tvTotalInvited);
+        tvTotalCoins = view.findViewById(R.id.tvTotalCoins);
         arrayListItems = new ArrayList<>();
         for (int i = 0; i < GlobalVariables.listOrder.size(); i++) {
             Model_Profile m = new Model_Profile();
@@ -450,13 +579,15 @@ public class Fragment_Profile extends Fragment {
             }
             arrayListItems.add(m);
         }
-
+        tvTotalInvited.setText(GlobalVariables.totalInvited);
+        tvTotalCoins.setText(GlobalVariables.totalCoins==null?"0":GlobalVariables.totalCoins);
         ivAvatar = view.findViewById(R.id.ivAvatar);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvCoins = view.findViewById(R.id.tvCoins);
         tvJoinDate = view.findViewById(R.id.tvJoinDate);
         etTradeURL = view.findViewById(R.id.etTradeURL);
-        invitecode = view.findViewById(R.id.popup_invitecode);
+        tvInviteCode = view.findViewById(R.id.popup_invitecode);
+        btnSetTradeURL = view.findViewById(R.id.btn_seturl);
 
         //Thêm item từ database code ở đây
 
