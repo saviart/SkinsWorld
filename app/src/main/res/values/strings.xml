@@ -11,6 +11,7 @@
     <string name="title_activity__user_blocked">Activity_UserBlocked</string>
     <string name="policy_url">http://skinsworld.net/policy/conditions.html</string>
     <string name="help_tradeurl_url">http://skinsworld.net/policy/tradeurl_help.html</string>
+    <string name="help_missingcoins_url">http://skinsworld.net/policy/missingcoins_help.html</string>
 
 
 

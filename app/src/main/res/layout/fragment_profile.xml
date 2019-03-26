@@ -312,6 +312,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="No trade url has been set"
+                                android:lines="1"
+                                android:singleLine="true"
                                 android:textSize="10sp"
                                 android:textColor="#ffff"
                                 android:textColorHint="#ffff"
@@ -338,7 +340,7 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/poppinsmedium"
-                                            android:text="Adding SkinWorld to your steam profile name to get daily coins"
+                                            android:text="Please input the URL  and press button Set URL:"
                                             android:textColor="#ffff"
                                             android:textSize="10sp" />
 
@@ -410,7 +412,7 @@
                 android:layout_margin="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="In order to use our trade offer system, we need your Steam trade URL. This URL will not be publically visable. Please input the URL  and press Set Ủ:"
+                android:text="In order to use our trade offer system, we need your Steam trade URL. This URL will not be publically visable."
                 android:textColor="#FF898888"
                 android:textSize="10sp"/>
 

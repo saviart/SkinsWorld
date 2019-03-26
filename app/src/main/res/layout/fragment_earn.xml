@@ -21,11 +21,12 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/bg_missingpoint">
                 <TextView
+                    android:id="@+id/tv_missingcoins"
                     android:gravity="center"
                     android:drawableLeft="@drawable/ic_missingpoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tap here if you have issues with missing point"
+                    android:text="Tap here if you have issues with missing coins"
                     android:textSize="10dp"
                     android:textColor="#ffff"
                     android:fontFamily="@font/poppinsmedium"/>

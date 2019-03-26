@@ -1,6 +1,8 @@
 package net.skinsworld.fragment_mainscreen;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
@@ -13,7 +15,10 @@ import android.view.LayoutInflater;
 import  android.view.View;
 import  android.view.ViewGroup;
 import android.support.annotation.NonNull;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import net.skinsworld.R;
@@ -31,6 +36,7 @@ public class Fragment_Earn extends Fragment {
     ImageView tapjoyvideo;
     ImageView sonicvideo;
     ImageView btn_refresh_lastearning;
+    TextView tv_missingcoins;
 
 
     RecyclerView ListItems;
@@ -68,7 +74,7 @@ public class Fragment_Earn extends Fragment {
         tapjoyvideo = (ImageView) view.findViewById(R.id.tapjoyvideo);
         sonicvideo = (ImageView) view.findViewById(R.id.sonicvideo);
 
-
+        click_missingcoins();
         click_btn_refresh_lastearning();
         click_sonicvideo();
         click_tapjoyvideo();
@@ -78,6 +84,38 @@ public class Fragment_Earn extends Fragment {
         click_fyberwall();
 
         return view;
+    }
+
+    private void click_missingcoins() {
+        tv_missingcoins.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+
+
+                WebView wv = new WebView(getContext());
+                wv.loadUrl(getResources().getString(R.string.help_missingcoins_url));
+                wv.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        view.loadUrl(url);
+
+                        return true;
+                    }
+                });
+
+                alert.setView(wv);
+                alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+
+
+            }
+        });
     }
 
     private void click_btn_refresh_lastearning() {
@@ -147,6 +185,7 @@ public class Fragment_Earn extends Fragment {
 
 
     private void anhxa() {
+        tv_missingcoins = (TextView) view.findViewById(R.id.tv_missingcoins);
         btn_refresh_lastearning = (ImageView) view.findViewById(R.id.btn_refresh_lastearning);
         ListItems = (RecyclerView) view.findViewById(R.id.rvearnitems);
         arrayListItems = new ArrayList<>();

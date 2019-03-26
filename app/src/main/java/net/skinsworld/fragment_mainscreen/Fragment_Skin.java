@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
 
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -368,11 +369,20 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
             pd.cancel();
             if (buySuccess) {
                 //mua thanh cong, bat len thong bao da mua thanh cong
-                Toast.makeText(getActivity(), "BUY SUCCESS !", Toast.LENGTH_SHORT).show();
+                final BottomSheetDialog dialog_buysuccess = new BottomSheetDialog(getContext());
+                dialog_buysuccess.setContentView(R.layout.buy_success);
+                dialog_buysuccess.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
+                // set the custom dialog components - text, image and button
+                dialog_buysuccess.show();
 
             } else {
                 //mua that bai, co the do loi ket noi hoac thieu coin, nem ra thong bao o day
-                Toast.makeText(getActivity(), "Error occurred ! Please try again !", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getActivity(), "Error occurred ! Please try again !", Toast.LENGTH_SHORT).show();
+                final BottomSheetDialog dialog_buyerror = new BottomSheetDialog(getContext());
+                dialog_buyerror.setContentView(R.layout.buy_error);
+                dialog_buyerror.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundResource(android.R.color.transparent);
+                // set the custom dialog components - text, image and button
+                dialog_buyerror.show();
             }
         }
 

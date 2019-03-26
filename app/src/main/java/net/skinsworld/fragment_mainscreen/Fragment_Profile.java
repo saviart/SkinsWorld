@@ -390,7 +390,7 @@ public class Fragment_Profile extends Fragment {
 
 
                 Button popup_invite_copyintivecode = (Button) dialog.findViewById(R.id.popup_invite_copyintivecode);
-                Button popup_invite_shareonfacebook = (Button) dialog.findViewById(R.id.popup_invite_shareonfacebook);
+
                 // if button is clicked, close the custom dialog
                 popup_invite_copyintivecode.setOnClickListener(new View.OnClickListener() {
                     @Override

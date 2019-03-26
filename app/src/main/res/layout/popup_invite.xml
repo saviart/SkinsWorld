@@ -19,7 +19,7 @@
                     android:id="@+id/popup_invitecode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Receive 10% of the earned points of each invited friend"
+                    android:text="Receive 10% of the earned coins of each invited friend"
                     android:textColor="#ffff"
                     android:fontFamily="@font/poppinsbold"
                     android:textSize="12sp"/>
@@ -68,17 +68,6 @@
                     android:fontFamily="@font/poppinsmedium"
                     android:padding="5dp"
                     android:text="Copy Invite code"
-                    android:textColor="#000000"
-                    android:textSize="8sp" />
-                <Button
-                  android:layout_marginLeft="10dp"
-                    android:id="@+id/popup_invite_shareonfacebook"
-                    android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/bg_popup_btn_action"
-                    android:fontFamily="@font/poppinsmedium"
-                    android:text="Share on Facebook"
                     android:textColor="#000000"
                     android:textSize="8sp" />
 
