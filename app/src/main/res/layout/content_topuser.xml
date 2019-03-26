@@ -52,7 +52,7 @@
                 android:fontFamily="@font/poppinsmedium"
                 android:text="QuangPhụKhoa"
                 android:textColor="#898888"
-                android:textSize="12sp" />
+                android:textSize="10sp" />
             <TextView
                 android:layout_gravity="center"
                 android:id="@+id/member_since"
@@ -87,6 +87,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="15dp"
             android:text="1234"
+            android:textColor="#ffff"
             android:textSize="10sp"
 
 
