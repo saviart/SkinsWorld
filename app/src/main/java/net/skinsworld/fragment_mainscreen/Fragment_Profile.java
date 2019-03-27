@@ -134,10 +134,14 @@ public class Fragment_Profile extends Fragment {
                 public void onClick(View v) {
 
                     //validate
-                    if((etCode.getText().toString().trim().equals(""))||(!(etCode.getText().toString().trim().toUpperCase().contains("SW")))||(etCode.getText().toString().trim().length()!=11))
-                    {
+                    String inputedCode = etCode.getText().toString().trim();
+                    Long inputedSteamID64 = Long.parseLong(inputedCode.substring(2)) + Long.parseLong("76561197960265728");
+                    String SteamID64Inputed = inputedSteamID64.toString();
+                    if (inputedCode.equals("") || (!(inputedCode.toUpperCase().contains("SW"))) || (inputedCode.length() != 11)) {
                         Toast.makeText(getActivity(), "You must input correct invitation code format !", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else if (SteamID64Inputed.equals(GlobalVariables.user.getSteamID64())) {
+                        Toast.makeText(getActivity(), "You cannot input your own invitation code !", Toast.LENGTH_SHORT).show();
+                    } else {
                         new submitCode().execute();
                         dialog.dismiss();
                     }
@@ -266,9 +270,9 @@ public class Fragment_Profile extends Fragment {
             @Override
             public void onClick(View v) {
                 //validate
-                if((etTradeURL.getText().toString().trim().equals(""))||(!(etTradeURL.getText().toString().contains("https://steamcommunity.com/tradeoffer")))){
-                    Toast.makeText(getActivity(),"You must input correct Trade URL format !",Toast.LENGTH_SHORT).show();
-                }else{
+                if ((etTradeURL.getText().toString().trim().equals("")) || (!(etTradeURL.getText().toString().contains("https://steamcommunity.com/tradeoffer")))) {
+                    Toast.makeText(getActivity(), "You must input correct Trade URL format !", Toast.LENGTH_SHORT).show();
+                } else {
                     new setURL().execute();
                 }
 
@@ -276,7 +280,7 @@ public class Fragment_Profile extends Fragment {
         });
     }
 
-    class setURL extends  AsyncTask<String,String,String>{
+    class setURL extends AsyncTask<String, String, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -290,17 +294,17 @@ public class Fragment_Profile extends Fragment {
         @Override
         protected void onPostExecute(String s) {
             pd.cancel();
-            if(isSetTradeURLOK){
+            if (isSetTradeURLOK) {
                 etTradeURL.setText(GlobalVariables.user.getTradeURL());
-                Toast.makeText(getActivity(),"Done !",Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "Done !", Toast.LENGTH_LONG).show();
                 InputMethodManager inputManager =
                         (InputMethodManager) getActivity().
                                 getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.hideSoftInputFromWindow(
                         getActivity().getCurrentFocus().getWindowToken(),
                         InputMethodManager.HIDE_NOT_ALWAYS);
-            }
-            else Toast.makeText(getActivity(),"Error occurred ! Please try again later !",Toast.LENGTH_LONG).show();
+            } else
+                Toast.makeText(getActivity(), "Error occurred ! Please try again later !", Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -311,7 +315,7 @@ public class Fragment_Profile extends Fragment {
             try {
                 isSetTradeURLOK = js.getJSONObject("Success").getString("Message").equals("OK");
                 Gson gson = new Gson();
-                GlobalVariables.user = gson.fromJson(js.getJSONArray("user").getJSONObject(0).toString(),User.class);
+                GlobalVariables.user = gson.fromJson(js.getJSONArray("user").getJSONObject(0).toString(), User.class);
                 db.addUser(GlobalVariables.user);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -368,11 +372,10 @@ public class Fragment_Profile extends Fragment {
         protected void onPostExecute(String s) {
             pd.cancel();
             try {
-                if(isInputCodeOK){
+                if (isInputCodeOK) {
                     Toast.makeText(getActivity(), "OK !", Toast.LENGTH_SHORT).show();
                     new doSwipe().execute();
-                }
-                else{
+                } else {
                     Toast.makeText(getActivity(), "Invitation code unavailable !", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
@@ -388,11 +391,11 @@ public class Fragment_Profile extends Fragment {
             DatabaseHandler db = new DatabaseHandler(getActivity());
             JSONObject js = uf.setInvitedBy(GlobalVariables.user.getUserID(), etCode.getText().toString().trim());
             try {
-                if(js.getJSONObject("Success").getString("Message").equals("OK")){
+                if (js.getJSONObject("Success").getString("Message").equals("OK")) {
                     GlobalVariables.user.setCoins("" + (Integer.parseInt(GlobalVariables.user.getCoins()) + 50));
                     isInputCodeOK = true;
                 }
-                if(js.getJSONObject("Success").getString("Message").equals("No user !")){
+                if (js.getJSONObject("Success").getString("Message").equals("No user !")) {
                     isInputCodeOK = false;
                 }
 
@@ -416,7 +419,7 @@ public class Fragment_Profile extends Fragment {
         tvCoins.setText(GlobalVariables.user.getCoins());
         tvJoinDate.setText(GlobalVariables.user.getCreatedDate());
         etTradeURL.setText(GlobalVariables.user.getTradeURL());
-        tvTotalCoins.setText(GlobalVariables.totalCoins==null?"0":GlobalVariables.totalCoins);
+        tvTotalCoins.setText(GlobalVariables.totalCoins == null ? "0" : GlobalVariables.totalCoins);
         tvTotalInvited.setText(GlobalVariables.totalInvited);
     }
 
@@ -426,7 +429,6 @@ public class Fragment_Profile extends Fragment {
             @Override
             public void onClick(View v) {
                 // custom dialog
-
 
 
                 String prefix = "SkinsWorld.net";
@@ -444,7 +446,6 @@ public class Fragment_Profile extends Fragment {
 
 
                 // set the custom dialog components - text, image and button
-
 
 
             }
@@ -580,7 +581,7 @@ public class Fragment_Profile extends Fragment {
             arrayListItems.add(m);
         }
         tvTotalInvited.setText(GlobalVariables.totalInvited);
-        tvTotalCoins.setText(GlobalVariables.totalCoins==null?"0":GlobalVariables.totalCoins);
+        tvTotalCoins.setText(GlobalVariables.totalCoins == null ? "0" : GlobalVariables.totalCoins);
         ivAvatar = view.findViewById(R.id.ivAvatar);
         tvUsername = view.findViewById(R.id.tvUsername);
         tvCoins = view.findViewById(R.id.tvCoins);
