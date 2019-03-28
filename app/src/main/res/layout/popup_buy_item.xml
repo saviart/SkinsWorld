@@ -143,12 +143,12 @@
                     android:textSize="12sp" />
 
                 <TextView
-
+                    android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+
                     android:fontFamily="@font/poppinsmedium"
-                    android:text="This item will be send to your account after 24 hours "
+                    android:text="This item will be sent through trade URL to your account within 24 hours"
                     android:textColor="#FF898888"
                     android:textSize="9sp" />
 
