@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.ContactsContract;
+
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.Fragment;
@@ -12,7 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,29 +23,29 @@ import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
+
 import com.squareup.picasso.Picasso;
 
 import net.skinsworld.Activity_MainScreen;
 import net.skinsworld.R;
-import net.skinsworld.WebView_Login;
+
 import net.skinsworld.adapter.Adapter_RcvSkin;
 import net.skinsworld.library.DatabaseHandler;
 import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.event.OnClickIteml;
 import net.skinsworld.library.UserFunctions;
 import net.skinsworld.model.Item;
-import net.skinsworld.model.Order;
+
 import net.skinsworld.model.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 
 public class Fragment_Skin extends Fragment implements OnClickIteml {
@@ -55,7 +55,6 @@ public class Fragment_Skin extends Fragment implements OnClickIteml {
     RecyclerView ListItems;
     Adapter_RcvSkin adapter;
     private Dialog myDialog;
-    ImageView ic_refresh;
     private SwipeRefreshLayout swipe_Fragment_Skins;
     ImageView Autochess_Filter;
     ImageView Dota2_Filter;

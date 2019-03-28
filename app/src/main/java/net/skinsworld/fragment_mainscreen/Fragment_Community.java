@@ -1,6 +1,9 @@
 package net.skinsworld.fragment_mainscreen;
 
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +17,7 @@ import  android.view.View;
 import  android.view.ViewGroup;
 import android.support.annotation.NonNull;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -22,6 +26,7 @@ import net.skinsworld.R;
 import net.skinsworld.adapter.Adapter_RcvTopuser;
 
 import net.skinsworld.adapter.Adapter_TransactionHistory;
+import net.skinsworld.event.OnClickIteml_TopUser;
 import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.library.UserFunctions;
 import net.skinsworld.model.History;
@@ -34,7 +39,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Fragment_Community extends Fragment {
+public class Fragment_Community extends Fragment implements OnClickIteml_TopUser{
     View view;
     RecyclerView ListItems1;
     RecyclerView ListItems2;
@@ -79,7 +84,7 @@ public class Fragment_Community extends Fragment {
 
 
         //setup layout top usser
-        adapter2 = new Adapter_RcvTopuser(getActivity(), GlobalVariables.listTop);
+        adapter2 = new Adapter_RcvTopuser(getActivity(), GlobalVariables.listTop, this);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
         layoutManager2.setOrientation(LinearLayoutManager.VERTICAL);
         ListItems2.setLayoutManager(layoutManager2);
@@ -87,6 +92,17 @@ public class Fragment_Community extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onClickItemTopUser(TopUser data) {
+
+        ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("SW" + (Long.parseLong(data.getInvitationCode()) - Long.parseLong("76561197960265728")),"SW" + (Long.parseLong(data.getInvitationCode()) - Long.parseLong("76561197960265728")));
+        clipboard.setPrimaryClip(clip);
+        Toast.makeText(getActivity().getApplicationContext(), "Invited code copied !" + "SW" + (Long.parseLong(data.getInvitationCode()) - Long.parseLong("76561197960265728")), Toast.LENGTH_SHORT).show();
+
+    }
+
     class loadRecentOrder extends AsyncTask<String,String,String>{
         @Override
         protected void onPreExecute() {
