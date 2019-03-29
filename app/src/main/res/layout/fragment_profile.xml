@@ -234,7 +234,7 @@
                                  android:layout_width="70dp"
                                  android:layout_height="20dp"
                                  android:background="@drawable/bg_button_pressed"
-                                 android:text="Share"
+                                 android:text="Facebook"
                                  android:textColor="#ffff"
                                  android:textSize="10sp"/>
 
