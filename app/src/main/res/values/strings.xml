@@ -7,11 +7,11 @@
     <string name="title_setting">"Community"</string>
 
     <string name="dong_y_su_dung">You must accept our Privacy Policy and Terms</string>
-    <string name="conditions_url">http://skinsworld.net/policy/conditions.html</string>
+    <string name="conditions_url">http://skinsworld.net/terms.html</string>
     <string name="title_activity__user_blocked">Activity_UserBlocked</string>
-    <string name="policy_url">http://skinsworld.net/policy/conditions.html</string>
-    <string name="help_tradeurl_url">http://skinsworld.net/policy/tradeurl_help.html</string>
-    <string name="help_missingcoins_url">http://skinsworld.net/policy/missingcoins_help.html</string>
+    <string name="policy_url">http://skinsworld.net/privacy.html</string>
+    <string name="help_tradeurl_url">http://skinsworld.net/tradeurl_help.html</string>
+    <string name="help_missingcoins_url">http://skinsworld.net/missingcoins_help.html</string>
 
 
 
