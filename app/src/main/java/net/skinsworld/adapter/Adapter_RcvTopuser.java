@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import net.skinsworld.R;
+import net.skinsworld.event.OnClickIteml_TopUser;
 import net.skinsworld.model.TopUser;
 
 
@@ -21,11 +22,13 @@ import java.util.List;
 public class Adapter_RcvTopuser extends RecyclerView.Adapter<Adapter_RcvTopuser.ItemViewHolder> {
     private List<TopUser> data = new ArrayList<>();
     private Context context;
+    OnClickIteml_TopUser onClickIteml_TopUser;
 
 
-    public Adapter_RcvTopuser(Context context, List<TopUser> itemsList) {
+    public Adapter_RcvTopuser(Context context, List<TopUser> itemsList, OnClickIteml_TopUser OnClickIteml_TopUser) {
         this.data = itemsList;
         this.context = context;
+        onClickIteml_TopUser = OnClickIteml_TopUser;
     }
 
     public List<TopUser> getData() {
@@ -79,7 +82,14 @@ public class Adapter_RcvTopuser extends RecyclerView.Adapter<Adapter_RcvTopuser.
             user_name = (TextView) itemView.findViewById(R.id.user_name);
             member_since = (TextView) itemView.findViewById(R.id.member_since);
             current_coins = (Button) itemView.findViewById(R.id.current_coins);
-
+            // click(itemView);
+          itemView.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View v) {
+                  TopUser itemclick = data.get(getAdapterPosition());
+                  onClickIteml_TopUser.onClickItemTopUser(itemclick);
+              }
+          });
 
         }
     }

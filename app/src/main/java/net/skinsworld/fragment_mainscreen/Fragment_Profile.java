@@ -7,6 +7,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,12 +23,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.NonNull;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,12 +70,14 @@ public class Fragment_Profile extends Fragment {
     TextView tvUsername;
     TextView tvCoins;
     TextView tvJoinDate;
+    TextView tv_daily;
     EditText etTradeURL;
     TextView tvInviteCode;
     ImageView btn_refresh_lastorder;
     TextView tvTotalInvited;
     TextView tvTotalCoins;
     EditText etCode;
+    LinearLayout layout_dailyrewarrd;
     private SwipeRefreshLayout swipe_Fragment_Profile;
 
     ProgressDialog pd;
@@ -77,6 +85,12 @@ public class Fragment_Profile extends Fragment {
     Boolean isInputCodeOK = false;
     Boolean canTakeDailyCoins = false;
     Boolean isSetTradeURLOK = false;
+
+// check thông tin có thể nhận daily , gắn mặc định là có
+    Boolean ischeckdaily = true;
+
+
+
 
     public Fragment_Profile() {
     }
@@ -93,6 +107,14 @@ public class Fragment_Profile extends Fragment {
         ListItems.setLayoutManager(layoutManager);
         ListItems.setAdapter(adapter);
 
+       //------------------------------------------------------------------------------------------------------------
+
+        //-----------------------------------------------------------------------------------------------------------
+     //
+
+
+
+
 
         // adapter.notifyDataSetChanged();
         click_refresh_lastorder();
@@ -102,6 +124,10 @@ public class Fragment_Profile extends Fragment {
         clickbtn_share();
         clickbtn_dailyreward();
         clickSetURL();
+
+
+        checkdailyreward();
+
 
 
         //set toan bo thong tin user vao giao dien
@@ -155,6 +181,24 @@ public class Fragment_Profile extends Fragment {
         new refreshOrder().execute();
 
         return view;
+    }
+
+    private void checkdailyreward() {
+// gọi cái  cantakadailyCoin ra , nếu ko đc nhận
+        // ko đủ điều kiện thì ko có animation và xám nền nút daily
+    if (ischeckdaily == false) {
+        layout_dailyrewarrd.setBackgroundResource(R.drawable.color3_btn_profile);
+        }else {
+
+        //Animation nút daily reward khi đã set tên và đủ điều kiện nhận daily.
+        Animation animation = AnimationUtils.loadAnimation(getContext(), R.anim.anim_shake);
+       // anh code logic kiểu  tầm 10s nó chạy lại cái dòng chạy animation này.
+        btn_dailyreward.startAnimation(animation);
+        }
+
+
+
+
     }
 
     class doSwipe extends AsyncTask<String, String, String> {
@@ -429,6 +473,9 @@ public class Fragment_Profile extends Fragment {
             @Override
             public void onClick(View v) {
                 // custom dialog
+                Animation zoomin = AnimationUtils.loadAnimation(getContext(), R.anim.anim_shake);
+                btn_dailyreward.startAnimation(zoomin);
+
 
 
                 String prefix = "SkinsWorld.net";
@@ -495,7 +542,11 @@ public class Fragment_Profile extends Fragment {
         btn_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "đã bấm share", Toast.LENGTH_SHORT).show();
+
+                Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
+                String facebookUrl = getFacebookPageURL(getActivity());
+                facebookIntent.setData(Uri.parse(facebookUrl));
+                startActivity(facebookIntent);
             }
         });
     }
@@ -560,6 +611,8 @@ public class Fragment_Profile extends Fragment {
 
 
     private void anhxa() {
+
+        layout_dailyrewarrd = (LinearLayout) view.findViewById(R.id.layout_dailyrewarrd);
         btn_refresh_lastorder = (ImageView) view.findViewById(R.id.btn_refresh_lastorder);
         btn_tradeurl_help = (Button) view.findViewById(R.id.btn_tradeurl_help);
         btn_share = (Button) view.findViewById(R.id.btn_share);
@@ -595,6 +648,24 @@ public class Fragment_Profile extends Fragment {
 
     }
 
+
+    public static String FACEBOOK_URL = "https://www.facebook.com/SkinsWorld.net";
+    public static String FACEBOOK_PAGE_ID = "399485364185657";
+
+    //method to get the right URL to use in the intent
+    public String getFacebookPageURL(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        try {
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+            if (versionCode >= 3002850) { //newer versions of fb app
+                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+            } else { //older versions of fb app
+                return "fb://page/" + FACEBOOK_PAGE_ID;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return FACEBOOK_URL; //normal web url
+        }
+    }
 }
 
 

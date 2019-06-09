@@ -113,7 +113,7 @@
                     <CheckBox
 
                         android:id="@+id/checkBox"
-                        android:checked="true"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
@@ -140,7 +140,7 @@
                     <CheckBox
 
                         android:id="@+id/checkBox2"
-                        android:checked="true"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

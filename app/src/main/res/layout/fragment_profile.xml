@@ -68,6 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent">
                         <LinearLayout
+                            android:id="@+id/layout_dailyrewarrd"
                             android:gravity="center"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
@@ -79,6 +80,7 @@
                                 android:layout_height="wrap_content"
                                 android:src="@drawable/ic_dailygift"/>
                             <TextView
+                                android:id="@+id/tv_daily"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="#FFFF"
@@ -234,7 +236,7 @@
                                  android:layout_width="70dp"
                                  android:layout_height="20dp"
                                  android:background="@drawable/bg_button_pressed"
-                                 android:text="Share"
+                                 android:text="Facebook"
                                  android:textColor="#ffff"
                                  android:textSize="10sp"/>
 
@@ -258,7 +260,7 @@
                 android:layout_margin="3dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Refer your friend using above code - you will both receive additional coins !. Each invite friend user must earn at least 50 coins"
+                android:text="Refer your friend using above code - you will both receive additional coins !. Your friend will get 50 coins and you will get 5% earned from your friends."
                 android:textColor="#FF898888"
                 android:textSize="10sp"
                 />

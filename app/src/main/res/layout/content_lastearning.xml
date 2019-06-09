@@ -31,7 +31,7 @@
 
     <LinearLayout
 
-        android:layout_weight="4"
+        android:layout_weight="5"
         android:layout_width="0dp"
         android:layout_height="match_parent">
 
@@ -45,13 +45,13 @@
                 android:id="@+id/name_offer"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:fontFamily="@font/poppinsmedium"
                 android:text="Tapjoy Wall"
                 android:textColor="#FF898888"
                 android:textSize="10sp" />
             <TextView
-                android:layout_gravity="center"
+                android:layout_gravity="center_vertical"
                 android:id="@+id/time_complete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
 
     <LinearLayout
         android:gravity="center"
-        android:layout_weight="4"
+        android:layout_weight="3"
         android:layout_width="0dp"
         android:layout_height="match_parent" >
 

@@ -7,7 +7,7 @@
     android:layout_gravity="bottom">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:background="@drawable/bg_popup_reward"
         android:orientation="vertical"
         android:weightSum="10">
@@ -23,27 +23,11 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="You will receive 50 coins, thank you for being with us "
+                    android:text="You will receive 10 coins, thank you for being with us "
                     android:textColor="#ffff"
                     android:fontFamily="@font/poppinsbold"
                     android:textSize="12sp"/>
 
-                 <Button
 
-                        android:layout_marginTop="15dp"
-                        android:id="@+id/popup_dailyrewarded_get"
-                        android:layout_width="150dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center"
-                        android:background="@drawable/bg_content_copy"
-                        android:fontFamily="@font/poppinsmedium"
-                        android:padding="5dp"
-                        android:text="GET"
-                        android:textColor="#000000"/>
-
-
-
-
-
-</LinearLayout>
+    </LinearLayout>
 </LinearLayout>

@@ -5,8 +5,14 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="#121420">
-
+    android:background="#121420"
+    android:weightSum="2">
+<LinearLayout
+    android:layout_weight="1"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,5 +23,39 @@
         android:layout_height="wrap_content"
         android:text="USER BLOCKED"
         android:textColor="#FFFF"/>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You have violated one of our terms and conditions"
+        android:textColor="#ffff"/>
+    <TextView
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="If you think this is a mistake. Please contact us to provide information."
+        android:textColor="#ffff"/>
+</LinearLayout>
+
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email us: support@skinsworld.net"
+        android:textColor="#ffff"/>
+        <TextView
+            android:id="@+id/tv_fbcontact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Messages: Facebook fanpage"
+            android:textColor="#ef7c42"/>
+    </LinearLayout>
+
+
 
 </LinearLayout>

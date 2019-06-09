@@ -19,7 +19,7 @@
                     android:id="@+id/popup_invitecode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Receive 10% of the earned coins of each invited friend"
+                    android:text="Receive 5% of the earned coins of each invited friend"
                     android:textColor="#ffff"
                     android:fontFamily="@font/poppinsbold"
                     android:textSize="12sp"/>
@@ -81,7 +81,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Refer your friend using above code - you will both receive addition coin."
+                    android:text="Refer your friend using above code - you will both receive additional coins !. Your friend will get 50 coins and you will get 5% earned from your friends."
                     android:textColor="#898888"
                     android:fontFamily="@font/poppinsmedium"
                     android:textSize="10sp"/>

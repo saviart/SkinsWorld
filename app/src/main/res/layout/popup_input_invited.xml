@@ -14,7 +14,7 @@
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Get 50 coins if you enter the invite code, if you don't have, please enter SkinsWorld to get free coins"
+                    android:text="Get 50 coins if you enter the invite code, if you don't have, please choice any code from topuser in community tab"
                     android:textColor="#ffff"
                     android:fontFamily="@font/poppinsbold"
                     android:textSize="12sp"/>
