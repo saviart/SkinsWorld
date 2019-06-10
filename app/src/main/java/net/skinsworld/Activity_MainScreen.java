@@ -51,6 +51,7 @@ public class Activity_MainScreen extends AppCompatActivity {
 
             Toast.makeText(this.getApplicationContext(),"Bấm back 1 lần nữa để thoát ứng dụng",Toast.LENGTH_SHORT).show();
 
+
         }
     }
 

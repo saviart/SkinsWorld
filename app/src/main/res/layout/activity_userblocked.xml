@@ -44,18 +44,34 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email us: support@skinsworld.net"
-        android:textColor="#ffff"/>
-        <TextView
-            android:id="@+id/tv_fbcontact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Messages: Facebook fanpage"
+            android:text="Email us: support@skinsworld.net"
+            android:textColor="#ffff"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Messages:"
             android:textColor="#ef7c42"/>
+
     </LinearLayout>
 
-
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/tv_blockfbchatcontact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/fbchat"/>
+        <ImageView
+            android:id="@+id/tv_blocktwittercontact"
+            android:paddingLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/twitter"/>
+    </LinearLayout>
 
 </LinearLayout>

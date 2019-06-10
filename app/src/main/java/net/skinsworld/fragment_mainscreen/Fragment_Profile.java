@@ -160,10 +160,17 @@ public class Fragment_Profile extends Fragment {
                 public void onClick(View v) {
 
                     //validate
-                    String inputedCode = etCode.getText().toString().trim();
-                    Long inputedSteamID64 = Long.parseLong(inputedCode.substring(2)) + Long.parseLong("76561197960265728");
-                    String SteamID64Inputed = inputedSteamID64.toString();
-                    if (inputedCode.equals("") || (!(inputedCode.toUpperCase().contains("SW"))) || (inputedCode.length() != 11)) {
+                    String inputedCode = "";
+                    String SteamID64Inputed = "";
+                    try{
+                        inputedCode = etCode.getText().toString().trim();
+                        Long inputedSteamID64 = Long.parseLong(inputedCode.substring(2)) + Long.parseLong("76561197960265728");
+                        SteamID64Inputed = inputedSteamID64.toString();
+                    }catch (Exception ee){}
+
+                    if(inputedCode.equals("")||inputedCode.isEmpty()){
+                        Toast.makeText(getActivity(), "You must input invitation code !", Toast.LENGTH_SHORT).show();
+                    }else if ((!(inputedCode.toUpperCase().contains("SW"))) || (inputedCode.length() != 11)) {
                         Toast.makeText(getActivity(), "You must input correct invitation code format !", Toast.LENGTH_SHORT).show();
                     } else if (SteamID64Inputed.equals(GlobalVariables.user.getSteamID64())) {
                         Toast.makeText(getActivity(), "You cannot input your own invitation code !", Toast.LENGTH_SHORT).show();

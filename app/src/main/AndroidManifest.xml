@@ -24,7 +24,8 @@
         <activity
             android:name=".Activity_MainScreen"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activity_Loading"
+        <activity
+            android:name=".Activity_Loading"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +34,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity_Error" />
-        <activity android:name=".Activity_UserBlocked"
+        <activity
+            android:name=".Activity_UserBlocked"
+            android:screenOrientation="portrait" />
+        <activity android:name=".fragment_mainscreen.Activity_Login2Device"
             android:screenOrientation="portrait"></activity>
     </application>
 

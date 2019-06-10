@@ -9,11 +9,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Activity_UserBlocked extends AppCompatActivity {
 
-    TextView tv_fbcontact;
+    ImageView tv_blockfbchatcontact;
+    ImageView tv_blocktwittercontact;
 
 
     @Override
@@ -26,36 +28,33 @@ public class Activity_UserBlocked extends AppCompatActivity {
         Activity_MainScreen.AM.finish();
         Activity_Loading.AL.finish();
 
-        tv_fbcontact = (TextView) findViewById(R.id.tv_fbcontact);
-        tv_fbcontact.setOnClickListener(new View.OnClickListener() {
+        tv_blockfbchatcontact = (ImageView) findViewById(R.id.tv_blockfbchatcontact);
+        tv_blocktwittercontact = (ImageView) findViewById(R.id.tv_twittercontact);
+
+        tv_blockfbchatcontact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent facebookIntent = new Intent(Intent.ACTION_VIEW);
-                String facebookUrl = getFacebookPageURL(getApplicationContext());
-                facebookIntent.setData(Uri.parse(facebookUrl));
-                startActivity(facebookIntent);
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("http://m.me/SkinsWorld.net")));
             }
         });
 
-    }
-
-
-    public static String FACEBOOK_URL = "https://www.facebook.com/SkinsWorld.net";
-    public static String FACEBOOK_PAGE_ID = "399485364185657";
-
-    //method to get the right URL to use in the intent
-    public String getFacebookPageURL(Context context) {
-        PackageManager packageManager = context.getPackageManager();
-        try {
-            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
-            if (versionCode >= 3002850) { //newer versions of fb app
-                return "fb://facewebmodal/f?href=" + FACEBOOK_URL;
-            } else { //older versions of fb app
-                return "fb://page/" + FACEBOOK_PAGE_ID;
+        tv_blocktwittercontact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = getOpenTwitterIntent(getApplication(), "SkinsWorldApp");
+                startActivity(i);
             }
-        } catch (PackageManager.NameNotFoundException e) {
-            return FACEBOOK_URL; //normal web url
-        }
+        });
     }
+    public static Intent getOpenTwitterIntent(Context c, String Username) {
 
+        try {
+            c.getPackageManager().getPackageInfo("com.twitter.android", 0);
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?screen_name=" + Username));
+        } catch (Exception e) {
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/#!/" + Username));
+        }
+
+    }
 }

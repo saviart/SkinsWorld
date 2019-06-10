@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import net.skinsworld.fragment_mainscreen.Activity_Login2Device;
 import net.skinsworld.library.DatabaseHandler;
 import net.skinsworld.library.GlobalVariables;
 import net.skinsworld.library.UserFunctions;
@@ -37,6 +38,7 @@ public class WebView_Login extends AppCompatActivity {
     String steam64_from_api;
     final String REALM_PARAM = "skinsworld";
     ProgressDialog pd;
+    Boolean isMultiDevices = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -52,12 +54,12 @@ public class WebView_Login extends AppCompatActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 //checks the url being loaded
-                Toast.makeText(WebView_Login.this, "Loaded !", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(WebView_Login.this, "Please login with your Steam Account !", Toast.LENGTH_SHORT).show();
                 setTitle(url);
                 Uri Url = Uri.parse(url);
 
                 if(Url.getAuthority().equals(REALM_PARAM.toLowerCase())) {
-                    Toast.makeText(WebView_Login.this, "Finished Loading !", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(WebView_Login.this, "Finished Loading !", Toast.LENGTH_SHORT).show();
                     // That means that authentication is finished and the url contains user's id.
                     webView.stopLoading();
                     // Extracts user id.
@@ -99,12 +101,14 @@ public class WebView_Login extends AppCompatActivity {
         protected void onPostExecute(String s) {
             pd.cancel();
             try {
-                //Toast.makeText(WebView_Login.this, GlobalVariables.listItem.get(0).getGame(), Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(WebView_Login.this, Activity_MainScreen.class));
-                //Toast.makeText(WebView_Login.this, GlobalVariables.user.getSteamID64(), Toast.LENGTH_SHORT).show();
+                if(isMultiDevices){
+                    startActivity(new Intent(WebView_Login.this, Activity_Login2Device.class));
+                }else{
+                    startActivity(new Intent(WebView_Login.this, Activity_MainScreen.class));
+                }
             } catch (Exception e) {
-                e.printStackTrace();
-                Toast.makeText(WebView_Login.this, e.toString(), Toast.LENGTH_SHORT).show();
+                //e.printStackTrace();
+                //Toast.makeText(WebView_Login.this, e.toString(), Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -158,52 +162,12 @@ public class WebView_Login extends AppCompatActivity {
                 }
                 //getURL = json_registered.getString("SteamID64");
             } catch (Exception e) {
-                e.printStackTrace();
-
+                //multi acc
+                isMultiDevices = true;
             }
             return null;
         }
     }
-    class regsiter extends AsyncTask<String, String, String>{
-        @Override
-        protected void onPreExecute() {
-            //webview_login.setVisibility(View.INVISIBLE);
-            super.onPreExecute();
-        }
 
-        @Override
-        protected void onPostExecute(String s) {
-            startActivity(new Intent(WebView_Login.this, Activity_MainScreen.class));
-            super.onPostExecute(s);
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            try {
-                //GlobalVariables.user = new User(jsHTML.getString("steamid64"),jsHTML.getString("avatar"),jsHTML.getString("personaname"));
-//                UserFunctions uf = new UserFunctions();
-//                JSONObject json_registered = uf.signUp(GlobalVariables.user, GlobalVariables.gaid);
-//                DatabaseHandler db = new DatabaseHandler(getApplicationContext());
-//                db.resetTables();
-//                GlobalVariables.user.setId(json_registered.getString("UserID"));
-//                GlobalVariables.user.setSteamid64(json_registered.getString("SteamID64"));
-//                GlobalVariables.user.setTradeURL(json_registered.getString("TradeURL"));
-//                GlobalVariables.user.setCoins(json_registered.getString("Coins"));
-//                GlobalVariables.user.setCreated_date(json_registered.getString("CreatedDate"));
-//                GlobalVariables.user.setActive(json_registered.getString("Active"));
-//                GlobalVariables.user.setGaid(json_registered.getString("GAID"));
-//                GlobalVariables.user.setInvited_by(json_registered.getString("InvitedBy"));
-//                GlobalVariables.user.setAvatar(json_registered.getString("Avatar"));
-//                GlobalVariables.user.setPersonaName(json_registered.getString("PersonaName"));
-//                db.addUser(GlobalVariables.user);
-//                startActivity(new Intent(WebView_Login.this, Activity_MainScreen.class));
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-    }
 
 }
